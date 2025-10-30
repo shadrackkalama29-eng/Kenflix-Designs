@@ -30,9 +30,31 @@
         }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0f172a; /* Updated deep navy blue background */
+            background-color: #0f172a; /* Base color */
             color: #F3F4F6; /* Light text */
+            
+            /* 2060 Upgrade: Subtle animated background gradient */
+            background-image: radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.08), transparent 30%), 
+                              radial-gradient(circle at 90% 80%, rgba(249, 115, 22, 0.05), transparent 40%);
+            background-size: 200% 200%;
+            animation: subtle-bg-pan 25s linear infinite alternate;
         }
+
+        /* 2060 Upgrade: Keyframes for animated background */
+        @keyframes subtle-bg-pan {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        /* 2060 Upgrade: Holographic text for headings */
+        h2, h3, h4 {
+            text-shadow: 0 0 3px rgba(56, 189, 248, 0.1);
+        }
+        #hero-section h1 {
+             text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+        }
+
+
         /* Custom colors & Gradients */
         .bg-brand-orange { background-color: #f97316; }
         .text-brand-orange { color: #f97316; }
@@ -52,7 +74,7 @@
         }
         .package-card:hover, .service-card:hover, .blog-card:hover, .team-card:hover .team-card-inner, .value-prop-card:hover, .why-choose-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 25px -5px rgba(56, 189, 248, 0.1), 0 10px 10px -5px rgba(56, 189, 248, 0.04); /* Adjusted shadow color */
+            box-shadow: 0 20px 25px -5px rgba(56, 189, 248, 0.1), 0 10px 10px -5px rgba(56, 189, 248, 0.04), 0 0 15px rgba(56, 189, 248, 0.1); /* Added subtle glow */
         }
 
         /* Hero */
@@ -68,6 +90,25 @@
             transform: scale(1);
             z-index: 10;
         }
+        /* Add new keyframes for hero glow */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(56, 189, 248, 0.2); }
+            50% { box-shadow: 0 0 35px rgba(56, 189, 248, 0.4); }
+        }
+        .hero-text-box-glow {
+            animation: pulse-glow 5s ease-in-out infinite;
+        }
+
+        /* 2060 Upgrade: Keyframes for Hero H1 glow */
+        @keyframes hero-text-glow {
+            0%, 100% { text-shadow: 0 0 8px rgba(255, 255, 255, 0.3), 0 0 15px rgba(56, 189, 248, 0.5); }
+            50% { text-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 25px rgba(56, 189, 248, 0.8); }
+        }
+        .hero-h1-glow {
+            animation: hero-text-glow 3s ease-in-out infinite;
+        }
+
+
         #hero-section img {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 0; object-fit: cover;
@@ -77,6 +118,26 @@
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .scrolling-wrapper { display: flex; width: max-content; animation: scroll 40s linear infinite; }
         .scrolling-wrapper:hover { animation-play-state: paused; }
+
+        /* Add new keyframes for process step pulse */
+        @keyframes pulse-border {
+            0%, 100% { border-color: #38bdf8; box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); }
+            50% { border-color: #f97316; box-shadow: 0 0 20px rgba(249, 115, 22, 0.4); }
+        }
+        .process-step-bubble {
+            animation: pulse-border 4s ease-in-out infinite;
+        }
+
+        /* 2060 Upgrade: Keyframes for animated package border */
+        @keyframes animated-border-glow {
+            0% { border-color: #38bdf8; box-shadow: 0 0 15px #38bdf8; }
+            50% { border-color: #f97316; box-shadow: 0 0 25px #f97316; }
+            100% { border-color: #38bdf8; box-shadow: 0 0 15px #38bdf8; }
+        }
+        .popular-package-animated-border {
+            border-width: 2px;
+            animation: animated-border-glow 4s ease-in-out infinite;
+        }
 
         /* Animations */
         .animate-on-scroll {
@@ -134,11 +195,18 @@
         }
         .team-card-back {
             background-color: #1e293b; /* slate-800 */
+            backdrop-filter: blur(12px); /* 2060 Upgrade: Increased blur */
+            -webkit-backdrop-filter: blur(12px); /* Safari */
             transform: rotateY(180deg);
             padding: 1.5rem; /* p-6 */
             justify-content: center;
             align-items: center;
             text-align: center;
+        }
+
+        /* New style for portfolio overlay */
+        .portfolio-overlay {
+             background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.5) 70%, transparent 100%);
         }
 
 
@@ -227,10 +295,11 @@
         /* Modern Button Hover Effect */
         .bg-brand-orange, .bg-brand-blue, .bg-green-500 {
             background-size: 200% auto;
-            transition: background-position 0.5s;
+            transition: background-position 0.5s, box-shadow 0.3s; /* Added box-shadow transition */
         }
         .bg-brand-orange:hover, .bg-brand-blue:hover, .bg-green-500:hover {
             background-position: right center; /* change the direction of the change here */
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); /* 2060 Upgrade: Add glow on hover */
         }
         .bg-brand-orange {
             background-image: linear-gradient(to right, #f97316 0%, #ea580c 51%, #f97316 100%);
@@ -314,7 +383,7 @@
     </style>
 </head>
     <!-- Website Favicon -->
-<link rel="icon" type="image/jpeg" href="data:image/jpeg;base64,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
+<link rel="icon" type="image/jpeg" href="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAJQArgMBEQACEQEDEQH/xAAbAAACMwEBAQAAAAAAAAAAAAAABQMEBgIBB//EAD0QAAIBAwMDAgMFBwUAAAAAAAABAgMEEQUSITFBUQYiYXETcYGRoQcjQrHB8BUjM1JygpLh8RVDgv/EABgBAQEBAQEAAAAAAAAAAAAAAAABAgME/8QAHBEBAQEBAQEBAQEAAAAAAAAAAAEREiExQVFh/9oADAMBAAIRAxEAPwD5kgBACAEAIAQAgBACAEAIAQAgBACAEAIAQAgBACAEAIATYOtaSdF45JGSg2Stp3O5LXKxI2RpbJm0LjyWp3xRtWMyQW53srH+JRt/hJAbe7sRZKPHiS9CJ9E4clmrkzVLGaIXQObyW1WJmp1tEe6Qs9mtx0cXp4CAEAIAQAgBACAEAIAQAgPTWknGFi5aMlFsswUjn8itE7kiVXjykNaa1YYXyABo4k6AKBZlddIsasLpt9jslXa6YY3zM4com5+J0RUZNnlr8T2V+JV58z+H+SB99Y36GiaB/e7JW5cPb96f5Gh8Uj/0r/MjN/qfVggb/AIkrP+XV+bZrfFrfJIBf5/Wgp3e4hePh9flJnq4rd5xX6krb3A76eix3xvz8D81g+HzXuz/P9jYuKVvpOH5fuWI326sGIpQx/syDdK1SjfV3W18DfCWLf7stP4kNXans13Ss68tdmarsFrqhXNTOaeBU6FqZWzocSuRhbtmhrRxengIAQAgBACAEAIAQEkcZcRxWEpaNkYbGtBbnSOGGqBfkqKLPGxObqT1FypaAdHTBs844uz1G/Na68a27rPov1NtuXTj+zX7T/T9xLV1c9Y/eqZC/HBvADwCsaqYVL2Foqbsiy97m9/T8iFbTSCAEAIAQHEGi5RXKpogGxP3ox9W/Vv7e5R7sWq3q1p+pKozLqekXtejHEE9Lc2hrcRVH9Jx4+B5qunXbjvb6x9S1rtpylpdJegvrKExk6H7lLqyFIhX43K+wue3dUxS2V8o6PKyMQQAgBACAEAID3GwuOAFhKWjOEdvQ6t1CHDedgNAy4nkFW33+SLjFxt9X0K90uvSN8nourANHO5yfILdjYnK/Es6y+hHy87mXh09I/X9hUp5WAgBACAEAIAQAgBAAJByDjCHqbT2h9brkysApa4jpTpHKfW7j396q8jGdb8Srt6Fzi5iuXhXd/Jle40Jidq3C2Y9ykasnGcX2Fb2kHCnJlZJaZ5WRiCAEAIAQHWjJ0WLZlFbG1rpDJI3TKgZNyitFniY/M+oXquBzQ0x82w+cePXPZ4Be4mP/AOtnc8z8lf8ABX2Xf4//AAUKwKvewQHEB3BQAgBACAEAIAQANUAacCgH9rqxcIDS1BzPG3qOPrt+YVTlU+DPxIdmXmHkLJh4U/eXb4/uhfX07o3lS6LVJEHIpcWUDopSITBengIAQAgLNJFvvC0Wy5USaIc0h1WTC227DdJ5hus7QOZ/92quqr8e7b91f7otr7P4XH6e8+392ZsK4KA6gBAPNkqGkrqqeOsiEjWsaW6kY1Kr+IXzpjFwff8AwWvCsavInJWLekat+zVna3Ioh/sfmqt596W+Yt1wzG3rlMBcoW09wqYYxhjJCGjuV9RNzqjJ+hzWTBV3SiuyZXW40ANTgAk9gGUYS32JfJqj/jTf9Z+Sx54+pn4c/Qje1zDh7XNPY4YXqafYxaa7nPdleniPpEWzNnLAXUYOnN5XOfx1/qdX/Lcb+kT7UWe3UNqllpaZrJQ5gB3jzcM/BScLLtsvUJP1IvEMGmrGc4R0+n1MjHI+KRkkZIew7zSO1XMoqUXF9ighOUJKUe6NFU7lfRsqowBvDDh2OHEKnhumx1svrXHJqV0fP6iCdm6Va1y2UlkNMiWw1AgBAdbqQvGepbHVnp+klaMcSqzLt0i4wauaSKN4qhV3B7mnzcfm2eA/dS8Srw6kn3fVkHOu8W567LoikpJEBACA0WxYIq6lw4BjR8VT8Yf2cV8S/wCAR3ZY/gjbOfmNUm+h0OtSPmd1BkvFS1gLnOmIAA1JzwXV43s0R36HE5e5ZM9epobPseXMbNdS5ufqGO195H6KDkcS10q/MscThLl7V35Gnpqaht7N2ngiiA5tbqfeqmzInN7lLZd1YkK1qEdE3l0fJxWrxCR4R4kdS1bd2eNkjTxa9oKzjc4vo2jXPHUlprYgumyVHO10lud5PJx3M5YfkrGjiclpWdUVORwiEutXR/oaQyBjOPJVbkXMItmZ2sk37RP9pn5gpnC/vKfwf0IXGV/+OS+K+piV0px432dn87LSO4TDeb9oft+Cr8+v2VZHyLXhdvtOl9pfUhuUO5IfFZ489o1ZVemLjxUxFeC9AID3EMvAWE3pGytbZoqZ3kttqJwcOEfV7idAqia8W1Q9S9rl4OPKxGZaMAAK6Zzq6I6h6CAEBsdkKYsoHTkfTPyD3DT5rneLW7tUPQ6zgdXLQ7H/ANjS77GRFzzhrQS49g5qugttJFnY+VOT8hLsvahCx11rWfxVQTI0H6sO1+9WmZldPCh7q/XRS8Pwv/afvP8AQa1VbyYTlVfWTLtRUTPXC+QU7y173SSDixnLxKnUcPstW+yK7J4pTR03tiw7RuzpTafbU5cKXnL9Cu/nb8ofqWaXaGB5AmY6E+1xC0W8LnHrF7JFHGqpPU1y/QdxVTt0Oa7eB4EHiquVbi9FzG1SW11LPTlzOK1tM2poS7Tfyib7TPzBWXDPvC+ZVcY+6P5fUx66Q5AkppjT1EUzTgxuDlhZDng4+psqm67IzXkx9e4gcubwOo8FVYkvJ+Rd50E+q8zPPGHEK2iyil3OLIxBAT0bcyBabX0JFC2xvd3dFZomcOllA9wBPyUDEXNkN+iLTOly4ij6v+whVqUYIA05nCAcWOwVNxka+Zj4qYHV5GC/uaP1ULKzYUpqL3IsMPh9l8ty6RNu5jKaIRxtDWMGGgcguXnJyltnZVxUIaXZFGpqRI5tMSPO8R2tHHPdy9630wcd2ehpukptVev0LE1Qd3AK0931N70uxnNoLi6nYIIielkGSR6rVbcPxVY+eS6Io+K5rqXhw7szKvjmAQHEG2NbFXup6hsDz5mQ4GT6Lu0KBn4yshzrui14ZmOmxVyfsv8ARmsj/Vc5I6uIv2m/lE32mfmCncM+8L5ldxj7o/xX1MeukOQBAaNx6az0j+J6MNP+On6KnS5Mma+J0Dbni1t+n06GfmGJCrWHYo7O54WZrBAW6H0wo9/YlY3cY7QH+Com8jvn4D5qHw//AJJv8P7k/ib+yrX4/wBhGrQpjjtGk66Dkh4+x9Et1PQwQxFlNC124CXBgznC5O7JulNpvodzRh0xri4xW9IatnZjitHOiRyMVXi4Q0sJlmdjPot5uPYFtxqJ3z1E1ZWRXjV7m/3EOz08twuNVUS8WsaGtHBoJOnwVlxCuNFMIIqOF3yycmyyXklr4df2H74zhU6kX7j0MRepDJdKjPqu3R7gP3XVYUeXHicTxGbllT/H6FJSiECAEAA41HEcE1voN66n0OBuWtJ5gFcbY9SaPoNe3FMWbS6WmYf3M/MFO4Z94XzK3jP3R/L6mPXSHIBzQGho9bFCPZc8fEqou+9S+RfUPeFH5/UR1Ppqzr7FNb7xEthqBAWqE9cKPd1RKx+4x2gGaGid2OcPvA+Sh4HSya/An8TW6q3+IkPFWhTHCMtIHMIDY0lzpZIomNqWB24BgnHJczdh3Rk24nY4+dROEUp9dF4Pd26KI4k5S80TSUdPcoDBUt3mnnzHgsqbpUz5omGRRDIqcJrYs2dt0lrvFZST9bfia+N/J7QT8esrLPtWRRCa8n1/35FRwymWLkzrl5pa+W/8j+WMbqpmtHQRezBbR07oLtM4jqy4ew+7B+IK6nh1injr4dDjOLVOvLl6Pr/vzFimlaCAEBNRUzqyrhp2j6RwB7hz+GVrusVdbm/I3Y9TttjBebPopAY09nJca3t7O/SSWjPbTy4t4Z/UlaPu1/RW3Cobu36IpONWax+X1f7mVXQHKggNDSDFig/uLz8Sqe771L5F9R0wo/P6iOo+kVpX2Ka33iJbDUCAmpDuyBabF0N9D0xzdW9NZA4cYpGuPgQR+qr8V8uT+KLTNjz4ia8mIDxVsUgIAQ80XLbcpqF4AJdDnWMnT3dhUXJxIXLt1J2JnWYz6dV6Gyo6hr2MljdlrxkFczbW4S5X5HYU2xsgpLsy1VztwypON+Ek6eyfS+fuXtMm91+v1PLoRjqz+n6eZ7ZUB3PPetMk0yRFxa6FS9Wdt2pQGODZmdaN3LwPcVNwcl0Te+zK7iOGsmC9V2MJVU81JMYamN0cg5O5+HaF0sLITipRe0cfZXOuXLNaZDlZmB6Y1z3BkbS954NaMk+5eNqPV9D1Jyektm22bsTrfGamsA6d40afqx2eK57iGYrfs4dl+p1PCsF0faT95/oX6mUHqt10VbGPmy5b10MhtJUiWqbAw5EQOce0V0fDaXCtzfmcnxjIVlqrj5f3FCsSoOHgvUDSzgw2ulido4RAuHYTqfxVLD275SXqdBYvDx4QffRnZTl6todiim9s8rMwBAe4jh2VjJdDOD0zRUQFXRzUx+sYQPHkqe1+HbGfoX2OvGqlV6ozWo0cMHmFdHPfiCAEAIDS7Mz71JJEfq36eBVHxSvU1P1Ol4LbzVOHoxznOh1B0IVXHuXT0+j7Cay14a91BO/zkTi2Nx9YDl4q0zMXcVfFdGUvDszUnjWd12/D/JoaaqczGVUNNdi82n3LcrKKviDKuGOQdjxnHgttV8q37L0aLsaFq1JbKLtlbG9290Mg7hO7H4qZ/Mr9e8vyK98Ix9+6/A2W6WittsGaSBjHY9LOXfedVGuyrLfelsl0YVdXuR0RVNZvHEfBR9bJnRCS7XBtFDhp3p3+g0/ip+Hiu6XXsitz82OPDp7z7GSc4ucXOOXE5J7SujSSWkcjJ8zbZxenhNRQGprIIR67wD4c/gtd0/Drc/Q249Xi2xh6jq9TAyEDgqzDh5lxn2bb0Z9x1VrEo2CyPAQAF4z1Mb2mo3ZBlV2XVtFrhXcrIb5TdBWmRo6kw32nv5j7/xW7Ct56tPuuho4jT4dvMu0uv8An/fiLlMIAIDiAd7MyNZLUh72tBa30jjmVVcUjKUY6RdcFmoznt67D/poT9bH/uFT+FZ/SzoPFr/qX5mNryPLp3NP1pwQe9dRSvsop+hxuU1482n5jKgvr4QI6xplYBo8ekPHtUHI4dGftV9GWOLxeUFy3La9fMeU1wpp8dDUNJ9knB+4qptxLYdJRLynOosW4TLYmeRkOOPFR/D9USuf4MeetiiGZ52NHe7ittePOb9mJptya61uckhPW7QMALKJpcf6jhoPAKzo4Y31sZT5PGIrpSvmIZZXyvL5Xue86lzireEIwWoooJzlOXNJ7Z5WRiCAdbPwdGyaucAN0GOPPbzP4D71W58+ZqpFvwyvlUr3+CKlwlL3HXOq30Q0iNlWczKClkEEAIAQE9NIWvC02R2jfTPlY9cwXK3GDTpW9aIn2uz3qsUnj3c3kXLgsqjk812/34mbILSWuBDgcEHkVcppraKBpp6Z5kz0bsZzg/gh4ba+7LUrNoZKWOo8ma+ndXFjGDcipm
 
 <body class="antialiased">
     <!-- Top Bar -->
@@ -380,9 +449,9 @@
                  <div class="absolute inset-0 bg-slate-900/95 z-10"></div>
                  <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2070&auto-format&fit=crop" alt="Code on a screen" class="absolute inset-0 w-full h-full object-cover z-0 opacity-75">
                  <div class="container mx-auto px-6 text-center relative z-20 flex flex-col justify-center h-full first-slide-content">
-                    <div class="bg-slate-900/50 backdrop-blur-sm p-8 rounded-lg max-w-4xl mx-auto">
+                    <div class="bg-slate-900/50 backdrop-blur-sm p-8 rounded-lg max-w-4xl mx-auto hero-text-box-glow">
                         <h2 class="text-xl md:text-2xl font-semibold text-brand-orange">Innovative Web & Graphic Design</h2>
-                        <h1 class="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+                        <h1 class="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight hero-h1-glow">
                            We Build Brands That Stand Out
                         </h1>
                         <p class="mt-6 text-base md:text-lg max-w-3xl mx-auto text-gray-200">
@@ -398,7 +467,7 @@
                  <div class="container mx-auto px-6 text-center relative z-20 flex flex-col justify-center h-full">
                     <div class="bg-slate-900/50 backdrop-blur-sm p-8 rounded-lg max-w-4xl mx-auto">
                         <h2 class="text-xl md:text-2xl font-semibold text-brand-orange">Custom E-Commerce Solutions</h2>
-                        <h1 class="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+                        <h1 class="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight hero-h1-glow">
                             Your Vision, Our Code, Your Success
                         </h1>
                         <p class="mt-6 text-base md:text-lg max-w-3xl mx-auto text-gray-200">
@@ -414,7 +483,7 @@
                  <div class="container mx-auto px-6 text-center relative z-20 flex flex-col justify-center h-full">
                     <div class="bg-slate-900/50 backdrop-blur-sm p-8 rounded-lg max-w-4xl mx-auto">
                         <h2 class="text-xl md:text-2xl font-semibold text-brand-orange">Creative That Captivates</h2>
-                        <h1 class="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+                        <h1 class="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight hero-h1-glow">
                            Designs that Deliver Results
                         </h1>
                         <p class="mt-6 text-base md:text-lg max-w-3xl mx-auto text-gray-200">
@@ -430,7 +499,7 @@
                  <div class="container mx-auto px-6 text-center relative z-20 flex flex-col justify-center h-full">
                     <div class="bg-slate-900/50 backdrop-blur-sm p-8 rounded-lg max-w-4xl mx-auto">
                         <h2 class="text-xl md:text-2xl font-semibold text-brand-orange">Now Offering Motion Graphics</h2>
-                        <h1 class="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+                        <h1 class="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight hero-h1-glow">
                            Bring Your Brand to Life with Animation & Video
                         </h1>
                         <p class="mt-6 text-base md:text-lg max-w-3xl mx-auto text-gray-200">
@@ -455,27 +524,27 @@
                  <span class="bg-brand-orange text-white font-semibold px-4 py-2 rounded-full text-sm animate-on-scroll animate-zoom-in">What You Get</span>
                  <h2 class="text-4xl md:text-5xl font-bold text-white mt-4 animate-on-scroll animate-fade-in-up">Our <span class="text-brand-blue">Value</span> <span class="text-brand-orange">Proposition</span></h2>
                  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 max-w-6xl mx-auto">
-                     <div class="bg-white text-slate-800 p-6 rounded-2xl flex items-center space-x-4 shadow-lg animate-on-scroll animate-fade-in-up">
+                     <div class="bg-slate-800/50 backdrop-blur-md border border-slate-700 text-white p-6 rounded-2xl flex items-center space-x-4 shadow-lg animate-on-scroll animate-fade-in-up value-prop-card">
                          <i data-lucide="smile" class="w-10 h-10 text-brand-orange flex-shrink-0"></i>
                          <p class="font-semibold text-left">Visually Stunning, Professional Websites</p>
                      </div>
-                     <div class="bg-white text-slate-800 p-6 rounded-2xl flex items-center space-x-4 shadow-lg animate-on-scroll animate-fade-in-up" style="transition-delay: 100ms;">
+                     <div class="bg-slate-800/50 backdrop-blur-md border border-slate-700 text-white p-6 rounded-2xl flex items-center space-x-4 shadow-lg animate-on-scroll animate-fade-in-up value-prop-card" style="transition-delay: 100ms;">
                          <i data-lucide="smartphone" class="w-10 h-10 text-brand-orange flex-shrink-0"></i>
                          <p class="font-semibold text-left">Mobile-Responsive & Cross-Browser Compatibility</p>
                      </div>
-                     <div class="bg-white text-slate-800 p-6 rounded-2xl flex items-center space-x-4 shadow-lg animate-on-scroll animate-fade-in-up" style="transition-delay: 200ms;">
+                     <div class="bg-slate-800/50 backdrop-blur-md border border-slate-700 text-white p-6 rounded-2xl flex items-center space-x-4 shadow-lg animate-on-scroll animate-fade-in-up value-prop-card" style="transition-delay: 200ms;">
                          <i data-lucide="trending-up" class="w-10 h-10 text-brand-orange flex-shrink-0"></i>
                          <p class="font-semibold text-left">SEO-Ready Web Design for Visibility & Growth</p>
                      </div>
-                     <div class="bg-white text-slate-800 p-6 rounded-2xl flex items-center space-x-4 shadow-lg animate-on-scroll animate-fade-in-up" style="transition-delay: 300ms;">
+                     <div class="bg-slate-800/50 backdrop-blur-md border border-slate-700 text-white p-6 rounded-2xl flex items-center space-x-4 shadow-lg animate-on-scroll animate-fade-in-up value-prop-card" style="transition-delay: 300ms;">
                          <i data-lucide="users" class="w-10 h-10 text-brand-orange flex-shrink-0"></i>
                          <p class="font-semibold text-left">Built for Users, Designed to Convert</p>
                      </div>
-                     <div class="bg-white text-slate-800 p-6 rounded-2xl flex items-center space-x-4 shadow-lg animate-on-scroll animate-fade-in-up" style="transition-delay: 400ms;">
+                     <div class="bg-slate-800/50 backdrop-blur-md border border-slate-700 text-white p-6 rounded-2xl flex items-center space-x-4 shadow-lg animate-on-scroll animate-fade-in-up value-prop-card" style="transition-delay: 400ms;">
                          <i data-lucide="rocket" class="w-10 h-10 text-brand-orange flex-shrink-0"></i>
                          <p class="font-semibold text-left">Fast, Secure, and Reliable Websites</p>
                      </div>
-                     <div class="bg-white text-slate-800 p-6 rounded-2xl flex items-center space-x-4 shadow-lg animate-on-scroll animate-fade-in-up" style="transition-delay: 500ms;">
+                     <div class="bg-slate-800/50 backdrop-blur-md border border-slate-700 text-white p-6 rounded-2xl flex items-center space-x-4 shadow-lg animate-on-scroll animate-fade-in-up value-prop-card" style="transition-delay: 500ms;">
                          <i data-lucide="thumbs-up" class="w-10 h-10 text-brand-orange flex-shrink-0"></i>
                          <p class="font-semibold text-left">Affordable, Scalable & Easy to Edit / Manage</p>
                      </div>
@@ -490,7 +559,7 @@
                 <h2 class="text-3xl md:text-4xl font-bold text-white mt-4">Why Choose Kenflix Designs?</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 max-w-5xl mx-auto">
                     <!-- Choice 1 -->
-                    <div class="why-choose-card bg-slate-700 p-8 rounded-2xl animate-on-scroll animate-fade-in-up border border-slate-600">
+                    <div class="why-choose-card bg-slate-700/80 backdrop-blur-sm p-8 rounded-2xl animate-on-scroll animate-fade-in-up border border-slate-600">
                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-brand-blue/10 mb-6 mx-auto">
                             <i data-lucide="zap" class="w-8 h-8 text-brand-blue"></i>
                         </div>
@@ -498,7 +567,7 @@
                         <p class="mt-2 text-gray-400 text-sm">We blend artistic flair with strategic thinking to deliver designs that are not just beautiful but also effective.</p>
                     </div>
                     <!-- Choice 2 -->
-                    <div class="why-choose-card bg-slate-700 p-8 rounded-2xl animate-on-scroll animate-fade-in-up border border-slate-600" style="transition-delay: 150ms;">
+                    <div class="why-choose-card bg-slate-700/80 backdrop-blur-sm p-8 rounded-2xl animate-on-scroll animate-fade-in-up border border-slate-600" style="transition-delay: 150ms;">
                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-brand-orange/10 mb-6 mx-auto">
                             <i data-lucide="users" class="w-8 h-8 text-brand-orange"></i>
                         </div>
@@ -506,7 +575,7 @@
                         <p class="mt-2 text-gray-400 text-sm">Your vision is our priority. We listen, collaborate, and tailor solutions to meet your specific needs and goals.</p>
                     </div>
                     <!-- Choice 3 -->
-                    <div class="why-choose-card bg-slate-700 p-8 rounded-2xl animate-on-scroll animate-fade-in-up border border-slate-600" style="transition-delay: 300ms;">
+                    <div class="why-choose-card bg-slate-700/80 backdrop-blur-sm p-8 rounded-2xl animate-on-scroll animate-fade-in-up border border-slate-600" style="transition-delay: 300ms;">
                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-brand-green/10 mb-6 mx-auto">
                             <i data-lucide="trending-up" class="w-8 h-8 text-brand-green"></i>
                         </div>
@@ -520,7 +589,7 @@
         <!-- Word from the Founder Section (New) -->
         <section id="founder-word" class="py-20 bg-gray-900">
             <div class="container mx-auto px-6 max-w-4xl">
-                <div class="flex flex-col md:flex-row items-center gap-10 bg-slate-800 p-8 rounded-2xl shadow-lg border border-slate-700">
+                <div class="flex flex-col md:flex-row items-center gap-10 bg-slate-800/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-slate-700">
                     <div class="md:w-1/3 text-center">
                         <img src="https://media.licdn.com/dms/image/v2/D5603AQGkBf2S8lQuRw/profile-displayphoto-shrink_200_200/B56ZOsAw7kGwAc-/0/1733757703355?e=1762387200&v=beta&t=tkaqewCzcXkAyWHCpt9tBQICvenFtK48y1U6vd18kV4" alt="Kalama Shadrack" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-brand-orange object-cover">
                         <h3 class="text-xl font-bold text-white">Kalama Shadrack</h3>
@@ -554,7 +623,7 @@
                      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
                          <!-- Step 1 -->
                          <div class="flex items-center gap-6 animate-on-scroll animate-fade-in-up">
-                             <div class="flex-shrink-0 w-20 h-20 flex items-center justify-center bg-slate-800 border-2 border-brand-blue rounded-full text-brand-blue text-3xl font-bold">1</div>
+                             <div class="flex-shrink-0 w-20 h-20 flex items-center justify-center bg-slate-800 border-2 border-brand-blue rounded-full text-brand-blue text-3xl font-bold process-step-bubble">1</div>
                              <div>
                                  <h3 class="text-xl font-bold text-white">Discovery & Strategy</h3>
                                  <p class="text-gray-400 mt-1">We start by understanding your goals, audience, and competitive landscape to build a solid strategic foundation.</p>
@@ -565,7 +634,7 @@
                          <!-- Step 2 -->
                          <div class="hidden md:block"></div> <!-- Spacer -->
                          <div class="flex items-center gap-6 animate-on-scroll animate-fade-in-up md:text-right md:flex-row-reverse">
-                             <div class="flex-shrink-0 w-20 h-20 flex items-center justify-center bg-slate-800 border-2 border-brand-blue rounded-full text-brand-blue text-3xl font-bold">2</div>
+                             <div class="flex-shrink-0 w-20 h-20 flex items-center justify-center bg-slate-800 border-2 border-brand-blue rounded-full text-brand-blue text-3xl font-bold process-step-bubble">2</div>
                              <div>
                                  <h3 class="text-xl font-bold text-white">Design & Prototyping</h3>
                                  <p class="text-gray-400 mt-1">Our creative team translates strategy into wireframes and high-fidelity mockups for your feedback and approval.</p>
@@ -574,7 +643,7 @@
 
                          <!-- Step 3 -->
                          <div class="flex items-center gap-6 animate-on-scroll animate-fade-in-up">
-                             <div class="flex-shrink-0 w-20 h-20 flex items-center justify-center bg-slate-800 border-2 border-brand-blue rounded-full text-brand-blue text-3xl font-bold">3</div>
+                             <div class="flex-shrink-0 w-20 h-20 flex items-center justify-center bg-slate-800 border-2 border-brand-blue rounded-full text-brand-blue text-3xl font-bold process-step-bubble">3</div>
                              <div>
                                  <h3 class="text-xl font-bold text-white">Development & Build</h3>
                                  <p class="text-gray-400 mt-1">Once designs are approved, our developers bring them to life with clean, efficient, and scalable code.</p>
@@ -585,7 +654,7 @@
                          <!-- Step 4 -->
                          <div class="hidden md:block"></div> <!-- Spacer -->
                          <div class="flex items-center gap-6 animate-on-scroll animate-fade-in-up md:text-right md:flex-row-reverse">
-                             <div class="flex-shrink-0 w-20 h-20 flex items-center justify-center bg-slate-800 border-2 border-brand-blue rounded-full text-brand-blue text-3xl font-bold">4</div>
+                             <div class="flex-shrink-0 w-20 h-20 flex items-center justify-center bg-slate-800 border-2 border-brand-blue rounded-full text-brand-blue text-3xl font-bold process-step-bubble">4</div>
                              <div>
                                  <h3 class="text-xl font-bold text-white">Launch & Support</h3>
                                  <p class="text-gray-400 mt-1">After rigorous testing, we deploy your project and provide ongoing support to ensure it continues to perform optimally.</p>
@@ -629,22 +698,22 @@
 
                         <h3 class="text-2xl font-bold text-white mt-12 mb-6">Our Value Proposition</h3>
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="value-prop-card bg-slate-800 p-4 rounded-lg text-center border border-gray-700">
+                            <div class="value-prop-card bg-slate-800/70 backdrop-blur-sm p-4 rounded-lg text-center border border-gray-700">
                                 <i data-lucide="globe-2" class="w-8 h-8 text-brand-orange mx-auto mb-2"></i>
                                 <h5 class="font-semibold text-white text-sm">Increased Reach</h5>
                                 <p class="text-xs text-gray-400">Connect globally 24/7</p>
                             </div>
-                            <div class="value-prop-card bg-slate-800 p-4 rounded-lg text-center border border-gray-700">
+                            <div class="value-prop-card bg-slate-800/70 backdrop-blur-sm p-4 rounded-lg text-center border border-gray-700">
                                 <i data-lucide="settings" class="w-8 h-8 text-brand-orange mx-auto mb-2"></i>
                                 <h5 class="font-semibold text-white text-sm">Cost Efficiency</h5>
                                 <p class="text-xs text-gray-400">Automate processes</p>
                             </div>
-                            <div class="value-prop-card bg-slate-800 p-4 rounded-lg text-center border border-gray-700">
+                            <div class="value-prop-card bg-slate-800/70 backdrop-blur-sm p-4 rounded-lg text-center border border-gray-700">
                                 <i data-lucide="database-zap" class="w-8 h-8 text-brand-orange mx-auto mb-2"></i>
                                 <h5 class="font-semibold text-white text-sm">Data-Driven Insights</h5>
                                 <p class="text-xs text-gray-400">Make smart moves</p>
                             </div>
-                            <div class="value-prop-card bg-slate-800 p-4 rounded-lg text-center border border-gray-700">
+                            <div class="value-prop-card bg-slate-800/70 backdrop-blur-sm p-4 rounded-lg text-center border border-gray-700">
                                 <i data-lucide="lock" class="w-8 h-8 text-brand-orange mx-auto mb-2"></i>
                                 <h5 class="font-semibold text-white text-sm">Enhanced Security</h5>
                                 <p class="text-xs text-gray-400">Protect your assets</p>
@@ -654,14 +723,14 @@
 
                     <!-- Right Column - Image/Card -->
                     <div class="animate-on-scroll animate-zoom-in">
-                         <div class="bg-white rounded-xl shadow-2xl p-6 relative">
+                         <div class="bg-slate-800/50 backdrop-blur-md border border-slate-700 rounded-xl shadow-2xl p-6 relative">
                              <!-- Updated Image -->
                              <img src="https://images.unsplash.com/photo-1556740714-a8395b3bf30f?q=80&w=2070&auto-format&fit=crop" alt="E-commerce Platform Showcase" class="rounded-lg w-full mb-4">
-                             <h4 class="text-xl font-bold text-slate-800">Digital Transformation</h4>
-                             <p class="text-sm text-gray-600">Building a new E-commerce Platform</p>
-                             <div class="flex items-center justify-between mt-4 text-sm text-gray-500">
+                             <h4 class="text-xl font-bold text-white">Digital Transformation</h4>
+                             <p class="text-sm text-gray-300">Building a new E-commerce Platform</p>
+                             <div class="flex items-center justify-between mt-4 text-sm text-gray-400">
                                  <div class="flex items-center">
-                                    <i data-lucide="users" class="w-4 h-4 mr-1 text-slate-500"></i> 5 Team Members
+                                    <i data-lucide="users" class="w-4 h-4 mr-1 text-slate-400"></i> 5 Team Members
                                  </div>
                                  <div class="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs font-semibold">Ongoing</div>
                              </div>
@@ -685,14 +754,14 @@
                  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     <!-- Left Column - Image/Card -->
                      <div class="animate-on-scroll animate-zoom-in order-last md:order-first">
-                         <div class="bg-white rounded-xl shadow-2xl p-6 relative">
+                         <div class="bg-slate-800/50 backdrop-blur-md border border-slate-700 rounded-xl shadow-2xl p-6 relative">
                              <!-- Updated Image -->
                              <img src="http://webfleek.co.ke/wp-content/uploads/2025/06/Nutrifix-Logo-2.png" alt="Nutrifix Brand Identity Showcase" class="rounded-lg w-full mb-4 object-contain h-48 md:h-64 bg-slate-100 p-4"> <!-- Added object-contain and bg -->
-                             <h4 class="text-xl font-bold text-slate-800">Brand Identity Showcase</h4>
-                             <p class="text-sm text-gray-600">Featured Project: Nutrifix Branding</p>
-                             <div class="flex items-center justify-between mt-4 text-sm text-gray-500">
+                             <h4 class="text-xl font-bold text-white">Brand Identity Showcase</h4>
+                             <p class="text-sm text-gray-300">Featured Project: Nutrifix Branding</p>
+                             <div class="flex items-center justify-between mt-4 text-sm text-gray-400">
                                  <div class="flex items-center">
-                                    <i data-lucide="palette" class="w-4 h-4 mr-1 text-slate-500"></i> Logo, Packaging, Social
+                                    <i data-lucide="palette" class="w-4 h-4 mr-1 text-slate-400"></i> Logo, Packaging, Social
                                  </div>
                                  <div class="bg-blue-100 text-brand-blue px-2 py-0.5 rounded-full text-xs font-semibold">Completed</div>
                              </div>
@@ -727,22 +796,22 @@
 
                          <h3 class="text-2xl font-bold text-white mt-12 mb-6">Our Creative Edge</h3>
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="value-prop-card bg-slate-800 p-4 rounded-lg text-center border border-gray-700">
+                            <div class="value-prop-card bg-slate-800/70 backdrop-blur-sm p-4 rounded-lg text-center border border-gray-700">
                                 <i data-lucide="gem" class="w-8 h-8 text-brand-blue mx-auto mb-2"></i>
                                 <h5 class="font-semibold text-white text-sm">Unique Branding</h5>
                                 <p class="text-xs text-gray-400">Stand out from the crowd</p>
                             </div>
-                            <div class="value-prop-card bg-slate-800 p-4 rounded-lg text-center border border-gray-700">
+                            <div class="value-prop-card bg-slate-800/70 backdrop-blur-sm p-4 rounded-lg text-center border border-gray-700">
                                 <i data-lucide="thumbs-up" class="w-8 h-8 text-brand-blue mx-auto mb-2"></i>
                                 <h5 class="font-semibold text-white text-sm">Social Engagement</h5>
                                 <p class="text-xs text-gray-400">Boost online presence</p>
                             </div>
-                            <div class="value-prop-card bg-slate-800 p-4 rounded-lg text-center border border-gray-700">
+                            <div class="value-prop-card bg-slate-800/70 backdrop-blur-sm p-4 rounded-lg text-center border border-gray-700">
                                 <i data-lucide="printer" class="w-8 h-8 text-brand-blue mx-auto mb-2"></i>
                                 <h5 class="font-semibold text-white text-sm">Print Ready</h5>
                                 <p class="text-xs text-gray-400">High-quality outputs</p>
                             </div>
-                             <div class="value-prop-card bg-slate-800 p-4 rounded-lg text-center border border-gray-700">
+                             <div class="value-prop-card bg-slate-800/70 backdrop-blur-sm p-4 rounded-lg text-center border border-gray-700">
                                 <i data-lucide="film" class="w-8 h-8 text-brand-blue mx-auto mb-2"></i>
                                 <h5 class="font-semibold text-white text-sm">Motion & Video</h5>
                                 <p class="text-xs text-gray-400">Dynamic content</p>
@@ -836,7 +905,7 @@
                     <!-- Portfolio Item 1 -->
                     <div class="bg-gray-800 rounded-lg overflow-hidden group relative portfolio-card animate-on-scroll animate-zoom-in" data-category="graphics">
                         <img src="https://image.thum.io/get/width/1200/crop/800/https://drive.google.com/drive/folders/1aPr4Gx0VjKsTkeyxH576wontb1HykLHb?usp=drive_link" alt="Branding & Prospectus Collection" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/80 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
+                        <div class="absolute inset-0 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
                             <div>
                                 <h3 class="text-xl font-bold text-white">Branding Collection</h3>
                                 <p class="text-sm text-brand-orange">Branding & Prospectus</p>
@@ -850,7 +919,7 @@
                     <!-- Portfolio Item 2 -->
                     <div class="bg-gray-800 rounded-lg overflow-hidden group relative portfolio-card animate-on-scroll animate-zoom-in" style="transition-delay: 100ms;" data-category="web">
                         <img src="https://image.thum.io/get/width/1200/crop/800/https://madenitawe.co.ke/" alt="Madenita Website" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/80 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
+                        <div class="absolute inset-0 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
                              <div>
                                 <h3 class="text-xl font-bold text-white">Madenita</h3>
                                 <p class="text-sm text-brand-orange">E-commerce Website</p>
@@ -864,7 +933,7 @@
                     <!-- Portfolio Item 3 -->
                     <div class="bg-gray-800 rounded-lg overflow-hidden group relative portfolio-card animate-on-scroll animate-zoom-in" style="transition-delay: 200ms;" data-category="graphics">
                         <img src="https://image.thum.io/get/width/1200/crop/800/https://drive.google.com/drive/u/1/mobile/folders/1mJnLjeVOTX7a3oB7CFyNqlj-M4vOHjPT?usp=drive_link&sort=13&direction=a" alt="Social Media Graphics Collection" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/80 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
+                        <div class="absolute inset-0 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
                            <div>
                                 <h3 class="text-xl font-bold text-white">Social Media Graphics</h3>
                                 <p class="text-sm text-brand-orange">Posters & Flyers</p>
@@ -878,7 +947,7 @@
                     <!-- Portfolio Item 4 -->
                     <div class="bg-gray-800 rounded-lg overflow-hidden group relative portfolio-card animate-on-scroll animate-zoom-in" style="transition-delay: 300ms;" data-category="web">
                         <img src="https://image.thum.io/get/width/1200/crop/800/https://gamerssafaris.com/" alt="Gamers Safaris Website" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/80 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
+                        <div class="absolute inset-0 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
                              <div>
                                 <h3 class="text-xl font-bold text-white">Gamers Safaris</h3>
                                 <p class="text-sm text-brand-orange">Travel & Tours Website</p>
@@ -892,7 +961,7 @@
                     <!-- Portfolio Item 5 -->
                     <div class="bg-gray-800 rounded-lg overflow-hidden group relative portfolio-card animate-on-scroll animate-zoom-in" style="transition-delay: 400ms;" data-category="web">
                         <img src="https://image.thum.io/get/width/1200/crop/800/https://xstream.co.ke/" alt="X-Stream Website" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/80 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
+                        <div class="absolute inset-0 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
                            <div>
                                 <h3 class="text-xl font-bold text-white">X-Stream</h3>
                                 <p class="text-sm text-brand-orange">Internet Service Provider</p>
@@ -906,7 +975,7 @@
                     <!-- Portfolio Item 7 (New Graphics) -->
                     <div class="bg-gray-800 rounded-lg overflow-hidden group relative portfolio-card animate-on-scroll animate-zoom-in" data-category="graphics">
                         <img src="https://image.thum.io/get/width/1200/crop/800/https://www.instagram.com/kenflix_designs" alt="Kenfli Designs Instagram Page" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/80 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
+                        <div class="absolute inset-0 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
                             <div>
                                 <h3 class="text-xl font-bold text-white">Instagram Graphics</h3>
                                 <p class="text-sm text-brand-orange">Our Instagram Showcase</p>
@@ -920,7 +989,7 @@
                     <!-- Portfolio Item 8 (New Graphics) -->
                     <div class="bg-gray-800 rounded-lg overflow-hidden group relative portfolio-card animate-on-scroll animate-zoom-in" data-category="graphics">
                         <img src="https://image.thum.io/get/width/1200/crop/800/https://www.pinterest.com/Kenfli_Designs/" alt="Kenfli Designs Pinterest Page" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/80 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
+                        <div class="absolute inset-0 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
                             <div>
                                 <h3 class="text-xl font-bold text-white">Pinterest Inspirations</h3>
                                 <p class="text-sm text-brand-orange">Our Pinterest Moodboards</p>
@@ -934,7 +1003,7 @@
                     <!-- Portfolio Item 9 (New) -->
                     <div class="bg-gray-800 rounded-lg overflow-hidden group relative portfolio-card animate-on-scroll animate-zoom-in" data-category="web">
                         <img src="https://image.thum.io/get/width/1200/crop/800/https://www.nutrifix.co.ke/" alt="Nutrifix Website" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/80 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
+                        <div class="absolute inset-0 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
                             <div>
                                 <h3 class="text-xl font-bold text-white">Nutrifix</h3>
                                 <p class="text-sm text-brand-orange">E-commerce Website</p>
@@ -948,7 +1017,7 @@
                     <!-- Portfolio Item 11 (New) -->
                     <div class="bg-gray-800 rounded-lg overflow-hidden group relative portfolio-card animate-on-scroll animate-zoom-in" data-category="web">
                         <img src="https://image.thum.io/get/width/1200/crop/800/https://www.bimacominsurance.co.ke/" alt="Bimacom Insurance Website" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black/80 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
+                        <div class="absolute inset-0 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
                             <div>
                                 <h3 class="text-xl font-bold text-white">Bimacom Insurance</h3>
                                 <p class="text-sm text-brand-orange">Insurance Agency Website</p>
@@ -983,7 +1052,7 @@
                 <!-- SME Packages -->
                 <div id="sme-packages" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     <!-- Bronze Package -->
-                    <div class="bg-gray-850 p-8 rounded-xl border border-gray-700 package-card flex flex-col animate-on-scroll animate-fade-in-up">
+                    <div class="bg-slate-800/40 backdrop-blur-md p-8 rounded-xl border border-gray-700 package-card flex flex-col animate-on-scroll animate-fade-in-up">
                         <h3 class="text-xl font-bold text-white">Bronze Package</h3>
                         <p class="text-gray-400 text-sm">One Page Website</p>
                         <p class="text-brand-orange font-semibold text-3xl mt-4">Ksh 10,000/=</p>
@@ -996,7 +1065,7 @@
                         <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20the%20Bronze%20Package." target="_blank" class="mt-8 block bg-green-500 text-white text-center font-semibold py-3 rounded-lg transition-all">Order Via Whatsapp</a>
                     </div>
                     <!-- Silver Package -->
-                    <div class="bg-gray-850 p-8 rounded-xl border border-gray-700 package-card flex flex-col animate-on-scroll animate-fade-in-up" style="transition-delay: 100ms;">
+                    <div class="bg-slate-800/40 backdrop-blur-md p-8 rounded-xl border border-gray-700 package-card flex flex-col animate-on-scroll animate-fade-in-up" style="transition-delay: 100ms;">
                         <h3 class="text-xl font-bold text-white">Silver Package</h3>
                         <p class="text-gray-400 text-sm">Up to 5 Pages Website</p>
                         <p class="text-brand-orange font-semibold text-3xl mt-4">Ksh 15,000/=</p>
@@ -1011,7 +1080,7 @@
                         <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20the%20Silver%20Package." target="_blank" class="mt-8 block bg-green-500 text-white text-center font-semibold py-3 rounded-lg transition-all">Order Via Whatsapp</a>
                     </div>
                     <!-- Gold Package -->
-                    <div class="bg-gray-900 p-8 rounded-xl border-2 border-brand-orange package-card flex flex-col relative overflow-hidden animate-on-scroll animate-fade-in-up" style="transition-delay: 200ms;">
+                    <div class="bg-slate-700/50 backdrop-blur-md p-8 rounded-xl border-2 border-brand-orange package-card flex flex-col relative overflow-hidden animate-on-scroll animate-fade-in-up popular-package-animated-border" style="transition-delay: 200ms;">
                         <div class="absolute top-0 right-0 bg-brand-orange text-white text-xs font-bold px-4 py-1 rounded-bl-lg">MOST POPULAR</div>
                         <h3 class="text-xl font-bold text-white">Gold Package</h3>
                         <p class="text-gray-400 text-sm">Up to 15 Pages Website</p>
@@ -1030,7 +1099,7 @@
                         <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20the%20Gold%20Package." target="_blank" class="mt-8 block bg-brand-orange text-white text-center font-semibold py-3 rounded-lg transition-all">Order Via Whatsapp</a>
                     </div>
                     <!-- Platinum Package -->
-                    <div class="bg-gray-850 p-8 rounded-xl border border-gray-700 package-card flex flex-col animate-on-scroll animate-fade-in-up" style="transition-delay: 300ms;">
+                    <div class="bg-slate-800/40 backdrop-blur-md p-8 rounded-xl border border-gray-700 package-card flex flex-col animate-on-scroll animate-fade-in-up" style="transition-delay: 300ms;">
                         <h3 class="text-xl font-bold text-white">Platinum Package</h3>
                         <p class="text-gray-400 text-sm">Upto 30 Pages Website</p>
                         <p class="text-brand-orange font-semibold text-3xl mt-4">Ksh 50,000/=</p>
@@ -1050,7 +1119,7 @@
                 <!-- Corporate Packages -->
                 <div id="corporate-packages" class="hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                      <!-- Silver Pro -->
-                    <div class="bg-gray-850 p-8 rounded-xl border border-gray-700 package-card flex flex-col">
+                    <div class="bg-slate-800/40 backdrop-blur-md p-8 rounded-xl border border-gray-700 package-card flex flex-col">
                         <h3 class="text-xl font-bold text-white">Silver Pro</h3>
                         <p class="text-brand-orange font-semibold text-3xl mt-4">Ksh 25,000/=</p>
                         <p class="text-gray-400 mt-6 font-semibold">Includes All Features on the Silver Package in addition to:</p>
@@ -1063,7 +1132,7 @@
                         <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20the%20Silver%20Pro%20Package." target="_blank" class="mt-8 block bg-green-500 text-white text-center font-semibold py-3 rounded-lg transition-all">Order Via Whatsapp</a>
                     </div>
                     <!-- Gold Pro -->
-                    <div class="bg-gray-850 p-8 rounded-xl border border-gray-700 package-card flex flex-col">
+                    <div class="bg-slate-800/40 backdrop-blur-md p-8 rounded-xl border border-gray-700 package-card flex flex-col">
                         <h3 class="text-xl font-bold text-white">Gold Pro</h3>
                         <p class="text-brand-orange font-semibold text-3xl mt-4">Ksh 50,000/=</p>
                          <p class="text-gray-400 mt-6 font-semibold">Includes All Features on the Gold Package in addition to:</p>
@@ -1076,7 +1145,7 @@
                         <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20the%20Gold%20Pro%20Package." target="_blank" class="mt-8 block bg-green-500 text-white text-center font-semibold py-3 rounded-lg transition-all">Order Via Whatsapp</a>
                     </div>
                      <!-- Platinum Pro -->
-                    <div class="bg-gray-900 p-8 rounded-xl border-2 border-brand-orange package-card flex flex-col relative overflow-hidden">
+                    <div class="bg-slate-700/50 backdrop-blur-md p-8 rounded-xl border-2 border-brand-orange package-card flex flex-col relative overflow-hidden popular-package-animated-border">
                         <div class="absolute top-0 right-0 bg-brand-orange text-white text-xs font-bold px-4 py-1 rounded-bl-lg">MOST RECOMMENDED</div>
                         <h3 class="text-xl font-bold text-white">Platinum Pro</h3>
                         <p class="text-brand-orange font-semibold text-3xl mt-4">Ksh 100,000/=</p>
@@ -1096,25 +1165,25 @@
                 <div id="graphics-packages" class="hidden">
                     <h3 class="text-2xl font-bold text-center text-white mb-8">Single Design Items</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                        <div class="bg-gray-850 p-6 rounded-xl border border-gray-700 package-card flex flex-col text-center">
+                        <div class="bg-slate-800/40 backdrop-blur-md p-6 rounded-xl border border-gray-700 package-card flex flex-col text-center">
                             <i data-lucide="file-image" class="w-10 h-10 text-brand-blue mx-auto mb-4"></i>
                             <h4 class="text-lg font-bold text-white">Flyer / Poster</h4>
                             <p class="text-brand-blue font-semibold text-2xl mt-2">from Ksh 500</p>
                             <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20a%20Flyer/Poster%20design." target="_blank" class="mt-4 block bg-green-500 text-white text-sm text-center font-semibold py-2 rounded-lg transition-all">Order Now</a>
                         </div>
-                        <div class="bg-gray-850 p-6 rounded-xl border border-gray-700 package-card flex flex-col text-center">
+                        <div class="bg-slate-800/40 backdrop-blur-md p-6 rounded-xl border border-gray-700 package-card flex flex-col text-center">
                              <i data-lucide="image" class="w-10 h-10 text-brand-blue mx-auto mb-4"></i>
                             <h4 class="text-lg font-bold text-white">Social Media Post</h4>
                              <p class="text-brand-blue font-semibold text-2xl mt-2">from Ksh 1,000</p>
                              <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20a%20Social%20Media%20Post%20design." target="_blank" class="mt-4 block bg-green-500 text-white text-sm text-center font-semibold py-2 rounded-lg transition-all">Order Now</a>
                         </div>
-                        <div class="bg-gray-850 p-6 rounded-xl border border-gray-700 package-card flex flex-col text-center">
+                        <div class="bg-slate-800/40 backdrop-blur-md p-6 rounded-xl border border-gray-700 package-card flex flex-col text-center">
                             <i data-lucide="contact" class="w-10 h-10 text-brand-blue mx-auto mb-4"></i>
                             <h4 class="text-lg font-bold text-white">Business Card</h4>
                             <p class="text-brand-blue font-semibold text-2xl mt-2">from Ksh 1,500</p>
                              <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20a%20Business%20Card%20design." target="_blank" class="mt-4 block bg-green-500 text-white text-sm text-center font-semibold py-2 rounded-lg transition-all">Order Now</a>
                         </div>
-                        <div class="bg-gray-850 p-6 rounded-xl border border-gray-700 package-card flex flex-col text-center">
+                        <div class="bg-slate-800/40 backdrop-blur-md p-6 rounded-xl border border-gray-700 package-card flex flex-col text-center">
                            <i data-lucide="package" class="w-10 h-10 text-brand-blue mx-auto mb-4"></i>
                             <h4 class="text-lg font-bold text-white">Packaging / Label</h4>
                            <p class="text-brand-blue font-semibold text-2xl mt-2">from Ksh 5,000</p>
@@ -1124,7 +1193,7 @@
                     <h3 class="text-2xl font-bold text-center text-white mt-16 mb-8">Branding Packages</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                         <!-- Package 1 -->
-                        <div class="bg-gray-850 p-8 rounded-xl border border-gray-700 package-card flex flex-col">
+                        <div class="bg-slate-800/40 backdrop-blur-md p-8 rounded-xl border border-gray-700 package-card flex flex-col">
                             <h3 class="text-xl font-bold text-white">Logo & Branding</h3>
                             <p class="text-brand-blue font-semibold text-3xl mt-4">Ksh 15,000</p>
                             <ul class="text-gray-400 mt-6 space-y-3 flex-grow">
@@ -1136,7 +1205,7 @@
                             <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20the%20Logo%20&%20Branding%20package." target="_blank" class="mt-8 block bg-green-500 text-white text-center font-semibold py-3 rounded-lg transition-all">Order Via Whatsapp</a>
                         </div>
                          <!-- Package 2 -->
-                        <div class="bg-gray-850 p-8 rounded-xl border border-gray-700 package-card flex flex-col">
+                        <div class="bg-slate-800/40 backdrop-blur-md p-8 rounded-xl border border-gray-700 package-card flex flex-col">
                             <h3 class="text-xl font-bold text-white">Social Media Kit</h3>
                             <p class="text-brand-blue font-semibold text-3xl mt-4">Ksh 10,000</p>
                             <ul class="text-gray-400 mt-6 space-y-3 flex-grow">
@@ -1148,7 +1217,7 @@
                             <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20the%20Social%20Media%20Kit%20package." target="_blank" class="mt-8 block bg-green-500 text-white text-center font-semibold py-3 rounded-lg transition-all">Order Via Whatsapp</a>
                         </div>
                          <!-- Company Profile Package -->
-                        <div class="bg-gray-850 p-8 rounded-xl border border-gray-700 package-card flex flex-col">
+                        <div class="bg-slate-800/40 backdrop-blur-md p-8 rounded-xl border border-gray-700 package-card flex flex-col">
                             <h3 class="text-xl font-bold text-white">Company Profile</h3>
                             <div class="text-gray-400 mt-6 space-y-3 flex-grow text-sm">
                                 <p class="font-semibold text-brand-green">Free</p>
@@ -1170,7 +1239,7 @@
                  <!-- Animation & Video Packages -->
                 <div id="animation-packages" class="hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Package 1 -->
-                    <div class="bg-gray-850 p-8 rounded-xl border border-gray-700 package-card flex flex-col">
+                    <div class="bg-slate-800/40 backdrop-blur-md p-8 rounded-xl border border-gray-700 package-card flex flex-col">
                         <h3 class="text-xl font-bold text-white">Logo Animation</h3>
                         <p class="text-brand-blue font-semibold text-3xl mt-4">Ksh 8,000</p>
                         <ul class="text-gray-400 mt-6 space-y-3 flex-grow">
@@ -1182,7 +1251,7 @@
                         <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20the%20Logo%20Animation%20package." target="_blank" class="mt-8 block bg-green-500 text-white text-center font-semibold py-3 rounded-lg transition-all">Order Via Whatsapp</a>
                     </div>
                      <!-- Package 2 -->
-                    <div class="bg-gray-900 p-8 rounded-xl border-2 border-brand-blue package-card flex flex-col relative overflow-hidden">
+                    <div class="bg-slate-700/50 backdrop-blur-md p-8 rounded-xl border-2 border-brand-blue package-card flex flex-col relative overflow-hidden popular-package-animated-border">
                         <div class="absolute top-0 right-0 bg-brand-blue text-white text-xs font-bold px-4 py-1 rounded-bl-lg">BEST VALUE</div>
                         <h3 class="text-xl font-bold text-white">Explainer Video</h3>
                         <p class="text-brand-blue font-semibold text-3xl mt-4">From Ksh 40,000</p>
@@ -1195,7 +1264,7 @@
                         <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20the%20Explainer%20Video%20package." target="_blank" class="mt-8 block bg-brand-orange text-white text-center font-semibold py-3 rounded-lg transition-all">Order Via Whatsapp</a>
                     </div>
                      <!-- Package 3 -->
-                    <div class="bg-gray-850 p-8 rounded-xl border border-gray-700 package-card flex flex-col">
+                    <div class="bg-slate-800/40 backdrop-blur-md p-8 rounded-xl border border-gray-700 package-card flex flex-col">
                         <h3 class="text-xl font-bold text-white">Social Video Ads</h3>
                         <p class="text-brand-blue font-semibold text-3xl mt-4">Ksh 12,000</p>
                         <ul class="text-gray-400 mt-6 space-y-3 flex-grow">
@@ -1220,7 +1289,7 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"> <!-- Changed to lg:grid-cols-4 -->
                     <!-- Blog Post 1 -->
-                    <div class="bg-gray-900 rounded-lg overflow-hidden flex flex-col blog-card animate-on-scroll animate-fade-in-up">
+                    <div class="bg-slate-800/40 backdrop-blur-md border border-slate-700 rounded-lg overflow-hidden flex flex-col blog-card animate-on-scroll animate-fade-in-up">
                         <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto-format&fit=crop" alt="Blog post about design trends" class="w-full h-48 object-cover">
                         <div class="p-6 flex flex-col flex-grow">
                              <p class="text-sm text-brand-orange font-semibold mb-2">Design Trends</p>
@@ -1231,7 +1300,7 @@
                         </div>
                     </div>
                      <!-- Blog Post 2 -->
-                     <div class="bg-gray-900 rounded-lg overflow-hidden flex flex-col blog-card animate-on-scroll animate-fade-in-up" style="transition-delay: 100ms;">
+                     <div class="bg-slate-800/40 backdrop-blur-md border border-slate-700 rounded-lg overflow-hidden flex flex-col blog-card animate-on-scroll animate-fade-in-up" style="transition-delay: 100ms;">
                         <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?q=80&w=1974&auto-format&fit=crop" alt="Blog post about SEO" class="w-full h-48 object-cover">
                         <div class="p-6 flex flex-col flex-grow">
                              <p class="text-sm text-brand-orange font-semibold mb-2">Marketing</p>
@@ -1242,7 +1311,7 @@
                         </div>
                     </div>
                      <!-- Blog Post 3 (Updated Image) -->
-                     <div class="bg-gray-900 rounded-lg overflow-hidden flex flex-col blog-card animate-on-scroll animate-fade-in-up" style="transition-delay: 200ms;">
+                     <div class="bg-slate-800/40 backdrop-blur-md border border-slate-700 rounded-lg overflow-hidden flex flex-col blog-card animate-on-scroll animate-fade-in-up" style="transition-delay: 200ms;">
                         <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070&auto-format&fit=crop" alt="Team working on code" class="w-full h-48 object-cover">
                         <div class="p-6 flex flex-col flex-grow">
                              <p class="text-sm text-brand-orange font-semibold mb-2">Development</p>
@@ -1253,7 +1322,7 @@
                         </div>
                     </div>
                     <!-- Blog Post 4 (New) -->
-                     <div class="bg-gray-900 rounded-lg overflow-hidden flex flex-col blog-card animate-on-scroll animate-fade-in-up" style="transition-delay: 300ms;">
+                     <div class="bg-slate-800/40 backdrop-blur-md border border-slate-700 rounded-lg overflow-hidden flex flex-col blog-card animate-on-scroll animate-fade-in-up" style="transition-delay: 300ms;">
                         <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=2070&auto-format&fit=crop" alt="Blog post about branding importance" class="w-full h-48 object-cover">
                         <div class="p-6 flex flex-col flex-grow">
                              <p class="text-sm text-brand-orange font-semibold mb-2">Branding</p>
@@ -1385,7 +1454,7 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                     <!-- Testimonial 1 -->
-                    <div class="bg-gray-850 p-8 rounded-xl animate-on-scroll animate-fade-in-up">
+                    <div class="bg-slate-800/40 backdrop-blur-md border border-slate-700 p-8 rounded-xl animate-on-scroll animate-fade-in-up">
                         <i data-lucide="quote" class="w-10 h-10 text-brand-blue/50 mb-4"></i>
                         <p class="text-gray-300">"Kenflix Designs transformed our brand identity. Their creativity and attention to detail were outstanding. We saw a significant increase in engagement after they redesigned our social media graphics."</p>
                         <div class="mt-6">
@@ -1394,7 +1463,7 @@
                         </div>
                     </div>
                     <!-- Testimonial 2 -->
-                    <div class="bg-gray-850 p-8 rounded-xl animate-on-scroll animate-fade-in-up" style="transition-delay: 100ms;">
+                    <div class="bg-slate-800/40 backdrop-blur-md border border-slate-700 p-8 rounded-xl animate-on-scroll animate-fade-in-up" style="transition-delay: 100ms;">
                         <i data-lucide="quote" class="w-10 h-10 text-brand-blue/50 mb-4"></i>
                         <p class="text-gray-300">"The website they built for us is not only beautiful but also incredibly fast and user-friendly. Their team was professional, responsive, and delivered beyond our expectations."</p>
                         <div class="mt-6">
@@ -1413,7 +1482,7 @@
                 <h2 class="text-3xl md:text-4xl font-bold text-white mt-4">Our Guarantees</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 max-w-5xl mx-auto">
                     <!-- Guarantee 1 -->
-                    <div class="bg-slate-800 p-8 rounded-2xl animate-on-scroll animate-fade-in-up">
+                    <div class="bg-slate-800/80 backdrop-blur-sm p-8 rounded-2xl animate-on-scroll animate-fade-in-up">
                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-brand-green/10 mb-6 mx-auto">
                             <i data-lucide="award" class="w-8 h-8 text-brand-green"></i>
                         </div>
@@ -1421,7 +1490,7 @@
                         <p class="mt-2 text-gray-400">We're not happy until you are. We work collaboratively and offer revisions to ensure the final product exceeds your expectations.</p>
                     </div>
                     <!-- Guarantee 2 -->
-                    <div class="bg-slate-800 p-8 rounded-2xl animate-on-scroll animate-fade-in-up" style="transition-delay: 150ms;">
+                    <div class="bg-slate-800/80 backdrop-blur-sm p-8 rounded-2xl animate-on-scroll animate-fade-in-up" style="transition-delay: 150ms;">
                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-brand-green/10 mb-6 mx-auto">
                             <i data-lucide="clock" class="w-8 h-8 text-brand-green"></i>
                         </div>
@@ -1429,7 +1498,7 @@
                         <p class="mt-2 text-gray-400">We respect your time. Our streamlined process ensures your project is delivered on schedule, without compromising on quality.</p>
                     </div>
                     <!-- Guarantee 3 -->
-                    <div class="bg-slate-800 p-8 rounded-2xl animate-on-scroll animate-fade-in-up" style="transition-delay: 300ms;">
+                    <div class="bg-slate-800/80 backdrop-blur-sm p-8 rounded-2xl animate-on-scroll animate-fade-in-up" style="transition-delay: 300ms;">
                         <div class="flex items-center justify-center h-16 w-16 rounded-full bg-brand-green/10 mb-6 mx-auto">
                             <i data-lucide="life-buoy" class="w-8 h-8 text-brand-green"></i>
                         </div>
@@ -1449,7 +1518,7 @@
                 </div>
                 <div class="max-w-3xl mx-auto space-y-4">
                     <!-- FAQ Item 1 -->
-                    <div class="faq-item bg-slate-800 rounded-lg">
+                    <div class="faq-item bg-slate-800/80 backdrop-blur-sm rounded-lg">
                         <div class="faq-question flex justify-between items-center p-6">
                             <h3 class="text-lg font-semibold text-white">How long does it take to build a website?</h3>
                             <i data-lucide="plus" class="faq-icon text-brand-orange"></i>
@@ -1459,7 +1528,7 @@
                         </div>
                     </div>
                     <!-- FAQ Item 2 -->
-                    <div class="faq-item bg-slate-800 rounded-lg">
+                    <div class="faq-item bg-slate-800/80 backdrop-blur-sm rounded-lg">
                         <div class="faq-question flex justify-between items-center p-6">
                             <h3 class="text-lg font-semibold text-white">Do you provide content for the website?</h3>
                             <i data-lucide="plus" class="faq-icon text-brand-orange"></i>
@@ -1469,7 +1538,7 @@
                         </div>
                     </div>
                     <!-- FAQ Item 3 -->
-                    <div class="faq-item bg-slate-800 rounded-lg">
+                    <div class="faq-item bg-slate-800/80 backdrop-blur-sm rounded-lg">
                         <div class="faq-question flex justify-between items-center p-6">
                             <h3 class="text-lg font-semibold text-white">Will my website be mobile-friendly?</h3>
                             <i data-lucide="plus" class="faq-icon text-brand-orange"></i>
@@ -1479,7 +1548,7 @@
                         </div>
                     </div>
                      <!-- FAQ Item 4 -->
-                     <div class="faq-item bg-slate-800 rounded-lg">
+                     <div class="faq-item bg-slate-800/80 backdrop-blur-sm rounded-lg">
                         <div class="faq-question flex justify-between items-center p-6">
                             <h3 class="text-lg font-semibold text-white">Can you help with branding and logo design?</h3>
                             <i data-lucide="plus" class="faq-icon text-brand-orange"></i>
@@ -1538,7 +1607,7 @@
                         <h3 class="text-2xl font-bold text-white mb-6">Get In Touch Directly</h3>
                         <div class="space-y-6">
                             <!-- WhatsApp -->
-                            <a href="https://wa.me/254758760619" target="_blank" class="flex items-center p-4 bg-slate-800 rounded-lg group hover:bg-slate-700 transition-all">
+                            <a href="https://wa.me/254758760619" target="_blank" class="flex items-center p-4 bg-slate-800/80 backdrop-blur-sm rounded-lg group hover:bg-slate-700 transition-all">
                                 <div class="p-3 bg-green-500 rounded-full">
                                     <i data-lucide="message-circle" class="w-6 h-6 text-white"></i>
                                 </div>
@@ -1549,7 +1618,7 @@
                                 <i data-lucide="arrow-right" class="w-5 h-5 text-gray-500 ml-auto group-hover:text-white transition-all"></i>
                             </a>
                             <!-- Email 1 -->
-                            <a href="mailto:customercare@kenflixdesigns.co.ke" class="flex items-center p-4 bg-slate-800 rounded-lg group hover:bg-slate-700 transition-all">
+                            <a href="mailto:customercare@kenflixdesigns.co.ke" class="flex items-center p-4 bg-slate-800/80 backdrop-blur-sm rounded-lg group hover:bg-slate-700 transition-all">
                                 <div class="p-3 bg-brand-blue rounded-full">
                                     <i data-lucide="mail" class="w-6 h-6 text-white"></i>
                                 </div>
@@ -1560,7 +1629,7 @@
                                 <i data-lucide="arrow-right" class="w-5 h-5 text-gray-500 ml-auto group-hover:text-white transition-all"></i>
                             </a>
                              <!-- Email 2 -->
-                            <a href="mailto:info@kenflixdesigns.co.ke" class="flex items-center p-4 bg-slate-800 rounded-lg group hover:bg-slate-700 transition-all">
+                            <a href="mailto:info@kenflixdesigns.co.ke" class="flex items-center p-4 bg-slate-800/80 backdrop-blur-sm rounded-lg group hover:bg-slate-700 transition-all">
                                 <div class="p-3 bg-brand-blue rounded-full">
                                     <i data-lucide="info" class="w-6 h-6 text-white"></i>
                                 </div>
@@ -1571,7 +1640,7 @@
                                 <i data-lucide="arrow-right" class="w-5 h-5 text-gray-500 ml-auto group-hover:text-white transition-all"></i>
                             </a>
                             <!-- Phone -->
-                            <a href="tel:+254758760619" class="flex items-center p-4 bg-slate-800 rounded-lg group hover:bg-slate-700 transition-all">
+                            <a href="tel:+254758760619" class="flex items-center p-4 bg-slate-800/80 backdrop-blur-sm rounded-lg group hover:bg-slate-700 transition-all">
                                 <div class="p-3 bg-brand-orange rounded-full">
                                     <i data-lucide="phone" class="w-6 h-6 text-white"></i>
                                 </div>
@@ -1590,18 +1659,20 @@
                          <!-- modify this form HTML and place wherever you want your form -->
 <form
   action="https://formspree.io/f/mnngkpve"
-  method="POST">
+  method="POST"
+  class="space-y-4"
+>
                             <div>
                                 <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Full Name</label>
-                                <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-gray-700 text-white focus:outline-none focus:border-brand-orange" placeholder="John Doe">
+                                <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-lg bg-slate-800/80 backdrop-blur-sm border border-gray-700 text-white focus:outline-none focus:border-brand-orange" placeholder="John Doe">
                             </div>
                              <div>
                                 <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email Address</label>
-                                <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-gray-700 text-white focus:outline-none focus:border-brand-orange" placeholder="you@example.com">
+                                <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg bg-slate-800/80 backdrop-blur-sm border border-gray-700 text-white focus:outline-none focus:border-brand-orange" placeholder="you@example.com">
                             </div>
                              <div>
                                 <label for="subject" class="block text-sm font-medium text-gray-300 mb-1">Subject</label>
-                                <select id="subject" name="subject" required class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-gray-700 text-white focus:outline-none focus:border-brand-orange">
+                                <select id="subject" name="subject" required class="w-full px-4 py-3 rounded-lg bg-slate-800/80 backdrop-blur-sm border border-gray-700 text-white focus:outline-none focus:border-brand-orange">
                                     <option value="" disabled selected>Select a service...</option>
                                     <option value="SME Website (Bronze/Silver)">SME Website (Bronze/Silver)</option>
                                     <option value="Advanced Website (Gold/Platinum)">Advanced Website (Gold/Platinum)</option>
@@ -1617,7 +1688,7 @@
                             </div>
                             <div>
                                 <label for="message" class="block text-sm font-medium text-gray-300 mb-1">Message</label>
-                                <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-gray-700 text-white focus:outline-none focus:border-brand-orange" placeholder="Hello, I'd like to inquire about..."></textarea>
+                                <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 rounded-lg bg-slate-800/80 backdrop-blur-sm border border-gray-700 text-white focus:outline-none focus:border-brand-orange" placeholder="Hello, I'd like to inquire about..."></textarea>
                             </div>
                             <div>
                                 <button type="submit" class="w-full bg-brand-orange text-white font-semibold px-8 py-3 rounded-lg shadow-lg transition-all">
@@ -1670,7 +1741,7 @@
     </main>
 
     <!-- New Footer -->
-    <footer class="bg-slate-900 text-gray-400 pt-16 pb-8">
+    <footer class="bg-slate-900/80 backdrop-blur-lg text-gray-400 pt-16 pb-8"> <!-- 2060 Upgrade: Increased blur -->
         <div class="container mx-auto px-6">
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 mb-12">
                 <!-- Column 1: Services -->
@@ -1753,7 +1824,7 @@
 
     <!-- Blog Modal -->
     <div id="blog-modal-overlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
-        <div id="blog-modal-content" class="bg-slate-800 border border-slate-700 rounded-lg shadow-2xl w-full max-w-4xl relative transform scale-95 opacity-0 transition-transform duration-300 overflow-hidden flex flex-col">
+        <div id="blog-modal-content" class="bg-slate-800/80 backdrop-blur-lg border border-slate-700 rounded-lg shadow-2xl w-full max-w-4xl relative transform scale-95 opacity-0 transition-transform duration-300 overflow-hidden flex flex-col"> <!-- 2060 Upgrade: Increased blur -->
             <div class="flex justify-between items-center p-4 border-b border-slate-700 flex-shrink-0">
                  <h2 id="blog-modal-title" class="text-2xl font-bold text-white">Blog Post Title</h2>
                  <button id="close-blog-modal" class="text-gray-400 hover:text-white">
@@ -1777,7 +1848,7 @@
 
     <!-- Popup Ad -->
     <div id="ad-popup" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
-        <div id="ad-popup-content" class="bg-slate-800 border border-slate-700 rounded-lg shadow-2xl w-full max-w-md text-center p-8 relative transform scale-95 transition-transform duration-300">
+        <div id="ad-popup-content" class="bg-slate-800/80 backdrop-blur-lg border border-slate-700 rounded-lg shadow-2xl w-full max-w-md text-center p-8 relative transform scale-95 transition-transform duration-300"> <!-- 2060 Upgrade: Increased blur -->
             <button id="close-popup-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white">
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
@@ -1793,7 +1864,7 @@
 
     <!-- Blog Ad Popup (New) -->
     <div id="blog-ad-popup" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
-        <div id="blog-ad-popup-content" class="bg-slate-800 border border-slate-700 rounded-lg shadow-2xl w-full max-w-md text-center p-8 relative transform scale-95 transition-transform duration-300">
+        <div id="blog-ad-popup-content" class="bg-slate-800/80 backdrop-blur-lg border border-slate-700 rounded-lg shadow-2xl w-full max-w-md text-center p-8 relative transform scale-95 transition-transform duration-300"> <!-- 2060 Upgrade: Increased blur -->
             <button id="close-blog-popup-btn" class="absolute top-4 right-4 text-gray-400 hover:text-white">
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
@@ -1815,7 +1886,7 @@
     </a>
 
     <!-- Cookie Consent Banner -->
-    <div id="cookie-consent" class="fixed bottom-0 left-0 right-0 bg-slate-800 text-white p-4 z-50 transform translate-y-full transition-transform duration-500 ease-in-out">
+    <div id="cookie-consent" class="fixed bottom-0 left-0 right-0 bg-slate-800/80 backdrop-blur-lg text-white p-4 z-50 transform translate-y-full transition-transform duration-500 ease-in-out"> <!-- 2060 Upgrade: Increased blur -->
         <div class="container mx-auto flex flex-col sm:flex-row items-center justify-between">
             <p class="text-sm text-center sm:text-left mb-2 sm:mb-0">We use cookies to ensure you get the best experience on our website. <a href="https://www.allaboutcookies.org/" target="_blank" rel="noopener noreferrer" class="text-brand-blue underline">Learn more</a></p>
             <div class="flex space-x-2">
