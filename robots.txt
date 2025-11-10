@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kenflixdesigns.co.ke/sitemap.xml
