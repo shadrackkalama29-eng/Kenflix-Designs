@@ -1,111 +1,158 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://kenflixdesigns.co.ke/" />
 
-    <meta charset="UTF-8">
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Kenflix Designs is a top creative agency in Nairobi, Kenya, specializing in professional web design, graphic design, branding, animation, and digital solutions to elevate your business online.">
+  <meta name="keywords" content="web design Kenya, graphic design Nairobi, branding agency Kenya, website development Kenya, logo design Kenya, animation services Nairobi, Kenflix Designs, digital agency Nairobi">
+  <meta name="author" content="Kenflix Designs">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kenflixdesigns.co.ke/">
+  <meta property="og:title" content="Kenflix Designs - Creative Web & Graphics Agency Nairobi">
+  <meta property="og:description" content="Stunning web design, captivating graphics, and effective branding solutions in Nairobi, Kenya. Let's build your digital presence.">
+  <meta property="og:image" content="https://kenflixdesigns.co.ke/assets/images/og-image.jpg">
 
-    <!-- SEO Meta Tags -->
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://kenflixdesigns.co.ke/">
+  <meta property="twitter:title" content="Kenflix Designs - Creative Web & Graphics Agency Nairobi">
+  <meta property="twitter:description" content="Stunning web design, captivating graphics, and effective branding solutions in Nairobi, Kenya. Let's build your digital presence.">
+  <meta property="twitter:image" content="https://kenflixdesigns.co.ke/assets/images/og-image.jpg">
 
-    <meta name="description" content="Kenflix Designs is a top creative agency in Nairobi, Kenya, specializing in professional web design, graphic design, branding, animation, and digital solutions to elevate your business online.">
+  <title>Kenflix Designs - Creative Web & Graphics Agency</title>
 
-    <meta name="keywords" content="web design Kenya, graphic design Nairobi, branding agency Kenya, website development Kenya, logo design Kenya, animation services Nairobi, Kenflix Designs, digital agency Nairobi">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
 
-    <meta name="author" content="Kenflix Designs">
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Kenflix Designs",
+    "url": "https://kenflixdesigns.co.ke/",
+    "logo": "https://kenflixdesigns.co.ke/assets/images/logo.png",
+    "image": "https://kenflixdesigns.co.ke/assets/images/og-image.jpg",
+    "description": "Kenflix Designs is a creative agency in Nairobi offering web design, graphic design, branding, animation, and digital marketing services.",
+    "founder": "Kenflix Designs Team",
+    "foundingDate": "2020",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Moi Avenue",
+      "addressLocality": "Nairobi",
+      "addressCountry": "Kenya",
+      "postalCode": "00100"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+254700000000",
+      "contactType": "Customer Service",
+      "areaServed": "KE",
+      "availableLanguage": "English"
+    },
+    "sameAs": [
+      "https://www.facebook.com/kenflixdesigns",
+      "https://www.instagram.com/kenflixdesigns",
+      "https://www.linkedin.com/company/kenflixdesigns",
+      "https://twitter.com/kenflixdesigns"
+    ]
+  }
+  </script>
 
-    <!-- Open Graph / Facebook -->
-
-    <meta property="og:type" content="website">
-
-    <meta property="og:url" content="https://kenflixdesigns.co.ke/"> <!-- Replace with your actual URL -->
-
-    <meta property="og:title" content="Kenflix Designs - Creative Web & Graphics Agency Nairobi">
-
-    <meta property="og:description" content="Stunning web design, captivating graphics, and effective branding solutions in Nairobi, Kenya. Let's build your digital presence.">
-
-    <meta property="og:image" content="https://placehold.co/1200x630/0f172a/f97316?text=Kenflix+Designs"> <!-- Replace with a link to your preview image -->
-
-    <!-- Twitter -->
-
-    <meta property="twitter:card" content="summary_large_image">
-
-    <meta property="twitter:url" content="https://kenflixdesigns.co.ke/"> <!-- Replace with your actual URL -->
-
-    <meta property="twitter:title" content="Kenflix Designs - Creative Web & Graphics Agency Nairobi">
-
-    <meta property="twitter:description" content="Stunning web design, captivating graphics, and effective branding solutions in Nairobi, Kenya. Let's build your digital presence.">
-
-    <meta property="twitter:image" content="https://placehold.co/1200x630/0f172a/f97316?text=Kenflix+Designs"> <!-- Replace with a link to your preview image -->
-
-
-
-    <title>Kenflix Designs - Creative Web & Graphics Agency</title>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Kenflix Designs",
-      "url": "https://kenflixdesigns.co.ke/",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://kenflixdesigns.co.ke/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      },
-      "mainEntity": {
-        "@type": "SiteNavigationElement",
-        "name": "Main Navigation",
-        "description": "The main navigation links for Kenflix Designs.",
-        "itemListElement": [
-          {
-            "@type": "NavigationItem",
-            "position": 1,
-            "name": "Web Design",
-            "description": "Explore our affordable packages for SMEs and corporate clients.",
-            "url": "https://kenflixdesigns.co.ke/web-design"
-          },
-          {
-            "@type": "NavigationItem",
-            "position": 2,
-            "name": "Graphics",
-            "description": "Logo design, social media kits, company profiles, and posters.",
-            "url": "https://kenflixdesigns.co.ke/graphics"
-          },
-          {
-            "@type": "NavigationItem",
-            "position": 3,
-            "name": "Portfolio",
-            "description": "See our latest work for e-commerce, travel, and corporate websites.",
-            "url": "https://kenflixdesigns.co.ke/portfolio"
-          },
-          {
-            "@type": "NavigationItem",
-            "position": 4,
-            "name": "Pricing",
-            "description": "Find the perfect plan for your needs, from our Bronze to Platinum packages.",
-            "url": "https://kenflixdesigns.co.ke/pricing"
-          },
-          {
-            "@type": "NavigationItem",
-            "position": 5,
-            "name": "Contact Us",
-            "description": "Get in touch for a free consultation or chat with us on WhatsApp.",
-            "url": "https://kenflixdesigns.co.ke/contact"
-          }
-        ]
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Kenflix Designs",
+    "image": "https://kenflixdesigns.co.ke/assets/images/og-image.jpg",
+    "@id": "https://kenflixdesigns.co.ke/",
+    "url": "https://kenflixdesigns.co.ke/",
+    "telephone": "+254700000000",
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Moi Avenue",
+      "addressLocality": "Nairobi",
+      "addressCountry": "Kenya",
+      "postalCode": "00100"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -1.28333,
+      "longitude": 36.81667
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+        "opens": "09:00",
+        "closes": "18:00"
       }
-    }
-    </script>
+    ],
+    "sameAs": [
+      "https://www.facebook.com/kenflixdesigns",
+      "https://www.instagram.com/kenflixdesigns",
+      "https://www.linkedin.com/company/kenflixdesigns"
+    ]
+  }
+  </script>
 
-    <style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Kenflix Designs",
+    "url": "https://kenflixdesigns.co.ke/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://kenflixdesigns.co.ke/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    },
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": [
+        {
+          "@type": "SiteNavigationElement",
+          "position": 1,
+          "name": "Web Design",
+          "url": "https://kenflixdesigns.co.ke/web-design"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 2,
+          "name": "Graphics",
+          "url": "https://kenflixdesigns.co.ke/graphics"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 3,
+          "name": "Portfolio",
+          "url": "https://kenflixdesigns.co.ke/portfolio"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 4,
+          "name": "Pricing",
+          "url": "https://kenflixdesigns.co.ke/pricing"
+        },
+        {
+          "@type": "SiteNavigationElement",
+          "position": 5,
+          "name": "Contact",
+          "url": "https://kenflixdesigns.co.ke/contact"
+        }
+      ]
+    }
+  }
+  </script>
         html {
             scroll-behavior: smooth;
         }
@@ -2488,6 +2535,7 @@
     </script>
 </body>
 </html>
+
 
 
 
