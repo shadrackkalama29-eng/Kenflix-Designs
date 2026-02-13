@@ -196,14 +196,27 @@
         <button class="btn-romance" style="margin-top: 25px;" onclick="showView('view-menu')">Back to Menu</button>
     </div>
 
-    <div id="view-songs" class="view">
-        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 20px; width: 100%;">
-            <p style="margin-bottom: 15px;">Songs that remind me of us...</p>
-            <iframe width="100%" height="80" src="https://www.youtube.com/embed/fRDGP5wHo-c" style="border-radius:10px; margin-bottom:10px;" frameborder="0"></iframe>
-            <iframe width="100%" height="80" src="https://www.youtube.com/embed/O5MyE-b9tPw" style="border-radius:10px;" frameborder="0"></iframe>
+   <div id="view-songs" class="view" style="width: 100%; max-width: 600px; margin: 0 auto; box-sizing: border-box;">
+    <div style="background: rgba(255,255,255,0.1); padding: clamp(15px, 5vw, 30px); border-radius: 20px; width: 100%; box-sizing: border-box;">
+        
+        <p style="margin-bottom: 15px; font-size: 1.1rem;">Songs that remind me of us...</p>
+        
+        <div class="video-container" style="margin-bottom: 15px;">
+            <iframe width="100%" height="150" src="https://www.youtube.com/embed/fRDGP5wHo-c" 
+                style="border-radius:15px; border: none;" allowfullscreen></iframe>
         </div>
-        <button class="btn-romance" style="margin-top: 20px;" onclick="showView('view-menu')">Go Back</button>
+
+        <div class="video-container" style="margin-bottom: 15px;">
+            <iframe width="100%" height="150" src="https://www.youtube.com/embed/O5MyE-b9tPw" 
+                style="border-radius:15px; border: none;" allowfullscreen></iframe>
+        </div>
+
     </div>
+    
+    <button class="btn-romance" style="margin-top: 20px; width: 100%; padding: 12px;" onclick="showView('view-menu')">
+        Go Back
+    </button>
+</div>
 
     <div id="view-final" class="view">
         <div class="love-letter" style="text-align:center;">
@@ -243,3 +256,4 @@
     </script>
 </body>
 </html>
+
