@@ -460,7 +460,33 @@
         </div>
     </div>
 </footer>
+  
   <script>
+    // Package Toggler Logic
+        const packageToggle = document.getElementById('package-toggle');
+        if (packageToggle) { // Check if exists
+            const packageTabsNew = packageToggle.querySelectorAll('.package-toggle-btn');
+
+            const packageContents = [
+                document.getElementById('sme-packages'),
+                document.getElementById('corporate-packages'),
+                document.getElementById('graphics-packages'),
+                document.getElementById('animation-packages')
+            ];
+
+            packageTabsNew.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    packageTabsNew.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    const targetId = tab.dataset.target;
+                    packageContents.forEach(content => {
+                        if (content) {
+                            content.classList.toggle('hidden', content.id !== targetId);
+                        }
+                    });
+                });
+            });
+        }
       // Initialize Icons
       lucide.createIcons();
       
