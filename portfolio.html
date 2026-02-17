@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio - Kenflix Designs</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; 
+            color: #F3F4F6; 
+            background-image: radial-gradient(circle at 10% 10%, rgba(56, 189, 248, 0.08), transparent 30%), 
+                              radial-gradient(circle at 90% 80%, rgba(249, 115, 22, 0.05), transparent 40%);
+            background-size: 200% 200%;
+            animation: subtle-bg-pan 25s linear infinite alternate;
+        }
+
+        @keyframes subtle-bg-pan {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        .bg-brand-orange { background-color: #f97316; }
+        .text-brand-orange { color: #f97316; }
+        .border-brand-orange { border-color: #f97316; }
+        
+        .portfolio-card:hover .portfolio-overlay { opacity: 1; }
+        .portfolio-overlay {
+             background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.5) 70%, transparent 100%);
+        }
+
+        .toggle-container {
+            display: flex;
+            background-color: #FFFFFF;
+            border-radius: 9999px;
+            padding: 0.25rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .toggle-btn {
+            flex: 1;
+            text-align: center;
+            border: none;
+            background: none;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            font-weight: 600;
+            padding: 0.5rem 0.75rem;
+            white-space: nowrap;
+            border-radius: 9999px;
+            color: #111827;
+            position: relative;
+            z-index: 1;
+        }
+        .portfolio-toggle-btn.active {
+            background-color: #f97316; 
+            color: #FFFFFF; 
+            box-shadow: 0 4px 14px 0 rgba(249, 115, 22, 0.39);
+        }
+
+        .bg-brand-orange {
+            background-image: linear-gradient(to right, #f97316 0%, #ea580c 51%, #f97316 100%);
+            background-size: 200% auto;
+            transition: background-position 0.5s, box-shadow 0.3s;
+        }
+        .bg-brand-orange:hover {
+            background-position: right center; 
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); 
+        }
+  </style>
+</head>
+<body>
+
+  <nav class="p-6 text-center">
+      <a href="index.html" class="text-brand-orange hover:text-white transition font-bold">&larr; Back to Home</a>
+  </nav>
+
+  <section id="portfolio" class="py-20 bg-gray-900">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-12">
+                     <span class="bg-brand-orange/10 text-brand-orange font-semibold px-3 py-1 rounded-full text-sm">From Concepts to Clicks</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mt-4">Our <span class="text-brand-orange">Portfolio</span> Speaks Volumes</h2>
+                    <div class="mt-8 flex justify-center">
+                        <div class="portfolio-toggle-container toggle-container w-full max-w-sm">
+                            <button class="portfolio-toggle-btn toggle-btn active" data-filter="all">All</button>
+                            <button class="portfolio-toggle-btn toggle-btn" data-filter="web">Web Design</button>
+                            <button class="portfolio-toggle-btn toggle-btn" data-filter="graphics">Graphics</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Portfolio Item 1 -->
+                    <div class="bg-gray-800 rounded-lg overflow-hidden group relative portfolio-card animate-on-scroll animate-zoom-in" data-category="graphics">
+                        <img src="https://image.thum.io/get/width/1200/crop/800/https://drive.google.com/drive/folders/1aPr4Gx0VjKsTkeyxH576wontb1HykLHb?usp=drive_link" alt="Branding & Prospectus Collection" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Branding Collection</h3>
+                                <p class="text-sm text-brand-orange">Branding & Prospectus</p>
+                            </div>
+                            <div class="flex space-x-3 mt-4">
+                                <a href="https://drive.google.com/drive/folders/1aPr4Gx0VjKsTkeyxH576wontb1HykLHb?usp=drive_link" target="_blank" class="flex-1 bg-brand-orange text-white text-sm font-semibold py-2 px-4 rounded-lg transition-all text-center">View Gallery</a>
+                                <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20a%20branding%20project." target="_blank" class="flex-1 bg-transparent border-2 border-brand-orange text-brand-orange text-sm font-semibold py-2 px-4 rounded-lg hover:bg-brand-orange hover:text-white transition-all text-center">Order Similar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 2 -->
+                    <div class="bg-gray-800 rounded-lg overflow-hidden group relative portfolio-card animate-on-scroll animate-zoom-in" style="transition-delay: 100ms;" data-category="web">
+                        <img src="https://image.thum.io/get/width/1200/crop/800/https://madenitawe.co.ke/" alt="Madenita Website" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
+                             <div>
+                                <h3 class="text-xl font-bold text-white">Madenita</h3>
+                                <p class="text-sm text-brand-orange">E-commerce Website</p>
+                            </div>
+                            <div class="flex space-x-3 mt-4">
+                                <a href="https://madenitawe.co.ke/" target="_blank" class="flex-1 bg-brand-orange text-white text-sm font-semibold py-2 px-4 rounded-lg transition-all text-center">Live Preview</a>
+                                <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20a%20website%20like%20Madenita." target="_blank" class="flex-1 bg-transparent border-2 border-brand-orange text-brand-orange text-sm font-semibold py-2 px-4 rounded-lg hover:bg-brand-orange hover:text-white transition-all text-center">Order Similar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 3 -->
+                    <div class="bg-gray-800 rounded-lg overflow-hidden group relative portfolio-card animate-on-scroll animate-zoom-in" style="transition-delay: 200ms;" data-category="graphics">
+                        <img src="https://image.thum.io/get/width/1200/crop/800/https://drive.google.com/drive/u/1/mobile/folders/1mJnLjeVOTX7a3oB7CFyNqlj-M4vOHjPT?usp=drive_link&sort=13&direction=a" alt="Social Media Graphics Collection" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
+                           <div>
+                                <h3 class="text-xl font-bold text-white">Social Media Graphics</h3>
+                                <p class="text-sm text-brand-orange">Posters & Flyers</p>
+                            </div>
+                            <div class="flex space-x-3 mt-4">
+                                <a href="https://drive.google.com/drive/u/1/mobile/folders/1mJnLjeVOTX7a3oB7CFyNqlj-M4vOHjPT?usp=drive_link&sort=13&direction=a" target="_blank" class="flex-1 bg-brand-orange text-white text-sm font-semibold py-2 px-4 rounded-lg transition-all text-center">View Gallery</a>
+                                <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20social%20media%20graphics." target="_blank" class="flex-1 bg-transparent border-2 border-brand-orange text-brand-orange text-sm font-semibold py-2 px-4 rounded-lg hover:bg-brand-orange hover:text-white transition-all text-center">Order Similar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 4 -->
+                    <div class="bg-gray-800 rounded-lg overflow-hidden group relative portfolio-card animate-on-scroll animate-zoom-in" style="transition-delay: 300ms;" data-category="web">
+                        <img src="https://image.thum.io/get/width/1200/crop/800/https://gamerssafaris.com/" alt="Gamers Safaris Website" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
+                             <div>
+                                <h3 class="text-xl font-bold text-white">Gamers Safaris</h3>
+                                <p class="text-sm text-brand-orange">Travel & Tours Website</p>
+                            </div>
+                            <div class="flex space-x-3 mt-4">
+                                <a href="https://gamerssafaris.com/" target="_blank" class="flex-1 bg-brand-orange text-white text-sm font-semibold py-2 px-4 rounded-lg transition-all text-center">Live Preview</a>
+                                <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20a%20travel%20website." target="_blank" class="flex-1 bg-transparent border-2 border-brand-orange text-brand-orange text-sm font-semibold py-2 px-4 rounded-lg hover:bg-brand-orange hover:text-white transition-all text-center">Order Similar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 5 -->
+                    <div class="bg-gray-800 rounded-lg overflow-hidden group relative portfolio-card animate-on-scroll animate-zoom-in" style="transition-delay: 400ms;" data-category="web">
+                        <img src="https://image.thum.io/get/width/1200/crop/800/https://xstream.co.ke/" alt="X-Stream Website" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
+                           <div>
+                                <h3 class="text-xl font-bold text-white">X-Stream</h3>
+                                <p class="text-sm text-brand-orange">Internet Service Provider</p>
+                            </div>
+                            <div class="flex space-x-3 mt-4">
+                                <a href="https://xstream.co.ke/" target="_blank" class="flex-1 bg-brand-orange text-white text-sm font-semibold py-2 px-4 rounded-lg transition-all text-center">Live Preview</a>
+                                <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20a%20corporate%20website." target="_blank" class="flex-1 bg-transparent border-2 border-brand-orange text-brand-orange text-sm font-semibold py-2 px-4 rounded-lg hover:bg-brand-orange hover:text-white transition-all text-center">Order Similar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 7 (New Graphics) -->
+                    <div class="bg-gray-800 rounded-lg overflow-hidden group relative portfolio-card animate-on-scroll animate-zoom-in" data-category="graphics">
+                        <img src="https://image.thum.io/get/width/1200/crop/800/https://www.instagram.com/kenflix_designs" alt="Kenfli Designs Instagram Page" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Instagram Graphics</h3>
+                                <p class="text-sm text-brand-orange">Our Instagram Showcase</p>
+                            </div>
+                            <div class="flex space-x-3 mt-4">
+                                <a href="https://www.instagram.com/kenflix_designs" target="_blank" class="flex-1 bg-brand-orange text-white text-sm font-semibold py-2 px-4 rounded-lg transition-all text-center">View Instagram</a>
+                                <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20your%20Instagram%20graphics." target="_blank" class="flex-1 bg-transparent border-2 border-brand-orange text-brand-orange text-sm font-semibold py-2 px-4 rounded-lg hover:bg-brand-orange hover:text-white transition-all text-center">Order Similar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 8 (New Graphics) -->
+                    <div class="bg-gray-800 rounded-lg overflow-hidden group relative portfolio-card animate-on-scroll animate-zoom-in" data-category="graphics">
+                        <img src="https://image.thum.io/get/width/1200/crop/800/https://www.pinterest.com/Kenfli_Designs/" alt="Kenfli Designs Pinterest Page" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Pinterest Inspirations</h3>
+                                <p class="text-sm text-brand-orange">Our Pinterest Moodboards</p>
+                            </div>
+                            <div class="flex space-x-3 mt-4">
+                                <a href="https://www.pinterest.com/Kenfli_Designs/" target="_blank" class="flex-1 bg-brand-orange text-white text-sm font-semibold py-2 px-4 rounded-lg transition-all text-center">View Pinterest</a>
+                                <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20your%20Pinterest%20moodboards." target="_blank" class="flex-1 bg-transparent border-2 border-brand-orange text-brand-orange text-sm font-semibold py-2 px-4 rounded-lg hover:bg-brand-orange hover:text-white transition-all text-center">Order Similar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 9 (New) -->
+                    <div class="bg-gray-800 rounded-lg overflow-hidden group relative portfolio-card animate-on-scroll animate-zoom-in" data-category="web">
+                        <img src="https://image.thum.io/get/width/1200/crop/800/https://www.nutrifix.co.ke/" alt="Nutrifix Website" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Nutrifix</h3>
+                                <p class="text-sm text-brand-orange">E-commerce Website</p>
+                            </div>
+                            <div class="flex space-x-3 mt-4">
+                                <a href="https://www.nutrifix.co.ke/" target="_blank" class="flex-1 bg-brand-orange text-white text-sm font-semibold py-2 px-4 rounded-lg transition-all text-center">Live Preview</a>
+                                <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20an%20e-commerce%20website." target="_blank" class="flex-1 bg-transparent border-2 border-brand-orange text-brand-orange text-sm font-semibold py-2 px-4 rounded-lg hover:bg-brand-orange hover:text-white transition-all text-center">Order Similar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 11 (New) -->
+                    <div class="bg-gray-800 rounded-lg overflow-hidden group relative portfolio-card animate-on-scroll animate-zoom-in" data-category="web">
+                        <img src="https://image.thum.io/get/width/1200/crop/800/https://www.bimacominsurance.co.ke/" alt="Bimacom Insurance Website" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 flex flex-col justify-between p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 portfolio-overlay">
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Bimacom Insurance</h3>
+                                <p class="text-sm text-brand-orange">Insurance Agency Website</p>
+                            </div>
+                            <div class="flex space-x-3 mt-4">
+                                <a href="https://www.bimacominsurance.co.ke/" target="_blank" class="flex-1 bg-brand-orange text-white text-sm font-semibold py-2 px-4 rounded-lg transition-all text-center">Live Preview</a>
+                                <a href="https://wa.me/254758760619?text=I'm%20interested%20in%20an%20insurance%20website." target="_blank" class="flex-1 bg-transparent border-2 border-brand-orange text-brand-orange text-sm font-semibold py-2 px-4 rounded-lg hover:bg-brand-orange hover:text-white transition-all text-center">Order Similar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+          <!-- New Footer -->
+    <footer class="bg-slate-900/80 backdrop-blur-lg text-gray-400 pt-16 pb-8"> <!-- 2060 Upgrade: Increased blur -->
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 mb-12">
+                <!-- Column 1: Services -->
+                <div>
+                    <h5 class="font-semibold text-white mb-4">Services</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#web-design" class="footer-link">Web Design</a></li>
+                        <li><a href="#web-design" class="footer-link">Web Development</a></li>
+                        <li><a href="#graphics-design" class="footer-link">Graphic Design</a></li>
+                        <li><a href="#graphics-design" class="footer-link">Branding</a></li>
+                         <li><a href="#graphics-design" class="footer-link">Animation</a></li>
+                        <li><a href="#partnership" class="footer-link">Printing</a></li>
+                    </ul>
+                </div>
+                 <!-- Column 2: Business -->
+                <div>
+                    <h5 class="font-semibold text-white mb-4">Business</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#portfolio" class="footer-link">Portfolio</a></li>
+                        <li><a href="#packages" class="footer-link">Packages for SMEs</a></li>
+                        <li><a href="#packages" class="footer-link">Corporate Solutions</a></li>
+                        <li><a href="https://wa.me/254758760619?text=I'd%20like%20to%20get%20a%20quote" target="_blank" class="footer-link">Get a Quote</a></li> <!-- WhatsApp Link -->
+                    </ul>
+                </div>
+                <!-- Column 3: About Us -->
+                <div>
+                    <h5 class="font-semibold text-white mb-4">About Us</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#about-us-detailed" id="footer-about-link" class="footer-link">Who We Are</a></li> <!-- Added ID -->
+                        <li><a href="#team" class="footer-link">Our Team</a></li>
+                         <li><a href="#partnership" class="footer-link">Partnerships</a></li>
+                        <li><a href="#contact" class="footer-link">Contact Us</a></li>
+                    </ul>
+                </div>
+                 <!-- Column 4: Resources -->
+                 <div>
+                    <h5 class="font-semibold text-white mb-4">Resources</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#blog" class="footer-link">Blog</a></li>
+                        <li><a href="#faq" class="footer-link">FAQs</a></li>
+                        <li><a href="#" class="footer-link">Case Studies (Soon)</a></li>
+                        <li><a href="#process" class="footer-link">Design Process</a></li>
+                    </ul>
+                </div>
+                <!-- Column 5: Legal -->
+                 <div>
+                    <h5 class="font-semibold text-white mb-4">Legal</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="terms.html" target="_blank" class="footer-link">Terms & Conditions</a></li>
+                        <li><a href="#" class="footer-link">Privacy Policy</a></li> <!-- Placeholder Link -->
+                        <li><a href="#" class="footer-link">Cookie Policy</a></li> <!-- Placeholder Link -->
+                    </ul>
+                </div>
+                 <!-- Column 6: Contact Info -->
+                <div class="col-span-2 md:col-span-1">
+                     <h5 class="font-semibold text-white mb-4">Contact Info</h5>
+                     <ul class="space-y-2 text-sm">
+                         <li><i data-lucide="map-pin" class="w-4 h-4 inline mr-2 text-brand-orange"></i> Nairobi, Kenya</li>
+                         <li><i data-lucide="phone" class="w-4 h-4 inline mr-2 text-brand-orange"></i> <a href="tel:+254758760619" class="footer-link">+254 758 760 619</a></li>
+                         <li><i data-lucide="mail" class="w-4 h-4 inline mr-2 text-brand-orange"></i> <a href="mailto:customercare@kenflixdesigns.co.ke" class="footer-link break-all">customercare@kenflixdesigns.co.ke</a></li>
+                         <li><i data-lucide="info" class="w-4 h-4 inline mr-2 text-brand-orange"></i> <a href="mailto:info@kenflixdesigns.co.ke" class="footer-link break-all">info@kenflixdesigns.co.ke</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <div class="flex space-x-4 mb-4 md:mb-0">
+                    <a href="#" aria-label="Facebook" class="text-gray-500 hover:text-brand-orange"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                    <a href="#" aria-label="YouTube" class="text-gray-500 hover:text-brand-orange"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+                    <a href="#" aria-label="LinkedIn" class="text-gray-500 hover:text-brand-orange"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                    <a href="#" aria-label="Instagram" class="text-gray-500 hover:text-brand-orange"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                     <a href="#" aria-label="Twitter" class="text-gray-500 hover:text-brand-orange"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                    <!-- Add TikTok if needed <a href="#" aria-label="TikTok" class="text-gray-500 hover:text-brand-orange"><i data-lucide="tiktok" class="w-5 h-5"></i></a> -->
+                </div>
+                <p class="text-sm text-center">&copy; <span id="footer-year"></span> Kenflix Designs. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+  <script>
+      // Initialize Icons
+      lucide.createIcons();
+  </script>
+</body>
+</html>
