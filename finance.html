@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finance Vault | Kenflix Insights</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617; 
+            color: #F3F4F6; 
+            background-image: radial-gradient(circle at 100% 0%, rgba(56, 189, 248, 0.07), transparent 50%);
+            min-height: 100vh;
+        }
+
+        .text-brand-orange { color: #f97316; }
+        .bg-brand-orange { background-color: #f97316; }
+
+        /* The Styled Navigation Link */
+        .back-home-link {
+            color: #38bdf8;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .back-home-link:hover { opacity: 0.8; }
+
+        /* Upload Button styling from image */
+        .upload-btn {
+            background-color: #f97316;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 9999px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.2s ease;
+        }
+        .upload-btn:hover { transform: scale(1.05); }
+
+        .doc-card {
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .most-downloaded {
+            border: 2px solid #f97316 !important;
+            box-shadow: 0 0 20px rgba(249, 115, 22, 0.2);
+            animation: pulse-stroke 2s infinite;
+        }
+
+        @keyframes pulse-stroke {
+            0% { box-shadow: 0 0 5px rgba(249, 115, 22, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(249, 115, 22, 0.5); }
+            100% { box-shadow: 0 0 5px rgba(249, 115, 22, 0.2); }
+        }
+
+        .hidden { display: none; }
+        .footer-link:hover { color: #f97316; }
+    </style>
+</head>
+<body class="flex flex-col">
+
+    <nav class="p-8 sticky top-0 bg-slate-950/90 backdrop-blur-xl z-[60]">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="back-home-link">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Home
+            </a>
+            
+            <button onclick="accessAdmin()" class="upload-btn">
+                <i data-lucide="cloud-upload" class="w-5 h-5"></i>
+                <span class="text-sm">Upload PDF</span>
+            </button>
+        </div>
+    </nav>
+
+    <header class="container mx-auto px-6 pt-16 pb-12">
+        <div class="max-w-4xl">
+            <span class="text-sky-accent font-black text-[11px] uppercase tracking-[0.4em] mb-4 block">KENFLIX VAULT</span>
+            <h1 class="text-5xl md:text-7xl font-black text-white leading-tight uppercase tracking-tighter mb-6">
+                Finance <span class="text-brand-orange">Repository</span>
+            </h1>
+            <p class="text-gray-400 text-lg md:text-xl max-w-2xl leading-relaxed">
+                Explore our curated library of financial intelligence and strategic resources. Securely manage and access your essential documents in one place.
+            </p>
+        </div>
+    </header>
+
+    <main id="main-view" class="container mx-auto px-6 pb-32 flex-grow">
+        <div id="resource-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+        <div id="read-more-container" class="mt-16 text-center hidden">
+            <button onclick="showListView()" class="px-10 py-4 border border-white/10 rounded-full text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 hover:text-white hover:border-sky-accent transition-all">
+                View All Resources
+            </button>
+        </div>
+    </main>
+
+    <main id="list-view" class="container mx-auto px-6 pb-32 flex-grow hidden">
+        <button onclick="showGridView()" class="mb-10 text-gray-500 hover:text-white flex items-center gap-2 font-bold uppercase text-[10px] tracking-widest">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Featured
+        </button>
+        <div class="bg-slate-900/40 rounded-[2rem] border border-white/5 overflow-hidden" id="resource-list"></div>
+    </main>
+
+    <div id="pdfOverlay" class="fixed inset-0 bg-slate-950 z-[100] hidden flex flex-col md:flex-row">
+        <div class="w-full md:w-1/3 p-10 flex flex-col justify-between border-r border-white/5 bg-slate-900/50">
+            <div>
+                <button onclick="closeViewer()" class="text-gray-500 hover:text-white mb-12 flex items-center gap-2 font-bold uppercase text-[10px] tracking-widest"><i data-lucide="arrow-left" class="w-4 h-4"></i> Close</button>
+                <h2 id="viewingTitle" class="text-3xl font-black text-white uppercase leading-tight"></h2>
+                <p id="viewingDesc" class="text-gray-400 mt-6 leading-relaxed"></p>
+            </div>
+            <button id="dlBtnOverlay" class="w-full bg-brand-orange text-white py-5 rounded-2xl font-black uppercase tracking-widest text-xs">Download Copy</button>
+        </div>
+        <div class="flex-grow bg-slate-950 p-4"><iframe id="pdfFrame" src="" class="w-full h-full rounded-[2rem] border border-white/10"></iframe></div>
+    </div>
+
+    <div id="uploadModal" class="fixed inset-0 bg-slate-950/95 z-[110] hidden flex items-center justify-center p-6">
+        <div class="bg-slate-900 border border-white/10 p-10 rounded-[3rem] w-full max-w-lg">
+            <h3 class="text-white font-black uppercase mb-8 italic text-xl tracking-tight">Vault <span class="text-brand-orange">Upload</span></h3>
+            <div class="space-y-4">
+                <input type="text" id="docTitle" placeholder="Document Name" class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl text-white outline-none focus:border-brand-orange transition">
+                <label class="block w-full cursor-pointer bg-white/5 border border-dashed border-white/20 p-8 rounded-2xl text-center hover:border-brand-orange transition">
+                    <input type="file" id="pdfFile" accept="application/pdf" class="hidden" onchange="updateFileName()">
+                    <span id="fileStatus" class="text-xs text-gray-400 font-bold uppercase tracking-widest">Select PDF from Computer</span>
+                </label>
+                <textarea id="docDesc" placeholder="Brief description..." class="w-full bg-white/5 border border-white/10 p-5 rounded-2xl text-white h-24 outline-none focus:border-brand-orange transition"></textarea>
+                <button id="saveBtn" onclick="savePdfFromPc()" class="w-full bg-brand-orange text-white font-black py-5 rounded-2xl uppercase tracking-widest text-xs shadow-lg">Publish to Vault</button>
+                <button onclick="toggleUpload()" class="w-full text-gray-600 text-[10px] font-bold mt-2 uppercase tracking-widest">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-slate-900/80 backdrop-blur-lg text-gray-400 pt-16 pb-8 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 mb-12">
+                <div>
+                    <h5 class="font-semibold text-white mb-4">Services</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html#web-design" class="footer-link">Web Design</a></li>
+                        <li><a href="index.html#web-design" class="footer-link">Web Development</a></li>
+                        <li><a href="index.html#graphics-design" class="footer-link">Graphic Design</a></li>
+                        <li><a href="index.html#graphics-design" class="footer-link">Branding</a></li>
+                        <li><a href="index.html#graphics-design" class="footer-link">Animation</a></li>
+                        <li><a href="index.html#partnership" class="footer-link">Printing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold text-white mb-4">Business</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="portfolio.html" class="footer-link font-medium text-sky-400">Portfolio</a></li>
+                        <li><a href="prices.html" class="footer-link font-medium text-sky-400">Packages for SMEs</a></li>
+                        <li><a href="prices.html" class="footer-link font-medium text-sky-400">Corporate Solutions</a></li>
+                        <li><a href="https://wa.me/254758760619" target="_blank" class="footer-link">Get a Quote</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold text-white mb-4">About Us</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html#about-us-detailed" class="footer-link">Who We Are</a></li>
+                        <li><a href="index.html#team" class="footer-link">Our Team</a></li>
+                        <li><a href="index.html#partnership" class="footer-link">Partnerships</a></li>
+                        <li><a href="index.html#contact" class="footer-link">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold text-white mb-4">Resources</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html#blog" class="footer-link">Blog</a></li>
+                        <li><a href="index.html#faq" class="footer-link">FAQs</a></li>
+                        <li><a href="index.html#" class="footer-link">Case Studies (Soon)</a></li>
+                        <li><a href="index.html#process" class="footer-link">Design Process</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold text-white mb-4">Legal</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="terms.html" target="_blank" class="footer-link">Terms & Conditions</a></li>
+                        <li><a href="index.html#" class="footer-link">Privacy Policy</a></li>
+                        <li><a href="index.html#" class="footer-link">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-span-2 md:col-span-1">
+                    <h5 class="font-semibold text-white mb-4">Contact Info</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><i data-lucide="map-pin" class="w-4 h-4 inline mr-2 text-brand-orange"></i> Nairobi, Kenya</li>
+                        <li><i data-lucide="phone" class="w-4 h-4 inline mr-2 text-brand-orange"></i> <a href="tel:+254758760619" class="footer-link">+254 758 760 619</a></li>
+                        <li><i data-lucide="mail" class="w-4 h-4 inline mr-2 text-brand-orange"></i> <a href="mailto:customercare@kenflixdesigns.co.ke" class="footer-link break-all">customercare@kenflixdesigns.co.ke</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <div class="flex space-x-4 mb-4 md:mb-0">
+                    <a href="#" class="text-gray-500 hover:text-brand-orange"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-brand-orange"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-brand-orange"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-brand-orange"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                </div>
+                <p class="text-sm text-center">&copy; <span id="footer-year"></span> Kenflix Designs. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+        function accessAdmin() { if (prompt("Security Code:") === "29") toggleUpload(); }
+        function toggleUpload() { document.getElementById('uploadModal').classList.toggle('hidden'); }
+        function updateFileName() { const f = document.getElementById('pdfFile').files[0]; if(f) document.getElementById('fileStatus').innerText = f.name; }
+
+        function showListView() { document.getElementById('main-view').classList.add('hidden'); document.getElementById('list-view').classList.remove('hidden'); renderList(); }
+        function showGridView() { document.getElementById('list-view').classList.add('hidden'); document.getElementById('main-view').classList.remove('hidden'); }
+
+        function savePdfFromPc() {
+            const title = document.getElementById('docTitle').value;
+            const file = document.getElementById('pdfFile').files[0];
+            const desc = document.getElementById('docDesc').value;
+            if (!title || !file) return alert("Fill required fields");
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const doc = { id: Date.now(), title, data: e.target.result, desc, downloads: 0 };
+                let vault = JSON.parse(localStorage.getItem('kenflix_v6') || '[]');
+                vault.unshift(doc);
+                localStorage.setItem('kenflix_v6', JSON.stringify(vault));
+                toggleUpload();
+                renderVault();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function renderVault() {
+            const grid = document.getElementById('resource-grid');
+            const docs = JSON.parse(localStorage.getItem('kenflix_v6') || '[]');
+            
+            const maxDown = docs.length > 0 ? Math.max(...docs.map(d => d.downloads || 0)) : 0;
+            const mostPopularId = (maxDown > 0) ? docs.find(d => d.downloads === maxDown).id : null;
+
+            const featured = docs.slice(0, 6);
+            if (docs.length > 6) document.getElementById('read-more-container').classList.remove('hidden');
+
+            grid.innerHTML = featured.map(doc => `
+                <div class="doc-card p-10 flex flex-col h-full ${doc.id === mostPopularId ? 'most-downloaded' : ''}">
+                    ${doc.id === mostPopularId ? '<span class="absolute top-4 right-6 text-[8px] font-black text-brand-orange tracking-widest uppercase">Most Popular</span>' : ''}
+                    <div class="w-12 h-12 bg-sky-accent/10 rounded-xl flex items-center justify-center text-sky-accent mb-8"><i data-lucide="file-text"></i></div>
+                    <h3 class="text-xl font-black text-white mb-4 uppercase leading-tight">${doc.title}</h3>
+                    <div class="mt-auto flex items-center gap-6 pt-8 border-t border-white/5">
+                        <button onclick="openViewer('${doc.id}')" class="text-[10px] font-black text-sky-accent uppercase tracking-widest transition hover:text-white">Read Online</button>
+                        <button onclick="downloadPdf('${doc.id}')" class="text-[10px] font-black text-brand-orange uppercase tracking-widest transition hover:text-white">Download</button>
+                        <button onclick="removeDoc(${doc.id})" class="ml-auto text-gray-700 hover:text-red-500"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function renderList() {
+            const list = document.getElementById('resource-list');
+            const docs = JSON.parse(localStorage.getItem('kenflix_v6') || '[]');
+            list.innerHTML = docs.map(doc => `
+                <div class="p-6 border-b border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 hover:bg-white/5 transition">
+                    <span class="text-white font-bold uppercase text-xs tracking-tight">${doc.title}</span>
+                    <div class="flex gap-6 items-center">
+                        <button onclick="openViewer('${doc.id}')" class="text-[10px] font-black text-sky-accent uppercase tracking-widest">Read Online</button>
+                        <button onclick="downloadPdf('${doc.id}')" class="text-[10px] font-black text-brand-orange uppercase tracking-widest">Download</button>
+                        <button onclick="removeDoc(${doc.id})" class="text-gray-700 hover:text-red-500"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function openViewer(id) {
+            const docs = JSON.parse(localStorage.getItem('kenflix_v6') || '[]');
+            const doc = docs.find(d => d.id == id);
+            document.getElementById('viewingTitle').innerText = doc.title;
+            document.getElementById('viewingDesc').innerText = doc.desc || 'Internal Repository document.';
+            document.getElementById('pdfFrame').src = doc.data;
+            document.getElementById('dlBtnOverlay').onclick = () => downloadPdf(id);
+            document.getElementById('pdfOverlay').classList.remove('hidden');
+        }
+
+        function downloadPdf(id) {
+            let docs = JSON.parse(localStorage.getItem('kenflix_v6') || '[]');
+            const docIdx = docs.findIndex(d => d.id == id);
+            docs[docIdx].downloads = (docs[docIdx].downloads || 0) + 1;
+            localStorage.setItem('kenflix_v6', JSON.stringify(docs));
+            
+            const a = document.createElement('a');
+            a.href = docs[docIdx].data;
+            a.download = docs[docIdx].title + ".pdf";
+            a.click();
+            renderVault();
+        }
+
+        function closeViewer() { document.getElementById('pdfOverlay').classList.add('hidden'); document.getElementById('pdfFrame').src = ''; }
+        function removeDoc(id) { if (prompt("Security Code:") === "29") { let vault = JSON.parse(localStorage.getItem('kenflix_v6') || '[]'); vault = vault.filter(d => d.id !== id); localStorage.setItem('kenflix_v6', JSON.stringify(vault)); renderVault(); renderList(); } }
+        
+        window.onload = renderVault;
+    </script>
+</body>
+</html>
