@@ -4,184 +4,117 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kenflix Career Portal</title>
-
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f172a; 
-            color: #F3F4F6; 
-            background-image: radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.1), transparent 40%);
-            min-height: 100vh;
-        }
-
+        body { font-family: 'Inter', sans-serif; background: #020617; color: #F3F4F6; min-height: 100vh; }
         .text-brand-orange { color: #f97316; }
         .bg-brand-orange { background-color: #f97316; }
-        .text-sky-accent { color: #38bdf8; }
-
-        .nav-link {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            transition: color 0.3s ease;
+        .job-card { 
+            background: rgba(30, 41, 59, 0.4); 
+            backdrop-filter: blur(10px); 
+            border: 1px solid rgba(255,255,255,0.05); 
+            border-radius: 1.5rem; 
+            transition: 0.3s; 
         }
-        .nav-link:hover { color: #f97316; }
-
-        .upload-btn {
-            background-color: #f97316;
-            color: white;
-            padding: 10px 24px;
-            border-radius: 9999px;
-            font-weight: 700;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .job-card {
-            background: rgba(30, 41, 59, 0.4);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(56, 189, 248, 0.1);
-            border-radius: 2rem;
-            transition: all 0.4s ease;
-        }
-        .job-card:hover {
-            border-color: #f97316;
-            transform: translateY(-5px);
-        }
-
-        .hidden { display: none; }
-        .footer-link:hover { color: #f97316; }
+        .job-card:hover { border-color: #f97316; transform: translateY(-4px); }
+        .loader { border: 3px solid #1e293b; border-top: 3px solid #f97316; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; display: none; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="flex flex-col">
 
-    <nav class="p-6 border-b border-gray-800/50 sticky top-0 bg-slate-900/90 backdrop-blur-md z-[60]">
+    <nav class="p-6 border-b border-white/5 sticky top-0 bg-slate-950/80 backdrop-blur-lg z-50">
         <div class="container mx-auto flex justify-between items-center">
-            <a href="index.html" class="text-sky-accent hover:text-white transition font-bold flex items-center gap-2">
+            <a href="index.html" class="text-sky-400 font-bold flex items-center gap-2">
                 <i data-lucide="arrow-left" class="w-4 h-4"></i> Home
             </a>
-
-            <div class="hidden lg:flex items-center gap-8">
-                <a href="index.html#web-design" class="nav-link text-gray-300">Web Design</a>
-                <a href="index.html#graphics-design" class="nav-link text-gray-300">Graphics</a>
-                <a href="portfolio.html" class="nav-link text-gray-300">Portfolio</a>
+            <div class="hidden lg:flex gap-8 text-[11px] uppercase tracking-widest font-bold text-gray-400">
+                <a href="index.html#web-design" class="hover:text-brand-orange">Web Design</a>
+                <a href="index.html#graphics-design" class="hover:text-brand-orange">Graphics</a>
+                <a href="portfolio.html" class="hover:text-brand-orange">Portfolio</a>
             </div>
-
-            <button onclick="toggleAdminModal()" class="upload-btn">
-                <i data-lucide="lock" class="w-4 h-4"></i>
-                <span class="text-xs uppercase tracking-widest">Admin</span>
-            </button>
+            <button onclick="openAdmin()" class="bg-brand-orange px-6 py-2 rounded-full text-xs font-black uppercase tracking-widest">Post Job</button>
         </div>
     </nav>
 
-    <main id="portal-view" class="flex-grow container mx-auto px-6 py-12">
-        <header class="mb-16">
-            <span class="text-sky-accent font-black text-[10px] uppercase tracking-[0.3em]">Kenflix Career Portal</span>
-            <h1 class="text-5xl md:text-6xl font-black text-white mt-4 leading-tight">Find Your <span class="text-brand-orange">Opportunity</span></h1>
-            <p class="text-gray-400 mt-6 max-w-2xl text-lg">Direct access to verified roles in Finance, Tech, and Creative industries across Kenya.</p>
-        </header>
+    <header class="container mx-auto px-6 pt-20 pb-12">
+        <span class="text-sky-400 font-black text-[10px] uppercase tracking-[0.4em] mb-4 block">LIVE OPPORTUNITIES</span>
+        <h1 class="text-5xl md:text-7xl font-black text-white leading-tight uppercase tracking-tighter">
+            Kenflix <span class="text-brand-orange">Portal</span>
+        </h1>
+    </header>
+
+    <main class="container mx-auto px-6 pb-24 flex-grow">
+        <div id="loading-state" class="text-center py-20 text-gray-500 uppercase tracking-widest text-xs">Fetching latest roles...</div>
         <div id="job-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
     </main>
 
-    <main id="detail-view" class="flex-grow container mx-auto px-6 py-12 hidden">
-        <button onclick="closeDetailView()" class="text-gray-400 hover:text-white mb-8 flex items-center gap-2 font-bold uppercase text-xs tracking-widest">
-            <i data-lucide="chevron-left" class="w-4 h-4"></i> Back to All Jobs
-        </button>
-        <div id="detail-content" class="bg-slate-900/50 border border-gray-800 rounded-[3rem] p-8 md:p-16"></div>
-    </main>
-
-    <div id="adminModal" class="fixed inset-0 bg-slate-950/98 z-[100] hidden flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-brand-orange/20 w-full max-w-lg rounded-[3rem] p-10 text-center">
-            <h3 class="text-white font-black mb-4">ADMIN ACCESS</h3>
-            <p class="text-gray-400 text-sm mb-6">To add new jobs for your viewers, update the <code class="text-sky-accent font-mono">GLOBAL_JOB_DATABASE</code> array in the source code of this page.</p>
-            <button onclick="toggleAdminModal()" class="bg-brand-orange text-white px-8 py-3 rounded-xl font-bold uppercase text-xs">Close</button>
+    <div id="adminModal" class="fixed inset-0 bg-slate-950/95 z-[100] hidden flex items-center justify-center p-6">
+        <div class="bg-slate-900 border border-white/10 p-10 rounded-[2rem] w-full max-w-2xl">
+            <h3 class="text-white font-black uppercase mb-2">Paste Job Details</h3>
+            <p class="text-gray-500 text-xs mb-6 uppercase tracking-widest">Our AI will automatically extract Title, Location, and Pay.</p>
+            <textarea id="rawInput" class="w-full h-64 bg-black/40 border border-white/10 p-6 rounded-2xl text-white text-sm outline-none focus:border-brand-orange transition mb-6" placeholder="Example: Job Title: Accountant. Location: Nairobi. Salary: 50k..."></textarea>
+            
+            <div class="flex items-center gap-4">
+                <button id="publishBtn" onclick="submitJob()" class="flex-grow bg-brand-orange text-white font-black py-4 rounded-xl uppercase tracking-widest text-xs">Publish to Website</button>
+                <div id="btnLoader" class="loader"></div>
+                <button onclick="closeAdmin()" class="text-gray-500 text-xs font-bold uppercase">Cancel</button>
+            </div>
         </div>
     </div>
 
-    <footer class="bg-slate-900/80 backdrop-blur-lg text-gray-400 pt-16 pb-8 border-t border-gray-800 mt-20">
-        <div class="container mx-auto px-6 text-center">
-            <p class="text-sm">&copy; <span id="footer-year"></span> Kenflix Designs. All Rights Reserved.</p>
-        </div>
-    </footer>
-
     <script>
-        lucide.createIcons();
-        document.getElementById('footer-year').textContent = new Date().getFullYear();
+        const SCRIPT_URL = "PASTE_YOUR_APPS_SCRIPT_URL_HERE";
 
-        /** * GLOBAL DATABASE:
-         * This is where you add jobs so ALL viewers can see them.
-         * Just copy a block and change the details.
-         */
-        const GLOBAL_JOB_DATABASE = [
-            {
-                id: 1,
-                title: "Accounting Intern",
-                location: "Nairobi, Kenya",
-                pay: "KSh 25,000 - 35,000",
-                field: "Finance",
-                link: "mailto:careers@kenflixdesigns.co.ke",
-                fullContent: "We are looking for a Finance intern to assist with data merging and treasury documentation. \n\nRequirements:\n- Pursuing B.Com or CPA Part 1\n- High attention to detail\n- Basic knowledge of Google Apps Script is a plus."
-            },
-            {
-                id: 2,
-                title: "UI/UX Designer",
-                location: "Remote / Nairobi",
-                pay: "Competitive",
-                field: "Graphics",
-                link: "https://wa.me/254758760619",
-                fullContent: "Join the Kenflix Creative team. You will be responsible for creating minimalist silhouette illustrations and high-contrast branding assets for our SME clients."
-            }
-        ];
+        async function fetchJobs() {
+            try {
+                const res = await fetch(SCRIPT_URL);
+                const data = await res.json();
+                document.getElementById('loading-state').style.display = 'none';
+                displayJobs(data);
+            } catch (e) { console.error("Load failed", e); }
+        }
 
-        function toggleAdminModal() { document.getElementById('adminModal').classList.toggle('hidden'); }
-
-        function loadJobs() {
+        function displayJobs(jobs) {
             const grid = document.getElementById('job-grid');
-            grid.innerHTML = GLOBAL_JOB_DATABASE.map(j => `
-                <article class="job-card p-8 flex flex-col h-full">
-                    <span class="text-[9px] font-black text-sky-accent uppercase mb-4 tracking-widest">${j.field}</span>
-                    <h2 class="text-2xl font-bold text-white mb-4 leading-tight">${j.title}</h2>
-                    <div class="space-y-2 mb-6 text-sm text-gray-400">
-                        <div class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-brand-orange"></i> ${j.location}</div>
-                        <div class="flex items-center gap-2"><i data-lucide="banknote" class="w-4 h-4 text-brand-orange"></i> ${j.pay}</div>
+            grid.innerHTML = jobs.map(j => `
+                <div class="job-card p-8 flex flex-col h-full">
+                    <h2 class="text-2xl font-black text-white mb-6 leading-tight uppercase">${j.title}</h2>
+                    <div class="space-y-3 mb-8 text-sm font-bold text-gray-400">
+                        <div class="flex items-center gap-3"><i data-lucide="map-pin" class="w-4 h-4 text-brand-orange"></i> ${j.location}</div>
+                        <div class="flex items-center gap-3"><i data-lucide="banknote" class="w-4 h-4 text-brand-orange"></i> ${j.pay}</div>
                     </div>
-                    <div class="mt-auto flex justify-between items-center border-t border-gray-800 pt-6">
-                        <button onclick="viewJob(${j.id})" class="text-sky-accent text-xs font-bold uppercase tracking-widest hover:underline">Read More</button>
-                        <a href="${j.link}" target="_blank" class="bg-brand-orange text-white px-5 py-2 rounded-xl font-bold text-xs uppercase hover:scale-105 transition">Apply</a>
+                    <div class="mt-auto pt-6 border-t border-white/5 flex justify-between items-center">
+                        <a href="${j.link}" target="_blank" class="bg-white text-black px-6 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-brand-orange hover:text-white transition">Apply Now</a>
+                        <span class="text-[9px] text-gray-600 font-bold uppercase">${new Date(j.postedAt).toLocaleDateString()}</span>
                     </div>
-                </article>
+                </div>
             `).join('');
             lucide.createIcons();
         }
 
-        function viewJob(id) {
-            const job = GLOBAL_JOB_DATABASE.find(j => j.id == id);
-            document.getElementById('portal-view').classList.add('hidden');
-            document.getElementById('detail-view').classList.remove('hidden');
-            document.getElementById('detail-content').innerHTML = `
-                <h1 class="text-4xl md:text-6xl font-black text-white mb-6 uppercase tracking-tighter">${job.title}</h1>
-                <div class="flex flex-wrap gap-6 mb-12 text-gray-400 font-bold">
-                    <span class="flex items-center gap-2"><i data-lucide="map-pin" class="w-5 h-5 text-sky-accent"></i> ${job.location}</span>
-                    <span class="flex items-center gap-2"><i data-lucide="banknote" class="w-5 h-5 text-sky-accent"></i> ${job.pay}</span>
-                </div>
-                <div class="text-gray-300 leading-relaxed whitespace-pre-wrap text-lg border-l-4 border-brand-orange pl-8">${job.fullContent}</div>
-                <div class="mt-12"><a href="${job.link}" target="_blank" class="inline-block bg-brand-orange text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl hover:scale-105 transition">Apply Now</a></div>`;
-            lucide.createIcons();
-            window.scrollTo(0,0);
+        async function submitJob() {
+            const text = document.getElementById('rawInput').value;
+            if(!text || prompt("Enter Admin Code:") !== "29") return;
+
+            document.getElementById('publishBtn').disabled = true;
+            document.getElementById('btnLoader').style.display = 'block';
+
+            await fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({ text: text })
+            });
+
+            location.reload(); 
         }
 
-        function closeDetailView() {
-            document.getElementById('detail-view').classList.add('hidden');
-            document.getElementById('portal-view').classList.remove('hidden');
-        }
+        function openAdmin() { document.getElementById('adminModal').classList.remove('hidden'); }
+        function closeAdmin() { document.getElementById('adminModal').classList.add('hidden'); }
 
-        window.onload = loadJobs;
+        window.onload = fetchJobs;
+        lucide.createIcons();
     </script>
 </body>
 </html>
