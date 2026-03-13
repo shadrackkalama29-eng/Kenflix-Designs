@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kenflix Career Portal</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; 
+            color: #F3F4F6; 
+            background-image: radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.1), transparent 40%);
+            min-height: 100vh;
+        }
+
+        .text-brand-orange { color: #f97316; }
+        .bg-brand-orange { background-color: #f97316; }
+        .text-sky-accent { color: #38bdf8; }
+
+        /* The Custom Button from your Image */
+        .upload-btn {
+            background-color: #f97316;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 9999px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+        }
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            background-color: #ea580c;
+            box-shadow: 0 8px 25px rgba(249, 115, 22, 0.4);
+        }
+
+        .job-card {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(56, 189, 248, 0.1);
+            border-radius: 2rem;
+            transition: all 0.4s ease;
+        }
+        .job-card:hover {
+            border-color: #f97316;
+            transform: translateY(-5px);
+        }
+
+        /* Full Page View Animation */
+        #detail-view {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .hidden { display: none; }
+        
+        .footer-link:hover { color: #f97316; }
+    </style>
+</head>
+<body class="flex flex-col">
+
+    <nav class="p-6 border-b border-gray-800/50 sticky top-0 bg-slate-900/90 backdrop-blur-md z-[60]">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-sky-accent hover:text-white transition font-bold flex items-center gap-2">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Home
+            </a>
+            
+            <button onclick="toggleAdminModal()" class="upload-btn">
+                <i data-lucide="cloud-upload" class="w-5 h-5"></i>
+                <span>Upload Job</span>
+            </button>
+        </div>
+    </nav>
+
+    <main id="portal-view" class="flex-grow container mx-auto px-6 py-12">
+        <header class="mb-16">
+            <span class="text-sky-accent font-black text-[10px] uppercase tracking-[0.3em]">Kenflix Career Portal</span>
+            <h1 class="text-5xl md:text-6xl font-black text-white mt-4">Find Your <span class="text-brand-orange">Opportunity</span></h1>
+            <p class="text-gray-400 mt-6 max-w-2xl text-lg">Explore high-impact roles. Listings are automatically verified and removed after 60 days to keep opportunities fresh.</p>
+        </header>
+
+        <div id="job-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            </div>
+    </main>
+
+    <main id="detail-view" class="flex-grow container mx-auto px-6 py-12 hidden">
+        <button onclick="closeDetailView()" class="text-gray-400 hover:text-white mb-8 flex items-center gap-2 font-bold uppercase text-xs tracking-widest">
+            <i data-lucide="chevron-left" class="w-4 h-4"></i> Back to All Jobs
+        </button>
+        
+        <div id="detail-content" class="bg-slate-900/50 border border-gray-800 rounded-[3rem] p-8 md:p-16">
+            </div>
+    </main>
+
+    <div id="adminModal" class="fixed inset-0 bg-slate-950/98 backdrop-blur-2xl z-[100] hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-brand-orange/20 w-full max-w-2xl rounded-[3rem] p-10 shadow-3xl">
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="text-2xl font-black text-white italic">PORTAL <span class="text-brand-orange">UPLOAD</span></h3>
+                <button onclick="toggleAdminModal()" class="text-gray-500 hover:text-white"><i data-lucide="x"></i></button>
+            </div>
+            <textarea id="rawJobData" class="w-full h-80 bg-slate-800/50 border border-slate-700 rounded-3xl p-6 text-white text-sm focus:border-brand-orange outline-none mb-6" placeholder="Paste everything here..."></textarea>
+            <button onclick="processJob()" class="w-full bg-brand-orange text-white font-black py-5 rounded-2xl hover:bg-orange-600 transition-all uppercase tracking-widest text-sm">
+                Analyze & Publish
+            </button>
+        </div>
+    </div>
+
+    <footer class="bg-slate-900/80 backdrop-blur-lg text-gray-400 pt-16 pb-8 border-t border-gray-800 mt-20">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 mb-12">
+                <div>
+                    <h5 class="font-bold text-white mb-4 uppercase text-[10px] tracking-widest">Services</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html#web-design" class="footer-link">Web Design</a></li>
+                        <li><a href="index.html#graphics-design" class="footer-link">Graphic Design</a></li>
+                        <li><a href="index.html#partnership" class="footer-link">Digital Printing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold text-white mb-4 uppercase text-[10px] tracking-widest">Business</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="portfolio.html" class="footer-link text-sky-accent">Portfolio</a></li>
+                        <li><a href="prices.html" class="footer-link text-sky-accent">Pricing Plans</a></li>
+                    </ul>
+                </div>
+                <div class="col-span-2">
+                    <h5 class="font-bold text-white mb-4 uppercase text-[10px] tracking-widest">Contact Info</h5>
+                    <p class="text-sm">Nairobi, Kenya<br>+254 758 760 619</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-[10px] uppercase tracking-widest font-bold">
+                <p>&copy; 2026 Kenflix Designs. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleAdminModal() { document.getElementById('adminModal').classList.toggle('hidden'); }
+
+        function processJob() {
+            const rawText = document.getElementById('rawJobData').value;
+            if (!rawText.trim()) return alert("Paste details!");
+
+            const extract = (labels) => {
+                for (let label of labels) {
+                    const reg = new RegExp(`${label}:?\\s*(.*)`, 'i');
+                    const match = rawText.match(reg);
+                    if (match) return match[1].trim();
+                }
+                return "Not Specified";
+            };
+
+            const urlMatch = rawText.match(/https?:\/\/[^\s]+/);
+            const emailMatch = rawText.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+            const applyLink = urlMatch ? urlMatch[0] : (emailMatch ? `mailto:${emailMatch[0]}` : "#");
+
+            const job = {
+                id: Date.now(),
+                title: extract(['Job Title', 'Position', 'Role']),
+                location: extract(['Location', 'Place', 'Duty Station']),
+                pay: extract(['Salary', 'Pay', 'Range']),
+                field: /tech|developer|it|code/i.test(rawText) ? "Technology" : (/finance|accountant/i.test(rawText) ? "Finance" : "Administration"),
+                fullContent: rawText,
+                shortDesc: rawText.substring(0, 120) + "...",
+                link: applyLink,
+                postedAt: new Date().getTime()
+            };
+
+            let db = JSON.parse(localStorage.getItem('kenflix_final_jobs') || '[]');
+            db.unshift(job);
+            localStorage.setItem('kenflix_final_jobs', JSON.stringify(db));
+            
+            toggleAdminModal();
+            loadJobs();
+        }
+
+        function loadJobs() {
+            const grid = document.getElementById('job-grid');
+            const jobs = JSON.parse(localStorage.getItem('kenflix_final_jobs') || '[]');
+            const sixtyDays = 60 * 24 * 60 * 60 * 1000;
+            const active = jobs.filter(j => (new Date().getTime() - j.postedAt) < sixtyDays);
+
+            grid.innerHTML = active.map(j => `
+                <article class="job-card p-8 flex flex-col h-full">
+                    <span class="text-[9px] font-black text-sky-accent uppercase mb-4 tracking-widest">${j.field}</span>
+                    <h2 class="text-2xl font-bold text-white mb-4 leading-tight">${j.title}</h2>
+                    <div class="space-y-2 mb-6 text-sm text-gray-400">
+                        <div class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-brand-orange"></i> ${j.location}</div>
+                        <div class="flex items-center gap-2"><i data-lucide="banknote" class="w-4 h-4 text-brand-orange"></i> ${j.pay}</div>
+                    </div>
+                    <p class="text-gray-500 text-sm mb-8 line-clamp-3">${j.shortDesc}</p>
+                    <div class="mt-auto flex justify-between items-center">
+                        <button onclick="viewJob(${j.id})" class="text-sky-accent text-xs font-bold uppercase tracking-widest hover:underline">Read More</button>
+                        <a href="${j.link}" target="_blank" class="bg-brand-orange text-white px-5 py-2 rounded-xl font-bold text-xs uppercase">Apply</a>
+                    </div>
+                </article>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function viewJob(id) {
+            const jobs = JSON.parse(localStorage.getItem('kenflix_final_jobs') || '[]');
+            const job = jobs.find(j => j.id == id);
+            
+            document.getElementById('portal-view').classList.add('hidden');
+            document.getElementById('detail-view').classList.remove('hidden');
+            
+            document.getElementById('detail-content').innerHTML = `
+                <div class="flex flex-col md:flex-row justify-between items-start gap-8 mb-12">
+                    <div>
+                        <span class="text-brand-orange font-black uppercase text-xs tracking-widest">${job.field}</span>
+                        <h1 class="text-4xl md:text-6xl font-black text-white mt-4">${job.title}</h1>
+                        <div class="flex flex-wrap gap-6 mt-6 text-gray-400 font-bold">
+                            <span class="flex items-center gap-2"><i data-lucide="map-pin" class="w-5 h-5 text-sky-accent"></i> ${job.location}</span>
+                            <span class="flex items-center gap-2"><i data-lucide="banknote" class="w-5 h-5 text-sky-accent"></i> ${job.pay}</span>
+                        </div>
+                    </div>
+                    <a href="${job.link}" target="_blank" class="bg-brand-orange text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl">Apply for this Role</a>
+                </div>
+                <div class="prose prose-invert max-w-none">
+                    <h3 class="text-sky-accent uppercase text-sm tracking-widest mb-6">Full Analysis & Requirements</h3>
+                    <div class="text-gray-300 leading-relaxed whitespace-pre-wrap text-lg">${job.fullContent}</div>
+                </div>
+            `;
+            lucide.createIcons();
+            window.scrollTo(0,0);
+        }
+
+        function closeDetailView() {
+            document.getElementById('detail-view').classList.add('hidden');
+            document.getElementById('portal-view').classList.remove('hidden');
+        }
+
+        window.onload = loadJobs;
+    </script>
+</body>
+</html>
