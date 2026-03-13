@@ -3,62 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kenflix Careers</title>
+    <title>Kenflix Careers | Live Vacancies</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #0f172a; color: #f8fafc; }
+        .job-card { 
+            background: rgba(30, 41, 59, 0.4); 
+            border: 1px solid rgba(255,255,255,0.05); 
+            border-radius: 2.5rem; 
+            transition: all 0.3s ease;
+        }
+        .job-card:hover { 
+            border-color: #f97316; 
+            transform: translateY(-5px);
+            background: rgba(30, 41, 59, 0.6);
+        }
+        .text-brand-orange { color: #f97316; }
+        .bg-brand-orange { background-color: #f97316; }
+        .hidden { display: none; }
+    </style>
 </head>
-<body class="bg-[#0f172a] text-white min-h-screen">
+<body class="min-h-screen flex flex-col">
 
-    <nav class="p-6 border-b border-white/10 flex justify-between items-center">
-        <h1 class="font-black text-orange-500 uppercase tracking-widest">Kenflix Careers</h1>
-        <a href="index.html" class="text-xs uppercase font-bold text-gray-400">Back Home</a>
+    <nav class="p-6 border-b border-white/5 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-sky-400 font-black uppercase tracking-widest text-sm italic">Kenflix Portals</h1>
+            <a href="index.html" class="text-[10px] font-bold text-gray-500 uppercase tracking-widest hover:text-white transition">← Back to Main</a>
+        </div>
     </nav>
 
-    <main class="container mx-auto px-6 py-12">
-        <h2 class="text-5xl font-black mb-10 uppercase italic">Live <span class="text-orange-500">Vacancies</span></h2>
-        
-        <div id="jobList" class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <p class="animate-pulse text-gray-500 uppercase font-bold text-xs">Connecting to Google Sheet...</p>
+    <main class="container mx-auto px-6 py-16">
+        <header class="mb-20">
+            <span class="text-sky-400 font-black text-[10px] uppercase tracking-[0.4em] block mb-4">Live Opportunities</span>
+            <h1 class="text-6xl md:text-8xl font-black text-white leading-tight uppercase tracking-tighter">
+                Find Your <br><span class="text-brand-orange">Opportunity</span>
+            </h1>
+            <p class="mt-8 max-w-2xl text-gray-400 text-lg leading-relaxed italic border-l-2 border-brand-orange pl-6">
+                Directly connected to our human resource database. Browse our current vacancies and apply instantly.
+            </p>
+        </header>
+
+        <div id="status-area" class="flex items-center gap-3 text-gray-500 uppercase tracking-widest text-[10px] font-bold italic mb-10">
+            <div id="loader" class="animate-spin rounded-full h-4 w-4 border-2 border-brand-orange border-t-transparent"></div>
+            <span id="status-text">Syncing with Google Database...</span>
         </div>
+
+        <div id="jobGrid" class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            </div>
     </main>
 
     <script>
-        // PASTE YOUR GOOGLE WEB APP URL HERE
-        const SCRIPT_URL = "PASTE_YOUR_DEPLOYED_URL_HERE";
+        // YOUR PROVIDED APPS SCRIPT URL
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxifvk82I76Vt_fLPaDQgdjKPMqNYENi4JP3clerubLRf-qfwy43LAmTGqwNbm4-vFH/exec";
 
         async function fetchJobs() {
-            const container = document.getElementById('jobList');
+            const grid = document.getElementById('jobGrid');
+            const statusText = document.getElementById('status-text');
+            const loader = document.getElementById('loader');
+
             try {
+                // 1. Fetch data from your Google Script
                 const response = await fetch(SCRIPT_URL);
                 const jobs = await response.json();
 
+                // 2. Hide loader
+                loader.classList.add('hidden');
+                statusText.innerText = `Showing ${jobs.length} Live Vacancies`;
+
                 if (jobs.length === 0) {
-                    container.innerHTML = "<p class='text-gray-500'>No jobs found in the sheet.</p>";
+                    grid.innerHTML = `<p class="text-gray-600 uppercase font-black text-xs">The database is currently empty.</p>`;
                     return;
                 }
 
-                // Build the HTML for each job in the sheet
-                container.innerHTML = jobs.map(job => `
-                    <div class="bg-slate-900/50 p-8 rounded-[2rem] border border-white/5">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-2xl font-black uppercase text-white">${job.title || 'Untitled Role'}</h3>
-                            <span class="text-[10px] text-gray-500 font-bold">${new Date(job.postedAt).toLocaleDateString()}</span>
+                // 3. Map Google Sheet columns (A-G) to the UX
+                grid.innerHTML = jobs.map(job => `
+                    <div class="job-card p-10 flex flex-col h-full">
+                        <div class="flex justify-between items-start mb-8">
+                            <span class="text-[10px] font-black text-sky-400 uppercase tracking-[0.2em] italic">Open Position</span>
+                            <span class="text-[9px] text-gray-600 font-bold uppercase tracking-widest">${new Date(job.postedAt).toLocaleDateString()}</span>
                         </div>
-                        <div class="flex gap-4 mb-6 text-[10px] font-black text-sky-400 uppercase">
-                            <span>${job.location}</span>
-                            <span class="text-orange-500">${job.pay}</span>
+
+                        <h2 class="text-4xl font-black text-white mb-6 uppercase tracking-tighter leading-none">
+                            ${job.title || 'Role Title'}
+                        </h2>
+
+                        <div class="grid grid-cols-2 gap-4 mb-8">
+                            <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
+                                <p class="text-[8px] text-gray-500 uppercase font-black mb-1">Region</p>
+                                <p class="text-xs font-bold text-white uppercase tracking-wider">${job.location || 'Kenya'}</p>
+                            </div>
+                            <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
+                                <p class="text-[8px] text-gray-500 uppercase font-black mb-1">Package</p>
+                                <p class="text-xs font-bold text-brand-orange uppercase tracking-wider">${job.pay || 'Competitive'}</p>
+                            </div>
                         </div>
-                        <p class="text-gray-400 text-sm mb-6 line-clamp-3">${job.fullContent}</p>
-                        <a href="${job.link}" class="inline-block bg-white text-black px-6 py-2 rounded-lg text-[10px] font-black uppercase">Apply Now</a>
+
+                        <p class="text-gray-400 text-sm leading-relaxed mb-10 line-clamp-4">
+                            ${job.fullContent}
+                        </p>
+
+                        <div class="mt-auto pt-6 border-t border-white/5">
+                            <a href="${job.link}" target="_blank" class="inline-block bg-white text-black px-10 py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-brand-orange hover:text-white transition-all w-full text-center">
+                                View Full Application
+                            </a>
+                        </div>
                     </div>
                 `).join('');
 
+                // Refresh Icons
+                lucide.createIcons();
+
             } catch (error) {
-                container.innerHTML = "<p class='text-red-500 uppercase font-black text-xs'>Error: Check if the Web App URL is correct and deployed to 'Anyone'.</p>";
+                console.error(error);
+                statusText.innerText = "Connection Error: Check Google Script Deployment Permissions.";
+                statusText.classList.add('text-red-500');
+                loader.classList.add('hidden');
             }
         }
 
+        // Run the fetch on page load
         window.onload = fetchJobs;
+        lucide.createIcons();
     </script>
 </body>
 </html>
