@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kenflix Careers | Live Vacancies</title>
+    <title>Kenflix Careers | Vault Vacancies</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -21,7 +21,6 @@
             background: rgba(30, 41, 59, 0.6);
         }
         .text-brand-orange { color: #f97316; }
-        .bg-brand-orange { background-color: #f97316; }
         .hidden { display: none; }
     </style>
 </head>
@@ -30,24 +29,21 @@
     <nav class="p-6 border-b border-white/5 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-sky-400 font-black uppercase tracking-widest text-sm italic">Kenflix Portals</h1>
-            <a href="index.html" class="text-[10px] font-bold text-gray-500 uppercase tracking-widest hover:text-white transition">← Back to Home</a>
+            <a href="index.html" class="text-[10px] font-bold text-gray-500 uppercase tracking-widest hover:text-white transition">← Main Site</a>
         </div>
     </nav>
 
     <main class="container mx-auto px-6 py-16">
         <header class="mb-20">
-            <span class="text-sky-400 font-black text-[10px] uppercase tracking-[0.4em] block mb-4">Live Opportunities</span>
+            <span class="text-sky-400 font-black text-[10px] uppercase tracking-[0.4em] block mb-4">Live Database</span>
             <h1 class="text-6xl md:text-8xl font-black text-white leading-tight uppercase tracking-tighter">
-                Find Your <br><span class="text-brand-orange">Opportunity</span>
+                Careers <span class="text-brand-orange">Vault</span>
             </h1>
-            <p class="mt-8 max-w-2xl text-gray-400 text-lg leading-relaxed italic border-l-2 border-brand-orange pl-6">
-                Connected to the Kenflix Intelligence Database. Our system automatically analyzes and posts vacancies from the industry.
-            </p>
         </header>
 
         <div id="status-area" class="flex items-center gap-3 text-gray-500 uppercase tracking-widest text-[10px] font-bold italic mb-10">
             <div id="loader" class="animate-spin rounded-full h-4 w-4 border-2 border-brand-orange border-t-transparent"></div>
-            <span id="status-text">Syncing with Google Database...</span>
+            <span id="status-text">Connecting to Vault ID: ...vFH</span>
         </div>
 
         <div id="jobGrid" class="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -55,10 +51,9 @@
     </main>
 
     <script>
-        // YOUR DEPLOYED APPS SCRIPT URL
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxifvk82I76Vt_fLPaDQgdjKPMqNYENi4JP3clerubLRf-qfwy43LAmTGqwNbm4-vFH/exec";
 
-        async function fetchJobs() {
+        async function loadJobs() {
             const grid = document.getElementById('jobGrid');
             const statusText = document.getElementById('status-text');
             const loader = document.getElementById('loader');
@@ -68,65 +63,50 @@
                 const jobs = await response.json();
 
                 loader.classList.add('hidden');
-                statusText.innerText = `Showing ${jobs.length} Active Opportunities`;
+                statusText.innerText = `System Online: ${jobs.length} Active Roles`;
 
-                if (jobs.length === 0) {
-                    grid.innerHTML = `<p class="text-gray-600 uppercase font-black text-xs">The vault is currently empty.</p>`;
-                    return;
-                }
-
-                // MAPPING THE NEW ANALYZED DATA
-                // Using job.title, job.location, job.salary, job.summary, and job.deadline
                 grid.innerHTML = jobs.map(job => `
                     <div class="job-card p-10 flex flex-col h-full">
                         <div class="flex justify-between items-start mb-8">
-                            <span class="text-[10px] font-black text-sky-400 uppercase tracking-[0.2em] italic">Vault Verified</span>
-                            <span class="text-[9px] text-gray-600 font-bold uppercase tracking-widest">Added: ${new Date(job.postedAt).toLocaleDateString()}</span>
+                            <span class="text-[10px] font-black text-sky-400 uppercase tracking-[0.2em] italic">${job.jobid}</span>
+                            <span class="text-[9px] text-gray-600 font-bold uppercase tracking-widest">Post Date: ${new Date(job.timeweposted).toLocaleDateString()}</span>
                         </div>
 
-                        <h2 class="text-4xl font-black text-white mb-6 uppercase tracking-tighter leading-none">
-                            ${job.title}
-                        </h2>
+                        <h2 class="text-4xl font-black text-white mb-6 uppercase tracking-tighter leading-none">${job.jobtitle}</h2>
 
                         <div class="grid grid-cols-2 gap-4 mb-8">
                             <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
-                                <p class="text-[8px] text-gray-500 uppercase font-black mb-1">Location</p>
+                                <p class="text-[8px] text-gray-500 uppercase font-black mb-1">Region</p>
                                 <p class="text-xs font-bold text-white uppercase tracking-wider">${job.location}</p>
                             </div>
                             <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
-                                <p class="text-[8px] text-gray-500 uppercase font-black mb-1">Gross Salary</p>
+                                <p class="text-[8px] text-gray-500 uppercase font-black mb-1">Package</p>
                                 <p class="text-xs font-bold text-brand-orange uppercase tracking-wider">${job.salary}</p>
                             </div>
                         </div>
 
-                        <p class="text-gray-400 text-sm leading-relaxed mb-10 line-clamp-4">
-                            ${job.summary}
-                        </p>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-10 line-clamp-4">${job.description}</p>
 
-                        <div class="mt-auto pt-6 border-t border-white/5 flex flex-col gap-4">
-                            <div class="flex justify-between items-center px-2">
-                                <span class="text-[8px] text-gray-500 uppercase font-black">Deadline</span>
-                                <span class="text-[10px] text-sky-400 font-black uppercase">${job.deadline}</span>
+                        <div class="mt-auto pt-6 border-t border-white/5 space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[9px] text-gray-500 uppercase font-black">Deadline</span>
+                                <span class="text-[10px] text-brand-orange font-black uppercase">${job.datedposted}</span>
                             </div>
-                            <a href="https://wa.me/254758760619" target="_blank" class="inline-block bg-white text-black px-10 py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-brand-orange hover:text-white transition-all w-full text-center">
-                                Inquire / Apply via WhatsApp
+                            <a href="${job.link || '#'}" target="_blank" class="inline-block bg-white text-black px-10 py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-brand-orange hover:text-white transition-all w-full text-center">
+                                Apply for this Role
                             </a>
                         </div>
                     </div>
                 `).join('');
-
+                
                 lucide.createIcons();
 
             } catch (error) {
-                console.error(error);
-                statusText.innerText = "Connection Error: Check Google Script Deployment.";
-                statusText.classList.add('text-red-500');
-                loader.classList.add('hidden');
+                statusText.innerText = "Sync Error. Please check Deployment.";
             }
         }
 
-        window.onload = fetchJobs;
-        lucide.createIcons();
+        window.onload = loadJobs;
     </script>
 </body>
 </html>
