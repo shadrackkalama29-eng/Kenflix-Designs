@@ -7,7 +7,143 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <style><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenflix Career Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
+        body { font-family: 'Inter', sans-serif; background: #0f172a; color: #f8fafc; min-height: 100vh; }
+        .text-brand-orange { color: #f97316; }
+        .bg-brand-orange { background-color: #f97316; }
+        .job-card { background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 2.5rem; transition: 0.3s; }
+        .job-card:hover { border-color: #f97316; transform: translateY(-4px); }
+        .admin-panel { background: rgba(15, 23, 42, 0.98); border: 1px solid rgba(249, 115, 22, 0.2); border-radius: 3rem; }
+        .loader { border: 2px solid rgba(255,255,255,0.1); border-top: 2px solid #f97316; border-radius: 50%; width: 18px; height: 18px; animation: spin 1s linear infinite; display: none; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="flex flex-col">
+
+    <nav class="p-6 border-b border-white/5 sticky top-0 bg-slate-900/90 backdrop-blur-md z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-sky-400 font-bold flex items-center gap-2"><i data-lucide="arrow-left" class="w-4 h-4"></i> Home</a>
+            <button onclick="toggleAdmin()" id="adminBtn" class="bg-brand-orange px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg">Admin Portal</button>
+        </div>
+    </nav>
+
+    <main id="viewMode" class="container mx-auto px-6 py-16">
+        <header class="mb-20">
+            <span class="text-sky-400 font-black text-[10px] uppercase tracking-[0.4em] block mb-4">Kenflix Career Portal</span>
+            <h1 class="text-6xl md:text-8xl font-black text-white leading-tight uppercase tracking-tighter">Find Your <br><span class="text-brand-orange">Opportunity</span></h1>
+            <div class="mt-8 max-w-2xl border-l-2 border-brand-orange pl-6">
+                <p class="text-gray-400 text-lg leading-relaxed italic">
+                    Connecting Kenya's brightest talent with world-class organizations. Browse our curated list of high-impact roles across the region.
+                </p>
+            </div>
+        </header>
+
+        <div id="loading" class="flex items-center gap-3 text-gray-500 uppercase text-[10px] font-bold tracking-widest italic mb-10">
+            <div class="loader" style="display:block"></div> Fetching live data from Google...
+        </div>
+
+        <div id="jobGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    </main>
+
+    <main id="adminMode" class="container mx-auto px-6 py-16 hidden">
+        <div class="max-w-4xl mx-auto space-y-10">
+            <div class="admin-panel p-10">
+                <h2 class="text-3xl font-black text-white mb-6 uppercase italic">Analyze & <span class="text-brand-orange">Post</span></h2>
+                <textarea id="rawInput" class="w-full h-64 bg-black/40 border border-white/10 rounded-[2rem] p-6 text-white text-sm outline-none focus:border-brand-orange mb-6" placeholder="Paste full job details here..."></textarea>
+                <div class="flex items-center gap-4">
+                    <button onclick="publishJob()" id="pubBtn" class="bg-brand-orange text-white font-black px-10 py-4 rounded-2xl uppercase tracking-widest text-xs">Push to Live Website</button>
+                    <div id="pubLoader" class="loader"></div>
+                </div>
+            </div>
+
+            <div class="admin-panel p-10">
+                <h2 class="text-2xl font-black text-white mb-6 uppercase italic">Manage <span class="text-brand-orange">Database</span></h2>
+                <div id="adminList" class="space-y-3"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // REPLACE WITH YOUR URL
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxifvk82I76Vt_fLPaDQgdjKPMqNYENi4JP3clerubLRf-qfwy43LAmTGqwNbm4-vFH/exec";
+        let liveData = [];
+
+        async function init() {
+            try {
+                const res = await fetch(SCRIPT_URL);
+                liveData = await res.json();
+                document.getElementById('loading').classList.add('hidden');
+                renderJobs();
+                renderAdminList();
+            } catch(e) { console.error("Sync Failed"); }
+        }
+
+        function renderJobs() {
+            const grid = document.getElementById('jobGrid');
+            grid.innerHTML = liveData.map(j => `
+                <div class="job-card p-10 flex flex-col h-full">
+                    <h2 class="text-3xl font-black text-white mb-6 leading-tight uppercase">${j.title}</h2>
+                    <div class="text-[12px] font-bold text-gray-400 uppercase space-y-3 mb-10">
+                        <div class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-brand-orange"></i> ${j.location}</div>
+                        <div class="flex items-center gap-2"><i data-lucide="banknote" class="w-4 h-4 text-brand-orange"></i> ${j.pay}</div>
+                    </div>
+                    <a href="${j.link}" target="_blank" class="mt-auto bg-white text-black px-8 py-3 rounded-xl text-[10px] font-black uppercase text-center hover:bg-brand-orange hover:text-white transition">Apply</a>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function renderAdminList() {
+            const list = document.getElementById('adminList');
+            list.innerHTML = liveData.map(j => `
+                <div class="flex items-center justify-between p-5 bg-white/5 rounded-2xl border border-white/5">
+                    <div>
+                        <p class="text-white font-black text-xs uppercase">${j.title}</p>
+                        <p class="text-[9px] text-gray-500 uppercase tracking-widest">${new Date(j.postedAt).toLocaleDateString()}</p>
+                    </div>
+                    <button onclick="deleteJob('${j.id}')" class="text-red-500 hover:bg-red-500/10 p-2 rounded-xl transition">
+                        <i data-lucide="trash-2" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        async function publishJob() {
+            const text = document.getElementById('rawInput').value;
+            if(!text || prompt("Admin Pin:") !== "29") return;
+            document.getElementById('pubLoader').style.display = "block";
+            await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({action: "add", text: text}) });
+            location.reload();
+        }
+
+        async function deleteJob(id) {
+            if(!confirm("Delete this job?") || prompt("Admin Pin:") !== "29") return;
+            await fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({action: "delete", id: id}) });
+            location.reload();
+        }
+
+        function toggleAdmin() {
+            document.getElementById('viewMode').classList.toggle('hidden');
+            document.getElementById('adminMode').classList.toggle('hidden');
+            document.getElementById('adminBtn').innerText = document.getElementById('adminMode').classList.contains('hidden') ? "Admin Portal" : "Exit Admin";
+        }
+
+        window.onload = init;
+        lucide.createIcons();
+    </script>
+</body>
+</html>
         body { font-family: 'Inter', sans-serif; background: #0f172a; color: #f8fafc; min-height: 100vh; }
         .text-brand-orange { color: #f97316; }
         .bg-brand-orange { background-color: #f97316; }
