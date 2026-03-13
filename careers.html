@@ -22,22 +22,25 @@
         .bg-brand-orange { background-color: #f97316; }
         .text-sky-accent { color: #38bdf8; }
 
+        .nav-link {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover { color: #f97316; }
+
         .upload-btn {
             background-color: #f97316;
             color: white;
-            padding: 12px 28px;
+            padding: 10px 24px;
             border-radius: 9999px;
             font-weight: 700;
             display: inline-flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
-        }
-        .upload-btn:hover {
-            transform: translateY(-2px);
-            background-color: #ea580c;
-            box-shadow: 0 8px 25px rgba(249, 115, 22, 0.4);
         }
 
         .job-card {
@@ -46,26 +49,10 @@
             border: 1px solid rgba(56, 189, 248, 0.1);
             border-radius: 2rem;
             transition: all 0.4s ease;
-            position: relative;
         }
         .job-card:hover {
             border-color: #f97316;
             transform: translateY(-5px);
-        }
-
-        .delete-btn-card {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            color: #94a3b8;
-            padding: 0.5rem;
-            border-radius: 0.75rem;
-            transition: all 0.2s;
-            z-index: 10;
-        }
-        .delete-btn-card:hover {
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
         }
 
         .hidden { display: none; }
@@ -79,9 +66,16 @@
             <a href="index.html" class="text-sky-accent hover:text-white transition font-bold flex items-center gap-2">
                 <i data-lucide="arrow-left" class="w-4 h-4"></i> Home
             </a>
+
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="index.html#web-design" class="nav-link text-gray-300">Web Design</a>
+                <a href="index.html#graphics-design" class="nav-link text-gray-300">Graphics</a>
+                <a href="portfolio.html" class="nav-link text-gray-300">Portfolio</a>
+            </div>
+
             <button onclick="toggleAdminModal()" class="upload-btn">
-                <i data-lucide="cloud-upload" class="w-5 h-5"></i>
-                <span>Upload Job</span>
+                <i data-lucide="lock" class="w-4 h-4"></i>
+                <span class="text-xs uppercase tracking-widest">Admin</span>
             </button>
         </div>
     </nav>
@@ -89,100 +83,30 @@
     <main id="portal-view" class="flex-grow container mx-auto px-6 py-12">
         <header class="mb-16">
             <span class="text-sky-accent font-black text-[10px] uppercase tracking-[0.3em]">Kenflix Career Portal</span>
-            <h1 class="text-5xl md:text-6xl font-black text-white mt-4">Find Your <span class="text-brand-orange">Opportunity</span></h1>
-            <p class="text-gray-400 mt-6 max-w-2xl text-lg">Explore high-impact roles. Listings are automatically verified and removed after 60 days to keep opportunities fresh.</p>
+            <h1 class="text-5xl md:text-6xl font-black text-white mt-4 leading-tight">Find Your <span class="text-brand-orange">Opportunity</span></h1>
+            <p class="text-gray-400 mt-6 max-w-2xl text-lg">Direct access to verified roles in Finance, Tech, and Creative industries across Kenya.</p>
         </header>
         <div id="job-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
     </main>
 
     <main id="detail-view" class="flex-grow container mx-auto px-6 py-12 hidden">
-        <div class="flex justify-between items-center mb-8">
-            <button onclick="closeDetailView()" class="text-gray-400 hover:text-white flex items-center gap-2 font-bold uppercase text-xs tracking-widest">
-                <i data-lucide="chevron-left" class="w-4 h-4"></i> Back to All Jobs
-            </button>
-            <div id="detail-admin-bar"></div>
-        </div>
+        <button onclick="closeDetailView()" class="text-gray-400 hover:text-white mb-8 flex items-center gap-2 font-bold uppercase text-xs tracking-widest">
+            <i data-lucide="chevron-left" class="w-4 h-4"></i> Back to All Jobs
+        </button>
         <div id="detail-content" class="bg-slate-900/50 border border-gray-800 rounded-[3rem] p-8 md:p-16"></div>
     </main>
 
-    <div id="adminModal" class="fixed inset-0 bg-slate-950/98 backdrop-blur-2xl z-[100] hidden flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-brand-orange/20 w-full max-w-2xl rounded-[3rem] p-10 shadow-3xl">
-            <div class="flex justify-between items-center mb-8">
-                <h3 class="text-2xl font-black text-white italic">PORTAL <span class="text-brand-orange">UPLOAD</span></h3>
-                <button onclick="toggleAdminModal()" class="text-gray-500 hover:text-white"><i data-lucide="x"></i></button>
-            </div>
-            <textarea id="rawJobData" class="w-full h-80 bg-slate-800/50 border border-slate-700 rounded-3xl p-6 text-white text-sm focus:border-brand-orange outline-none mb-6" placeholder="Paste full details here..."></textarea>
-            <button onclick="processJob()" class="w-full bg-brand-orange text-white font-black py-5 rounded-2xl hover:bg-orange-600 transition-all uppercase tracking-widest text-sm">Analyze & Publish</button>
+    <div id="adminModal" class="fixed inset-0 bg-slate-950/98 z-[100] hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-brand-orange/20 w-full max-w-lg rounded-[3rem] p-10 text-center">
+            <h3 class="text-white font-black mb-4">ADMIN ACCESS</h3>
+            <p class="text-gray-400 text-sm mb-6">To add new jobs for your viewers, update the <code class="text-sky-accent font-mono">GLOBAL_JOB_DATABASE</code> array in the source code of this page.</p>
+            <button onclick="toggleAdminModal()" class="bg-brand-orange text-white px-8 py-3 rounded-xl font-bold uppercase text-xs">Close</button>
         </div>
     </div>
 
-    <footer class="bg-slate-900/80 backdrop-blur-lg text-gray-400 pt-16 pb-8 border-t border-gray-800">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 mb-12">
-                <div>
-                    <h5 class="font-semibold text-white mb-4">Services</h5>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="index.html#web-design" class="footer-link">Web Design</a></li>
-                        <li><a href="index.html#web-design" class="footer-link">Web Development</a></li>
-                        <li><a href="index.html#graphics-design" class="footer-link">Graphic Design</a></li>
-                        <li><a href="index.html#graphics-design" class="footer-link">Branding</a></li>
-                        <li><a href="index.html#graphics-design" class="footer-link">Animation</a></li>
-                        <li><a href="index.html#partnership" class="footer-link">Printing</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="font-semibold text-white mb-4">Business</h5>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="portfolio.html" class="footer-link font-medium text-sky-400">Portfolio</a></li>
-                        <li><a href="prices.html" class="footer-link font-medium text-sky-400">Packages for SMEs</a></li>
-                        <li><a href="prices.html" class="footer-link font-medium text-sky-400">Corporate Solutions</a></li>
-                        <li><a href="https://wa.me/254758760619?text=I'd%20like%20to%20get%20a%20quote" target="_blank" class="footer-link">Get a Quote</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="font-semibold text-white mb-4">About Us</h5>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="index.html#about-us-detailed" class="footer-link">Who We Are</a></li>
-                        <li><a href="index.html#team" class="footer-link">Our Team</a></li>
-                        <li><a href="index.html#partnership" class="footer-link">Partnerships</a></li>
-                        <li><a href="index.html#contact" class="footer-link">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="font-semibold text-white mb-4">Resources</h5>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="index.html#blog" class="footer-link">Blog</a></li>
-                        <li><a href="index.html#faq" class="footer-link">FAQs</a></li>
-                        <li><a href="index.html#" class="footer-link">Case Studies (Soon)</a></li>
-                        <li><a href="index.html#process" class="footer-link">Design Process</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5 class="font-semibold text-white mb-4">Legal</h5>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="terms.html" target="_blank" class="footer-link">Terms & Conditions</a></li>
-                        <li><a href="index.html#" class="footer-link">Privacy Policy</a></li>
-                        <li><a href="index.html#" class="footer-link">Cookie Policy</a></li>
-                    </ul>
-                </div>
-                <div class="col-span-2 md:col-span-1">
-                    <h5 class="font-semibold text-white mb-4">Contact Info</h5>
-                    <ul class="space-y-2 text-sm">
-                        <li><i data-lucide="map-pin" class="w-4 h-4 inline mr-2 text-brand-orange"></i> Nairobi, Kenya</li>
-                        <li><i data-lucide="phone" class="w-4 h-4 inline mr-2 text-brand-orange"></i> <a href="tel:+254758760619" class="footer-link">+254 758 760 619</a></li>
-                        <li><i data-lucide="mail" class="w-4 h-4 inline mr-2 text-brand-orange"></i> <a href="mailto:customercare@kenflixdesigns.co.ke" class="footer-link break-all">customercare@kenflixdesigns.co.ke</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <div class="flex space-x-4 mb-4 md:mb-0">
-                    <a href="#" class="text-gray-500 hover:text-brand-orange"><i data-lucide="facebook" class="w-5 h-5"></i></a>
-                    <a href="#" class="text-gray-500 hover:text-brand-orange"><i data-lucide="youtube" class="w-5 h-5"></i></a>
-                    <a href="#" class="text-gray-500 hover:text-brand-orange"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
-                    <a href="#" class="text-gray-500 hover:text-brand-orange"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                </div>
-                <p class="text-sm text-center">&copy; <span id="footer-year"></span> Kenflix Designs. All Rights Reserved.</p>
-            </div>
+    <footer class="bg-slate-900/80 backdrop-blur-lg text-gray-400 pt-16 pb-8 border-t border-gray-800 mt-20">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">&copy; <span id="footer-year"></span> Kenflix Designs. All Rights Reserved.</p>
         </div>
     </footer>
 
@@ -190,74 +114,37 @@
         lucide.createIcons();
         document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-        function toggleAdminModal() { document.getElementById('adminModal').classList.toggle('hidden'); }
-
-        // Secure Delete Function
-        function deleteListing(id) {
-            if (confirm("Verify deletion?")) {
-                const pass = prompt("Enter verification code:");
-                // Secret code is hidden here
-                if (pass === "29") {
-                    let db = JSON.parse(localStorage.getItem('kenflix_final_jobs') || '[]');
-                    db = db.filter(j => j.id !== id);
-                    localStorage.setItem('kenflix_final_jobs', JSON.stringify(db));
-                    alert("Listing removed.");
-                    closeDetailView();
-                    loadJobs();
-                } else {
-                    alert("Unauthorized.");
-                }
+        /** * GLOBAL DATABASE:
+         * This is where you add jobs so ALL viewers can see them.
+         * Just copy a block and change the details.
+         */
+        const GLOBAL_JOB_DATABASE = [
+            {
+                id: 1,
+                title: "Accounting Intern",
+                location: "Nairobi, Kenya",
+                pay: "KSh 25,000 - 35,000",
+                field: "Finance",
+                link: "mailto:careers@kenflixdesigns.co.ke",
+                fullContent: "We are looking for a Finance intern to assist with data merging and treasury documentation. \n\nRequirements:\n- Pursuing B.Com or CPA Part 1\n- High attention to detail\n- Basic knowledge of Google Apps Script is a plus."
+            },
+            {
+                id: 2,
+                title: "UI/UX Designer",
+                location: "Remote / Nairobi",
+                pay: "Competitive",
+                field: "Graphics",
+                link: "https://wa.me/254758760619",
+                fullContent: "Join the Kenflix Creative team. You will be responsible for creating minimalist silhouette illustrations and high-contrast branding assets for our SME clients."
             }
-        }
+        ];
 
-        function processJob() {
-            const rawText = document.getElementById('rawJobData').value;
-            if (!rawText.trim()) return;
-            const extract = (labels) => {
-                for (let label of labels) {
-                    const reg = new RegExp(`${label}:?\\s*(.*)`, 'i');
-                    const match = rawText.match(reg);
-                    if (match) return match[1].trim();
-                }
-                return "Not Specified";
-            };
-            const urlMatch = rawText.match(/https?:\/\/[^\s]+/);
-            const emailMatch = rawText.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
-            const applyLink = urlMatch ? urlMatch[0] : (emailMatch ? `mailto:${emailMatch[0]}` : "#");
-
-            const job = {
-                id: Date.now(),
-                title: extract(['Job Title', 'Position', 'Role']),
-                location: extract(['Location', 'Place']),
-                pay: extract(['Salary', 'Pay']),
-                field: /tech|it|code/i.test(rawText) ? "Technology" : "General",
-                fullContent: rawText,
-                shortDesc: rawText.substring(0, 120) + "...",
-                link: applyLink,
-                postedAt: new Date().getTime()
-            };
-
-            let db = JSON.parse(localStorage.getItem('kenflix_final_jobs') || '[]');
-            db.unshift(job);
-            localStorage.setItem('kenflix_final_jobs', JSON.stringify(db));
-            toggleAdminModal();
-            loadJobs();
-            document.getElementById('rawJobData').value = '';
-        }
+        function toggleAdminModal() { document.getElementById('adminModal').classList.toggle('hidden'); }
 
         function loadJobs() {
             const grid = document.getElementById('job-grid');
-            const jobs = JSON.parse(localStorage.getItem('kenflix_final_jobs') || '[]');
-            const active = jobs.filter(j => (new Date().getTime() - j.postedAt) < (60 * 24 * 60 * 60 * 1000));
-
-            if(active.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-20 text-gray-600 border border-dashed border-gray-800 rounded-3xl uppercase tracking-widest text-xs">No active vacancies</div>`;
-                return;
-            }
-
-            grid.innerHTML = active.map(j => `
+            grid.innerHTML = GLOBAL_JOB_DATABASE.map(j => `
                 <article class="job-card p-8 flex flex-col h-full">
-                    <button onclick="deleteListing(${j.id})" class="delete-btn-card"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                     <span class="text-[9px] font-black text-sky-accent uppercase mb-4 tracking-widest">${j.field}</span>
                     <h2 class="text-2xl font-bold text-white mb-4 leading-tight">${j.title}</h2>
                     <div class="space-y-2 mb-6 text-sm text-gray-400">
@@ -266,7 +153,7 @@
                     </div>
                     <div class="mt-auto flex justify-between items-center border-t border-gray-800 pt-6">
                         <button onclick="viewJob(${j.id})" class="text-sky-accent text-xs font-bold uppercase tracking-widest hover:underline">Read More</button>
-                        <a href="${j.link}" target="_blank" class="bg-brand-orange text-white px-5 py-2 rounded-xl font-bold text-xs uppercase">Apply</a>
+                        <a href="${j.link}" target="_blank" class="bg-brand-orange text-white px-5 py-2 rounded-xl font-bold text-xs uppercase hover:scale-105 transition">Apply</a>
                     </div>
                 </article>
             `).join('');
@@ -274,19 +161,17 @@
         }
 
         function viewJob(id) {
-            const jobs = JSON.parse(localStorage.getItem('kenflix_final_jobs') || '[]');
-            const job = jobs.find(j => j.id == id);
+            const job = GLOBAL_JOB_DATABASE.find(j => j.id == id);
             document.getElementById('portal-view').classList.add('hidden');
             document.getElementById('detail-view').classList.remove('hidden');
-            document.getElementById('detail-admin-bar').innerHTML = `<button onclick="deleteListing(${job.id})" class="text-red-500 border border-red-500/20 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-red-500 hover:text-white transition">Delete</button>`;
             document.getElementById('detail-content').innerHTML = `
-                <h1 class="text-4xl md:text-6xl font-black text-white mb-6">${job.title}</h1>
+                <h1 class="text-4xl md:text-6xl font-black text-white mb-6 uppercase tracking-tighter">${job.title}</h1>
                 <div class="flex flex-wrap gap-6 mb-12 text-gray-400 font-bold">
                     <span class="flex items-center gap-2"><i data-lucide="map-pin" class="w-5 h-5 text-sky-accent"></i> ${job.location}</span>
                     <span class="flex items-center gap-2"><i data-lucide="banknote" class="w-5 h-5 text-sky-accent"></i> ${job.pay}</span>
                 </div>
-                <div class="text-gray-300 leading-relaxed whitespace-pre-wrap text-lg">${job.fullContent}</div>
-                <div class="mt-12"><a href="${job.link}" target="_blank" class="inline-block bg-brand-orange text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl">Apply Now</a></div>`;
+                <div class="text-gray-300 leading-relaxed whitespace-pre-wrap text-lg border-l-4 border-brand-orange pl-8">${job.fullContent}</div>
+                <div class="mt-12"><a href="${job.link}" target="_blank" class="inline-block bg-brand-orange text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl hover:scale-105 transition">Apply Now</a></div>`;
             lucide.createIcons();
             window.scrollTo(0,0);
         }
