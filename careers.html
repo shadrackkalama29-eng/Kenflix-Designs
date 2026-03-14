@@ -3,77 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kenflix Careers | Live Vault</title>
+    <title>Kenflix Careers | Premium Job Vault</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; background: #0f172a; color: #f8fafc; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #070b14; color: #f8fafc; }
+        h1, h2, .font-heading { font-family: 'Space Grotesk', sans-serif; }
+        
+        .text-brand-orange { color: #f97316; }
+        .text-sky-blue { color: #38bdf8; }
+        .bg-sky-blue { background-color: #38bdf8; }
+        
         .job-card { 
-            background: rgba(30, 41, 59, 0.4); 
-            border: 1px solid rgba(255,255,255,0.05); 
-            border-radius: 2rem; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.1));
+            border: 1px solid rgba(56, 189, 248, 0.05); 
+            border-radius: 2.5rem; 
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
         .job-card:hover { 
-            border-color: #f97316; 
-            transform: translateY(-8px);
-            background: rgba(30, 41, 59, 0.7);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            border-color: rgba(56, 189, 248, 0.4); 
+            transform: translateY(-12px);
+            background: rgba(30, 41, 59, 0.6);
+            box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.5);
         }
-        .text-brand-orange { color: #f97316; }
-        .hidden { display: none; }
         
-        /* List Mode Styling */
-        .list-item {
-            background: rgba(30, 41, 59, 0.3);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            transition: background 0.2s;
+        /* Cursor Effect for Typing */
+        #typing-text::after {
+            content: '|';
+            animation: blink 0.7s infinite;
+            margin-left: 5px;
+            color: #f97316;
         }
-        .list-item:hover { background: rgba(30, 41, 59, 0.6); }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .list-container {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.1);
+            border-radius: 2rem;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <nav class="p-6 border-b border-white/5 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
+    <nav class="p-8 border-b border-white/5 bg-[#070b14]/80 backdrop-blur-xl sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-sky-400 font-black uppercase tracking-widest text-sm italic">Kenflix Portals</h1>
-            <div class="flex gap-6 items-center">
-                <span id="connection-dot" class="h-2 w-2 rounded-full bg-red-500 animate-pulse"></span>
-                <a href="index.html" class="text-[10px] font-bold text-gray-500 uppercase tracking-widest hover:text-white transition">← Exit Vault</a>
+            <h1 class="text-white font-bold uppercase tracking-tighter text-xl">
+                Kenflix<span class="text-sky-blue">Designs</span>
+            </h1>
+            <div class="flex gap-8 items-center">
+                <div class="flex items-center gap-2">
+                    <span id="connection-dot" class="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse"></span>
+                    <span class="text-[9px] font-black uppercase tracking-widest text-sky-blue/60">Live Sync</span>
+                </div>
+                <a href="index.html" class="text-[10px] font-black text-gray-400 uppercase tracking-widest hover:text-sky-blue transition-colors">Back to Home</a>
             </div>
         </div>
     </nav>
 
-    <main class="container mx-auto px-6 py-16">
-        <header class="mb-12">
-            <span class="text-sky-400 font-black text-[10px] uppercase tracking-[0.4em] block mb-4">Live Cloud Sync</span>
-            <h1 class="text-6xl md:text-8xl font-black text-white leading-tight uppercase tracking-tighter mb-4">
-                Careers <span class="text-brand-orange">Vault</span>
+    <main class="container mx-auto px-6 py-20 flex-grow">
+        <header class="mb-20">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-blue/10 border border-sky-blue/20 mb-8">
+                <span class="text-[10px] font-bold text-sky-blue uppercase tracking-[0.2em]">Verified Career Opportunities</span>
+            </div>
+            
+            <h1 class="text-7xl md:text-9xl font-bold text-white leading-[0.85] uppercase tracking-tighter mb-10">
+                Career <span id="typing-text" class="text-brand-orange"></span>
             </h1>
-            <div class="max-w-2xl border-l-2 border-brand-orange pl-6 py-2">
-                <h3 class="text-white font-bold text-lg mb-2">Build your career at Britam</h3>
-                <p class="text-gray-400 text-sm leading-relaxed italic">
-                    Choosing a career with Britam means joining a dynamic and innovative company that values its employees and invests in their professional growth. Our diverse range of business units and a supportive team culture provides ample opportunities for career advancement and personal fulfillment at every level of your development.
+            
+            <div class="max-w-2xl bg-white/[0.02] p-8 rounded-[2rem] border-l-4 border-l-sky-blue border-y border-r border-white/5 backdrop-blur-sm">
+                <p class="text-gray-400 text-lg leading-relaxed font-light">
+                    Your direct connection to <span class="text-sky-blue font-semibold italic">reputable industry leaders</span>. We scout and curate the most promising vacancies across the digital and corporate landscape. While these roles are hosted by our partner firms, we provide the <span class="text-white font-semibold">Kenflix Standard</span> of accessibility.
                 </p>
             </div>
         </header>
 
-        <div id="status-area" class="flex items-center gap-3 text-gray-500 uppercase tracking-widest text-[10px] font-bold italic mb-10">
-            <div id="loader" class="animate-spin rounded-full h-4 w-4 border-2 border-brand-orange border-t-transparent"></div>
-            <span id="status-text">Synchronizing with Google Sheets...</span>
+        <div class="mb-12 max-w-xl">
+            <div class="relative">
+                <i data-lucide="search" class="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500"></i>
+                <input type="text" id="jobSearch" onkeyup="filterJobs()" placeholder="SEARCH FOR ROLES OR LOCATIONS..." 
+                class="w-full bg-white/5 border border-white/10 rounded-2xl py-5 pl-14 pr-6 text-[10px] font-bold text-white uppercase tracking-widest focus:outline-none focus:border-sky-blue transition-all">
+            </div>
         </div>
 
-        <div id="jobGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8"></div>
+        <div id="jobGrid" class="grid grid-cols-1 md:grid-cols-2 gap-10"></div>
+        <div id="fullListView" class="hidden">
+            <div class="list-container">
+                <div id="listContent"></div>
+            </div>
+        </div>
 
-        <div id="fullListView" class="hidden space-y-4"></div>
-
-        <div id="action-container" class="mt-16 flex justify-center">
-            <button id="viewMoreBtn" onclick="toggleViewMode()" class="hidden border border-white/20 text-white px-12 py-4 rounded-full text-[10px] font-black uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all">
-                View All Vacancies
+        <div id="action-container" class="mt-20 flex flex-col items-center gap-4">
+            <button id="viewMoreBtn" onclick="toggleViewMode()" class="hidden group relative bg-sky-blue text-black px-16 py-6 rounded-2xl text-[11px] font-black uppercase tracking-[0.4em] hover:bg-brand-orange hover:text-white transition-all duration-500">
+                Explore All Listings
             </button>
+            <p id="jobCountLabel" class="text-[10px] text-gray-600 font-bold uppercase tracking-[0.3em]"></p>
         </div>
     </main>
+
+   <footer class="bg-slate-900/80 backdrop-blur-lg text-gray-400 pt-16 pb-8 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 mb-12">
+                <div>
+                    <h5 class="font-semibold text-white mb-4">Services</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html#web-design" class="footer-link">Web Design</a></li>
+                        <li><a href="index.html#web-design" class="footer-link">Web Development</a></li>
+                        <li><a href="index.html#graphics-design" class="footer-link">Graphic Design</a></li>
+                        <li><a href="index.html#graphics-design" class="footer-link">Branding</a></li>
+                        <li><a href="index.html#graphics-design" class="footer-link">Animation</a></li>
+                        <li><a href="index.html#partnership" class="footer-link">Printing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold text-white mb-4">Business</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="portfolio.html" class="footer-link font-medium text-sky-400">Portfolio</a></li>
+                        <li><a href="prices.html" class="footer-link font-medium text-sky-400">Packages for SMEs</a></li>
+                        <li><a href="prices.html" class="footer-link font-medium text-sky-400">Corporate Solutions</a></li>
+                        <li><a href="https://wa.me/254758760619" target="_blank" class="footer-link">Get a Quote</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold text-white mb-4">About Us</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html#about-us-detailed" class="footer-link">Who We Are</a></li>
+                        <li><a href="index.html#team" class="footer-link">Our Team</a></li>
+                        <li><a href="index.html#partnership" class="footer-link">Partnerships</a></li>
+                        <li><a href="index.html#contact" class="footer-link">Contact Us</a></li>
+                         <li><a href="career.html" class="footer-link">Careers</a></li>
+                          <li><a href="finance.html"class="footer-link">Finance</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold text-white mb-4">Resources</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html#blog" class="footer-link">Blog</a></li>
+                        <li><a href="index.html#faq" class="footer-link">FAQs</a></li>
+                        <li><a href="index.html#" class="footer-link">Case Studies (Soon)</a></li>
+                        <li><a href="index.html#process" class="footer-link">Design Process</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold text-white mb-4">Legal</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="terms.html" target="_blank" class="footer-link">Terms & Conditions</a></li>
+                        <li><a href="index.html#" class="footer-link">Privacy Policy</a></li>
+                        <li><a href="index.html#" class="footer-link">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-span-2 md:col-span-1">
+                    <h5 class="font-semibold text-white mb-4">Contact Info</h5>
+                    <ul class="space-y-2 text-sm">
+                        <li><i data-lucide="map-pin" class="w-4 h-4 inline mr-2 text-brand-orange"></i> Nairobi, Kenya</li>
+                        <li><i data-lucide="phone" class="w-4 h-4 inline mr-2 text-brand-orange"></i> <a href="tel:+254758760619" class="footer-link">+254 758 760 619</a></li>
+                        <li><i data-lucide="mail" class="w-4 h-4 inline mr-2 text-brand-orange"></i> <a href="mailto:customercare@kenflixdesigns.co.ke" class="footer-link break-all">customercare@kenflixdesigns.co.ke</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white/5 pt-10 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] text-gray-600 font-bold uppercase tracking-widest">
+                <p>© 2026 Kenflix Designs.</p>
+               <p class="flex items-center gap-2">
+  Built with <i data-lucide="heart" class="w-3 h-3 text-brand-orange"></i> by 
+  <a href="https://kenflixdesigns.co.ke" target="_blank" class="text-sky-blue hover:text-white transition-all duration-300 font-black">
+    Kenflix Designs
+  </a>
+</p></div>
+        </div>
+    </footer>
 
     <script>
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxifvk82I76Vt_fLPaDQgdjKPMqNYENi4JP3clerubLRf-qfwy43LAmTGqwNbm4-vFH/exec";
@@ -81,136 +179,86 @@
         let allJobs = [];
         let isListView = false;
 
-        async function fetchRealData() {
-            const statusText = document.getElementById('status-text');
-            const loader = document.getElementById('loader');
-            const dot = document.getElementById('connection-dot');
+        // --- Typing Effect Logic ---
+        const words = ["Vault.", "Opportunities.", "Portal.", "Gateway."];
+        let i = 0, j = 0, isDeleting = false;
+        function type() {
+            const currentWord = words[i];
+            const display = document.getElementById('typing-text');
+            display.textContent = isDeleting ? currentWord.substring(0, j--) : currentWord.substring(0, j++);
+            
+            if (!isDeleting && j === currentWord.length + 1) { isDeleting = true; setTimeout(type, 2000); }
+            else if (isDeleting && j === 0) { isDeleting = false; i = (i + 1) % words.length; setTimeout(type, 500); }
+            else { setTimeout(type, isDeleting ? 100 : 200); }
+        }
 
+        async function fetchRealData() {
             const offlineData = localStorage.getItem(CACHE_KEY);
-            if (offlineData) {
-                allJobs = JSON.parse(offlineData);
-                renderInitialGrid(allJobs);
-                statusText.innerText = "Showing Cached Data (Fetching Live...)";
-            }
+            if (offlineData) { allJobs = JSON.parse(offlineData); renderInitialGrid(allJobs); }
 
             try {
                 const response = await fetch(SCRIPT_URL);
                 allJobs = await response.json();
                 localStorage.setItem(CACHE_KEY, JSON.stringify(allJobs));
-
-                loader.classList.add('hidden');
-                dot.classList.remove('bg-red-500', 'animate-pulse');
-                dot.classList.add('bg-green-500');
-                statusText.innerText = `Connected: ${allJobs.length} Live Vacancies Found`;
-
+                document.getElementById('connection-dot').classList.replace('bg-red-500', 'bg-green-500');
                 renderInitialGrid(allJobs);
+            } catch (error) { console.log("Sync failed"); }
+        }
 
-            } catch (error) {
-                loader.classList.add('hidden');
-                statusText.innerText = offlineData ? "Offline Mode: Active" : "Sync Error";
-            }
+        function filterJobs() {
+            const query = document.getElementById('jobSearch').value.toLowerCase();
+            const filtered = allJobs.filter(j => j.jobtitle.toLowerCase().includes(query) || j.location.toLowerCase().includes(query));
+            isListView ? renderFullList(filtered) : renderInitialGrid(filtered);
         }
 
         function renderInitialGrid(jobs) {
             const grid = document.getElementById('jobGrid');
             const btn = document.getElementById('viewMoreBtn');
-            
-            // Only show first 6 in the fancy grid
             const displayJobs = jobs.slice(0, 6);
             
             grid.innerHTML = displayJobs.map(job => `
-                <div class="job-card p-8 md:p-10 flex flex-col h-full">
-                    <div class="flex justify-between items-start mb-8">
-                        <span class="text-[10px] font-black text-sky-400 uppercase tracking-[0.2em] italic">${job.jobid}</span>
-                        <div class="bg-brand-orange/10 px-3 py-1 rounded-full">
-                             <span class="text-[9px] text-brand-orange font-black uppercase">Recent</span>
-                        </div>
+                <div class="job-card p-10 md:p-12 flex flex-col h-full">
+                    <div class="flex justify-between items-start mb-10">
+                        <span class="text-[10px] font-black text-sky-blue uppercase tracking-[0.3em] font-heading">${job.jobid}</span>
+                        <span class="text-[9px] text-gray-600 font-bold uppercase tracking-widest">${job.timeweposted ? new Date(job.timeweposted).toLocaleDateString() : 'Active'}</span>
                     </div>
-                    <h2 class="text-3xl font-black text-white mb-6 uppercase tracking-tighter leading-tight">${job.jobtitle}</h2>
-                    <div class="grid grid-cols-2 gap-4 mb-8">
-                        <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
-                            <p class="text-[8px] text-gray-500 uppercase font-black mb-1">Region</p>
-                            <p class="text-xs font-bold text-white uppercase truncate">${job.location}</p>
-                        </div>
-                        <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
-                            <p class="text-[8px] text-gray-500 uppercase font-black mb-1">Salary</p>
-                            <p class="text-xs font-bold text-brand-orange uppercase truncate">${job.salary}</p>
-                        </div>
+                    <h2 class="text-4xl font-bold text-white mb-8 uppercase tracking-tighter leading-[0.9]">${job.jobtitle}</h2>
+                    <div class="flex flex-wrap gap-4 mb-10">
+                        <div class="bg-white/5 px-4 py-2 rounded-lg border border-white/5"><p class="text-[10px] font-bold text-white uppercase">${job.location}</p></div>
+                        <div class="bg-brand-orange/10 px-4 py-2 rounded-lg border border-brand-orange/20"><p class="text-[10px] font-bold text-brand-orange uppercase">${job.salary}</p></div>
                     </div>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-10 line-clamp-3">${job.description}</p>
-                    <div class="mt-auto pt-6 border-t border-white/5 flex justify-between items-center">
-                        <div class="flex flex-col">
-                            <span class="text-[8px] text-gray-500 uppercase font-black">Closing Date</span>
-                            <span class="text-[10px] text-white font-black uppercase">${job.closingdate || job.datedposted}</span>
-                        </div>
-                        <a href="${job.link || '#'}" target="_blank" class="bg-white text-black px-6 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-brand-orange hover:text-white transition-all">
-                            Apply
-                        </a>
+                    <p class="text-gray-400 text-sm mb-12 line-clamp-3 font-light">${job.description}</p>
+                    <div class="mt-auto pt-8 border-t border-white/5 flex justify-between items-center">
+                        <div><span class="text-[8px] text-gray-600 font-black uppercase tracking-widest block">Deadline</span><span class="text-[11px] text-white font-bold uppercase">${job.closingdate || job.datedposted || 'Urgent'}</span></div>
+                        <a href="${job.link || '#'}" target="_blank" class="bg-sky-blue text-black px-10 py-4 rounded-xl text-[10px] font-black uppercase hover:bg-brand-orange hover:text-white transition-all">Apply</a>
                     </div>
                 </div>
             `).join('');
-
-            // Show "View More" if we have more than 6 jobs
-            if (jobs.length > 6) {
-                btn.classList.remove('hidden');
-            }
+            if (jobs.length > 6) btn.classList.remove('hidden');
             lucide.createIcons();
         }
 
         function toggleViewMode() {
-            const grid = document.getElementById('jobGrid');
-            const list = document.getElementById('fullListView');
-            const btn = document.getElementById('viewMoreBtn');
-
             isListView = !isListView;
-
-            if (isListView) {
-                grid.classList.add('hidden');
-                list.classList.remove('hidden');
-                btn.innerText = "Show Featured View";
-                renderFullList(allJobs);
-            } else {
-                grid.classList.remove('hidden');
-                list.classList.add('hidden');
-                btn.innerText = "View All Vacancies";
-            }
+            document.getElementById('jobGrid').classList.toggle('hidden');
+            document.getElementById('fullListView').classList.toggle('hidden');
+            document.getElementById('viewMoreBtn').innerText = isListView ? "Back to Featured View" : "Explore All Listings";
+            if (isListView) renderFullList(allJobs);
             window.scrollTo({ top: 400, behavior: 'smooth' });
         }
 
         function renderFullList(jobs) {
-            const list = document.getElementById('fullListView');
-            list.innerHTML = `
-                <div class="bg-slate-900 border border-white/5 rounded-3xl overflow-hidden">
-                    <table class="w-full text-left border-collapse">
-                        <thead class="bg-white/5">
-                            <tr>
-                                <th class="p-6 text-[10px] font-black uppercase tracking-widest text-sky-400">Position</th>
-                                <th class="p-6 text-[10px] font-black uppercase tracking-widest text-sky-400">Location</th>
-                                <th class="p-6 text-[10px] font-black uppercase tracking-widest text-sky-400">Deadline</th>
-                                <th class="p-6 text-[10px] font-black uppercase tracking-widest text-sky-400">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${jobs.map(job => `
-                                <tr class="list-item border-t border-white/5">
-                                    <td class="p-6">
-                                        <p class="text-white font-bold text-sm uppercase">${job.jobtitle}</p>
-                                        <p class="text-[9px] text-gray-500 uppercase mt-1">ID: ${job.jobid}</p>
-                                    </td>
-                                    <td class="p-6 text-xs text-gray-400 uppercase font-medium">${job.location}</td>
-                                    <td class="p-6 text-xs text-brand-orange font-black uppercase">${job.closingdate || job.datedposted}</td>
-                                    <td class="p-6">
-                                        <a href="${job.link || '#'}" target="_blank" class="text-[10px] font-black text-white hover:text-brand-orange uppercase tracking-tighter transition">Details →</a>
-                                    </td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
+            document.getElementById('listContent').innerHTML = jobs.map(job => `
+                <div class="list-item flex flex-col md:grid md:grid-cols-4 p-8 gap-6 items-center">
+                    <div><p class="text-white font-bold text-lg uppercase tracking-tighter">${job.jobtitle}</p><p class="text-[9px] text-sky-blue font-black uppercase italic">${job.jobid}</p></div>
+                    <div class="text-[11px] text-gray-400 uppercase font-bold">${job.location}</div>
+                    <div class="text-[11px] text-brand-orange font-black uppercase tracking-widest">${job.closingdate || job.datedposted}</div>
+                    <div class="text-right w-full"><a href="${job.link || '#'}" target="_blank" class="text-[10px] font-black text-white border border-sky-blue/30 px-6 py-3 rounded-lg hover:bg-sky-blue hover:text-black transition-all">Apply →</a></div>
                 </div>
-            `;
+            `).join('');
         }
 
-        window.onload = fetchRealData;
+        window.onload = () => { fetchRealData(); type(); };
     </script>
 </body>
 </html>
