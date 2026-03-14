@@ -23,6 +23,14 @@
         }
         .text-brand-orange { color: #f97316; }
         .hidden { display: none; }
+        
+        /* List Mode Styling */
+        .list-item {
+            background: rgba(30, 41, 59, 0.3);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: background 0.2s;
+        }
+        .list-item:hover { background: rgba(30, 41, 59, 0.6); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -38,11 +46,17 @@
     </nav>
 
     <main class="container mx-auto px-6 py-16">
-        <header class="mb-16">
+        <header class="mb-12">
             <span class="text-sky-400 font-black text-[10px] uppercase tracking-[0.4em] block mb-4">Live Cloud Sync</span>
-            <h1 class="text-6xl md:text-8xl font-black text-white leading-tight uppercase tracking-tighter">
+            <h1 class="text-6xl md:text-8xl font-black text-white leading-tight uppercase tracking-tighter mb-4">
                 Careers <span class="text-brand-orange">Vault</span>
             </h1>
+            <div class="max-w-2xl border-l-2 border-brand-orange pl-6 py-2">
+                <h3 class="text-white font-bold text-lg mb-2">Build your career at Britam</h3>
+                <p class="text-gray-400 text-sm leading-relaxed italic">
+                    Choosing a career with Britam means joining a dynamic and innovative company that values its employees and invests in their professional growth. Our diverse range of business units and a supportive team culture provides ample opportunities for career advancement and personal fulfillment at every level of your development.
+                </p>
+            </div>
         </header>
 
         <div id="status-area" class="flex items-center gap-3 text-gray-500 uppercase tracking-widest text-[10px] font-bold italic mb-10">
@@ -50,100 +64,150 @@
             <span id="status-text">Synchronizing with Google Sheets...</span>
         </div>
 
-        <div id="jobGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-            </div>
+        <div id="jobGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8"></div>
+
+        <div id="fullListView" class="hidden space-y-4"></div>
+
+        <div id="action-container" class="mt-16 flex justify-center">
+            <button id="viewMoreBtn" onclick="toggleViewMode()" class="hidden border border-white/20 text-white px-12 py-4 rounded-full text-[10px] font-black uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all">
+                View All Vacancies
+            </button>
+        </div>
     </main>
 
     <script>
-        // 1. YOUR APPS SCRIPT URL (Replace with your current deployment URL)
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxifvk82I76Vt_fLPaDQgdjKPMqNYENi4JP3clerubLRf-qfwy43LAmTGqwNbm4-vFH/exec";
         const CACHE_KEY = 'kenflix_live_data';
+        let allJobs = [];
+        let isListView = false;
 
         async function fetchRealData() {
-            const grid = document.getElementById('jobGrid');
             const statusText = document.getElementById('status-text');
             const loader = document.getElementById('loader');
             const dot = document.getElementById('connection-dot');
 
-            // Load from Cache first (Offline support)
             const offlineData = localStorage.getItem(CACHE_KEY);
             if (offlineData) {
-                renderUI(JSON.parse(offlineData));
+                allJobs = JSON.parse(offlineData);
+                renderInitialGrid(allJobs);
                 statusText.innerText = "Showing Cached Data (Fetching Live...)";
             }
 
             try {
-                // Fetch live data from the Sheet
                 const response = await fetch(SCRIPT_URL);
-                const jobs = await response.json();
+                allJobs = await response.json();
+                localStorage.setItem(CACHE_KEY, JSON.stringify(allJobs));
 
-                // Save to cache for next time
-                localStorage.setItem(CACHE_KEY, JSON.stringify(jobs));
-
-                // Update UI state
                 loader.classList.add('hidden');
                 dot.classList.remove('bg-red-500', 'animate-pulse');
                 dot.classList.add('bg-green-500');
-                statusText.innerText = `Connected: ${jobs.length} Real-Time Vacancies Found`;
+                statusText.innerText = `Connected: ${allJobs.length} Live Vacancies Found`;
 
-                renderUI(jobs);
+                renderInitialGrid(allJobs);
 
             } catch (error) {
-                console.error("Cloud Fetch Error:", error);
                 loader.classList.add('hidden');
-                statusText.innerText = offlineData ? "Offline: Viewing Last Synced Data" : "Connection Error: Check Script URL";
+                statusText.innerText = offlineData ? "Offline Mode: Active" : "Sync Error";
             }
         }
 
-        function renderUI(jobs) {
+        function renderInitialGrid(jobs) {
             const grid = document.getElementById('jobGrid');
+            const btn = document.getElementById('viewMoreBtn');
             
-            if (!jobs || jobs.length === 0) {
-                grid.innerHTML = `<p class="text-gray-600 uppercase text-[10px] font-bold">No jobs found in the vault.</p>`;
-                return;
-            }
-
-            grid.innerHTML = jobs.map(job => `
+            // Only show first 6 in the fancy grid
+            const displayJobs = jobs.slice(0, 6);
+            
+            grid.innerHTML = displayJobs.map(job => `
                 <div class="job-card p-8 md:p-10 flex flex-col h-full">
                     <div class="flex justify-between items-start mb-8">
-                        <div class="flex flex-col">
-                            <span class="text-[10px] font-black text-sky-400 uppercase tracking-[0.2em] italic">${job.jobid}</span>
-                            <span class="text-[9px] text-gray-600 font-bold uppercase mt-1">Ref: ${job.timeweposted ? new Date(job.timeweposted).toLocaleDateString() : 'N/A'}</span>
-                        </div>
+                        <span class="text-[10px] font-black text-sky-400 uppercase tracking-[0.2em] italic">${job.jobid}</span>
                         <div class="bg-brand-orange/10 px-3 py-1 rounded-full">
-                             <span class="text-[9px] text-brand-orange font-black uppercase">Active</span>
+                             <span class="text-[9px] text-brand-orange font-black uppercase">Recent</span>
                         </div>
                     </div>
-
-                    <h2 class="text-3xl md:text-4xl font-black text-white mb-6 uppercase tracking-tighter leading-tight">${job.jobtitle}</h2>
-
+                    <h2 class="text-3xl font-black text-white mb-6 uppercase tracking-tighter leading-tight">${job.jobtitle}</h2>
                     <div class="grid grid-cols-2 gap-4 mb-8">
                         <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
                             <p class="text-[8px] text-gray-500 uppercase font-black mb-1">Region</p>
                             <p class="text-xs font-bold text-white uppercase truncate">${job.location}</p>
                         </div>
                         <div class="bg-white/5 p-4 rounded-2xl border border-white/5">
-                            <p class="text-[8px] text-gray-500 uppercase font-black mb-1">Budget/Salary</p>
+                            <p class="text-[8px] text-gray-500 uppercase font-black mb-1">Salary</p>
                             <p class="text-xs font-bold text-brand-orange uppercase truncate">${job.salary}</p>
                         </div>
                     </div>
-
                     <p class="text-gray-400 text-sm leading-relaxed mb-10 line-clamp-3">${job.description}</p>
-
-                    <div class="mt-auto pt-6 border-t border-white/5 space-y-4">
-                        <div class="flex justify-between items-center px-1">
-                            <span class="text-[9px] text-gray-500 uppercase font-black tracking-widest">Closing Date</span>
-                            <span class="text-[10px] text-white font-black uppercase">${job.datedposted}</span>
+                    <div class="mt-auto pt-6 border-t border-white/5 flex justify-between items-center">
+                        <div class="flex flex-col">
+                            <span class="text-[8px] text-gray-500 uppercase font-black">Closing Date</span>
+                            <span class="text-[10px] text-white font-black uppercase">${job.closingdate || job.datedposted}</span>
                         </div>
-                        <a href="${job.link || '#'}" target="_blank" class="flex items-center justify-center gap-2 bg-white text-black px-10 py-4 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-brand-orange hover:text-white transition-all w-full text-center">
-                            Apply for this Role
-                            <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                        <a href="${job.link || '#'}" target="_blank" class="bg-white text-black px-6 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-brand-orange hover:text-white transition-all">
+                            Apply
                         </a>
                     </div>
                 </div>
             `).join('');
 
+            // Show "View More" if we have more than 6 jobs
+            if (jobs.length > 6) {
+                btn.classList.remove('hidden');
+            }
             lucide.createIcons();
+        }
+
+        function toggleViewMode() {
+            const grid = document.getElementById('jobGrid');
+            const list = document.getElementById('fullListView');
+            const btn = document.getElementById('viewMoreBtn');
+
+            isListView = !isListView;
+
+            if (isListView) {
+                grid.classList.add('hidden');
+                list.classList.remove('hidden');
+                btn.innerText = "Show Featured View";
+                renderFullList(allJobs);
+            } else {
+                grid.classList.remove('hidden');
+                list.classList.add('hidden');
+                btn.innerText = "View All Vacancies";
+            }
+            window.scrollTo({ top: 400, behavior: 'smooth' });
+        }
+
+        function renderFullList(jobs) {
+            const list = document.getElementById('fullListView');
+            list.innerHTML = `
+                <div class="bg-slate-900 border border-white/5 rounded-3xl overflow-hidden">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-white/5">
+                            <tr>
+                                <th class="p-6 text-[10px] font-black uppercase tracking-widest text-sky-400">Position</th>
+                                <th class="p-6 text-[10px] font-black uppercase tracking-widest text-sky-400">Location</th>
+                                <th class="p-6 text-[10px] font-black uppercase tracking-widest text-sky-400">Deadline</th>
+                                <th class="p-6 text-[10px] font-black uppercase tracking-widest text-sky-400">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${jobs.map(job => `
+                                <tr class="list-item border-t border-white/5">
+                                    <td class="p-6">
+                                        <p class="text-white font-bold text-sm uppercase">${job.jobtitle}</p>
+                                        <p class="text-[9px] text-gray-500 uppercase mt-1">ID: ${job.jobid}</p>
+                                    </td>
+                                    <td class="p-6 text-xs text-gray-400 uppercase font-medium">${job.location}</td>
+                                    <td class="p-6 text-xs text-brand-orange font-black uppercase">${job.closingdate || job.datedposted}</td>
+                                    <td class="p-6">
+                                        <a href="${job.link || '#'}" target="_blank" class="text-[10px] font-black text-white hover:text-brand-orange uppercase tracking-tighter transition">Details →</a>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
         }
 
         window.onload = fetchRealData;
