@@ -3,142 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finance Vault | Kenflix</title>
+    <title>Finance Intelligence | Kenflix</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #05070a; color: #f8fafc; }
-        
-        .doc-card { 
-            background: rgba(15, 23, 42, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
+        body { font-family: 'Space Grotesk', sans-serif; background: #020617; color: #f1f5f9; }
+        .stat-card { background: linear-gradient(180deg, rgba(30,41,59,0.5) 0%, rgba(15,23,42,0) 100%); border: 1px solid rgba(255,255,255,0.05); }
+        .asset-card { 
+            background: rgba(15, 23, 42, 0.6); 
+            border: 1px solid rgba(56, 189, 248, 0.1); 
+            transition: all 0.3s ease;
         }
-
-        /* Hover Effect: Glow and Lift */
-        .doc-card:hover {
-            transform: translateY(-8px);
-            border-color: #38bdf8;
-            box-shadow: 0 0 30px rgba(56, 189, 248, 0.15);
-            background: rgba(15, 23, 42, 0.8);
-        }
-
-        /* Trending Badge for Most Downloaded */
-        .trending-ribbon {
-            position: absolute;
-            top: 15px;
-            right: -35px;
-            background: #f97316;
-            color: white;
-            padding: 5px 40px;
-            font-size: 9px;
-            font-weight: 900;
-            transform: rotate(45deg);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-            z-index: 10;
-        }
-
-        .modal-blur { backdrop-filter: blur(25px); background: rgba(5, 7, 10, 0.9); }
+        .asset-card:hover { border-color: #f97316; transform: translateY(-4px); box-shadow: 0 10px 30px -10px rgba(249, 115, 22, 0.2); }
+        .trending-tag { background: linear-gradient(90deg, #f97316, #ea580c); }
     </style>
 </head>
 <body class="min-h-screen">
 
-    <nav class="p-6 border-b border-white/5 flex justify-between items-center sticky top-0 bg-[#05070a]/80 backdrop-blur-md z-50">
-        <h1 class="font-black text-xl tracking-tighter uppercase">Kenflix<span class="text-sky-400">Vault</span></h1>
-        <div class="flex items-center gap-3">
-            <div id="sync-indicator" class="h-2 w-2 rounded-full bg-orange-500 animate-pulse"></div>
-            <span class="text-[10px] font-bold text-white/40 uppercase tracking-widest">Live Node Access</span>
+    <nav class="border-b border-white/5 p-6 flex justify-between items-center sticky top-0 bg-[#020617]/90 backdrop-blur-md z-50">
+        <div class="flex items-center gap-4">
+            <div class="h-8 w-1 bg-sky-500"></div>
+            <h1 class="font-bold text-xl tracking-widest uppercase">Kenflix <span class="text-sky-400">Finance</span></h1>
+        </div>
+        <div class="text-[10px] font-mono text-white/40 bg-white/5 px-4 py-2 rounded-full border border-white/10">
+            SYSTEM STATUS: <span class="text-emerald-400">ENCRYPTED</span>
         </div>
     </nav>
 
-    <main class="container mx-auto px-6 py-16">
-        <header class="mb-12">
-            <h2 class="text-sky-400 font-bold text-xs uppercase tracking-[0.4em] mb-2">Secure Directory</h2>
-            <h1 class="text-5xl font-extrabold text-white tracking-tighter uppercase">Asset <span class="text-orange-500">Registry</span></h1>
-        </header>
-
-        <div id="vaultGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="col-span-full py-20 text-center text-white/20 animate-pulse uppercase font-bold tracking-widest">Establishing Secure Connection...</div>
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            <div class="stat-card p-8 rounded-3xl">
+                <p class="text-xs font-bold text-white/40 uppercase tracking-widest mb-2">Total Assets Managed</p>
+                <h2 id="totalAssets" class="text-4xl font-bold">--</h2>
+            </div>
+            <div class="stat-card p-8 rounded-3xl border-l-4 border-l-sky-500">
+                <p class="text-xs font-bold text-white/40 uppercase tracking-widest mb-2">Market Sentiment</p>
+                <h2 class="text-4xl font-bold text-sky-400 font-mono">STABLE</h2>
+            </div>
+            <div class="stat-card p-8 rounded-3xl">
+                <p class="text-xs font-bold text-white/40 uppercase tracking-widest mb-2">Global Access Level</p>
+                <h2 class="text-4xl font-bold text-orange-500">PREMIUM</h2>
+            </div>
         </div>
+
+        <div class="flex justify-between items-end mb-8">
+            <div>
+                <h2 class="text-3xl font-bold tracking-tighter">ASSET REGISTRY</h2>
+                <p class="text-gray-500 text-sm">Real-time proprietary financial documents and salary scaling.</p>
+            </div>
+        </div>
+
+        <div id="vaultGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            </div>
     </main>
 
-    <div id="viewerModal" class="fixed inset-0 z-[100] hidden flex flex-col modal-blur">
-        <div class="p-4 border-b border-white/10 flex justify-between items-center bg-black/40">
-            <div class="flex items-center gap-4">
-                <button onclick="closeViewer()" class="text-white/50 hover:text-white transition-colors">
-                    <i data-lucide="chevron-left"></i>
-                </button>
-                <h3 id="modalTitle" class="text-white font-bold uppercase tracking-tight"></h3>
-            </div>
-            <a id="modalDownload" href="#" class="bg-white text-black px-6 py-2 rounded-full font-bold text-xs uppercase hover:bg-sky-400 transition-all">Download Copy</a>
+    <div id="viewerModal" class="fixed inset-0 z-[100] hidden bg-black/95 backdrop-blur-xl flex flex-col p-4">
+        <div class="flex justify-between items-center mb-4 px-4">
+            <h3 id="modalTitle" class="text-xl font-bold uppercase"></h3>
+            <button onclick="closeViewer()" class="p-2 hover:bg-white/10 rounded-full"><i data-lucide="x"></i></button>
         </div>
-        <div class="flex-grow">
-            <iframe id="viewerFrame" src="" class="w-full h-full border-none"></iframe>
-        </div>
+        <iframe id="viewerFrame" src="" class="flex-grow w-full rounded-2xl border border-white/10"></iframe>
     </div>
 
     <script>
-        const SCRIPT_URL = "PASTE_YOUR_DEPLOYED_URL_HERE";
+        const URL = "https://script.google.com/macros/s/AKfycbzaYM3K_pEgJRzoxwHRfi17pOKL71AWL_tW8_N_0O_ewC7pGj4nO7IaTULNInKxygxcyQ/exec";
         let vaultData = [];
 
-        async function loadVault() {
-            try {
-                const response = await fetch(`${SCRIPT_URL}?t=${Date.now()}`);
-                vaultData = await response.json();
-                
-                // Find highest download count
-                const maxDls = Math.max(...vaultData.map(d => parseInt(d.downloads || 0)));
-                
-                renderCards(maxDls);
-                document.getElementById('sync-indicator').classList.replace('bg-orange-500', 'bg-green-500');
-            } catch (err) {
-                console.error("Vault Error:", err);
-            }
+        async function init() {
+            const resp = await fetch(`${URL}?t=${Date.now()}`);
+            vaultData = await resp.json();
+            document.getElementById('totalAssets').innerText = vaultData.length.toString().padStart(2, '0');
+            
+            const maxDls = Math.max(...vaultData.map(d => parseInt(d.downloads || 0)));
+            render(maxDls);
         }
 
-        function renderCards(maxDls) {
+        function render(max) {
             const grid = document.getElementById('vaultGrid');
             grid.innerHTML = vaultData.map(doc => {
-                const isMostDownloaded = parseInt(doc.downloads) === maxDls && maxDls > 0;
-                
+                const trending = parseInt(doc.downloads) === max && max > 0;
                 return `
-                <div class="doc-card p-8 rounded-[2.5rem] flex flex-col h-full">
-                    ${isMostDownloaded ? '<div class="trending-ribbon">TRENDING</div>' : ''}
-                    
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="w-12 h-12 bg-sky-400/10 rounded-2xl flex items-center justify-center text-sky-400">
-                            <i data-lucide="file-text"></i>
-                        </div>
-                        <span class="px-3 py-1 bg-white/5 rounded-full text-[10px] font-bold text-white/40 uppercase">${doc.type || 'PDF'}</span>
+                <div class="asset-card p-8 rounded-[2rem] relative flex flex-col h-full">
+                    ${trending ? '<span class="absolute top-6 right-6 trending-tag px-3 py-1 rounded-full text-[9px] font-black uppercase">Most Active</span>' : ''}
+                    <div class="text-sky-400 mb-6"><i data-lucide="bar-chart-3"></i></div>
+                    <h3 class="text-xl font-bold mb-2 uppercase tracking-tight">${doc.title}</h3>
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-[10px] bg-white/5 border border-white/10 px-2 py-1 rounded text-white/50 font-mono">${doc.type}</span>
+                        <span class="text-[10px] text-orange-400 font-bold uppercase tracking-widest">${doc.salary}</span>
                     </div>
-
-                    <h3 class="text-2xl font-bold text-white mb-2 uppercase leading-tight">${doc.title}</h3>
-                    <p class="text-gray-500 text-sm mb-8 line-clamp-3 leading-relaxed font-medium">${doc.description}</p>
-                    
-                    <div class="mt-auto space-y-3">
-                        <button onclick="openViewer('${doc.id}')" class="w-full py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2">
-                            <i data-lucide="eye" class="w-4 h-4"></i> View Online
-                        </button>
-                        <a href="${doc.pdflink}" target="_blank" class="w-full py-4 bg-sky-500 hover:bg-orange-500 text-black hover:text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2">
-                            <i data-lucide="download" class="w-4 h-4"></i> Download Asset
-                        </a>
+                    <p class="text-gray-500 text-sm mb-8 flex-grow leading-relaxed">${doc.description}</p>
+                    <div class="grid grid-cols-2 gap-3 pt-6 border-t border-white/5">
+                        <button onclick="openViewer('${doc.id}')" class="py-3 text-[10px] font-bold uppercase border border-white/10 rounded-xl hover:bg-white hover:text-black transition-all">Preview</button>
+                        <a href="${doc.pdflink}" target="_blank" class="py-3 text-[10px] font-bold uppercase bg-sky-500 text-black rounded-xl text-center hover:bg-sky-400 transition-all">Download</a>
                     </div>
                 </div>
-                `;
-            }).join('');
+            `}).join('');
             lucide.createIcons();
         }
 
         function openViewer(id) {
             const item = vaultData.find(d => d.id == id);
-            if(!item) return;
-            
             document.getElementById('modalTitle').innerText = item.title;
-            document.getElementById('modalDownload').href = item.pdflink;
-            // Convert Google Drive view link to preview link for iframe compatibility
             document.getElementById('viewerFrame').src = item.pdflink.replace('/view', '/preview');
             document.getElementById('viewerModal').classList.remove('hidden');
         }
@@ -148,7 +114,7 @@
             document.getElementById('viewerFrame').src = "";
         }
 
-        window.onload = loadVault;
+        window.onload = init;
     </script>
 </body>
 </html>
