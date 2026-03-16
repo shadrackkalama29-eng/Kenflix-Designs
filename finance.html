@@ -8,29 +8,16 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --terminal-dark: #020617;
-            --accent-gold: #f97316;
-            --accent-blue: #38bdf8;
-        }
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: var(--terminal-dark); 
-            color: #f1f5f9; 
-        }
+        :root { --terminal-dark: #020617; --accent-gold: #f97316; --accent-blue: #38bdf8; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--terminal-dark); color: #f1f5f9; margin: 0; }
         .mono { font-family: 'JetBrains Mono', monospace; }
-        
         .fin-card {
             background: linear-gradient(180deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0) 100%);
             border: 1px solid rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .fin-card:hover {
-            border-color: var(--accent-blue);
-            background: rgba(30, 41, 59, 0.8);
-            transform: translateY(-4px);
-        }
+        .fin-card:hover { border-color: var(--accent-blue); background: rgba(30, 41, 59, 0.8); transform: translateY(-4px); }
         .trending-border { border-left: 4px solid var(--accent-gold) !important; }
         .viewer-overlay { backdrop-filter: blur(40px); background: rgba(2, 6, 23, 0.98); }
     </style>
@@ -44,11 +31,11 @@
             <div class="hidden md:flex items-center gap-6 text-[10px] mono text-gray-500">
                 <span class="flex items-center gap-2">
                     <span id="status-dot" class="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse"></span> 
-                    VAULT_STATUS: <span id="status-text">OFFLINE</span>
+                    VAULT_STATUS: <span id="status-text">CONNECTING...</span>
                 </span>
             </div>
         </div>
-        <div class="px-4 py-1 border border-sky-500/30 rounded text-sky-400 text-[10px] mono">V8.6_ENCRYPTED</div>
+        <div class="px-4 py-1 border border-sky-500/30 rounded text-sky-400 text-[10px] mono uppercase">Node: Secure</div>
     </nav>
 
     <main class="container mx-auto px-6 py-16">
@@ -58,7 +45,7 @@
         </div>
 
         <div id="vaultGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="col-span-full py-20 text-center mono text-gray-600 animate-pulse tracking-widest">INITIALIZING SECURE DATA HANDSHAKE...</div>
+            <div class="col-span-full py-20 text-center mono text-gray-600 animate-pulse">ESTABLISHING DATA HANDSHAKE...</div>
         </div>
     </main>
 
@@ -68,13 +55,11 @@
                 <button onclick="closeViewer()" class="text-gray-500 hover:text-sky-400 mb-12 flex items-center gap-2 text-[10px] mono font-bold uppercase">
                     <i data-lucide="chevron-left" class="w-4 h-4"></i> Return to Terminal
                 </button>
-                <div id="vSalary" class="inline-block bg-orange-500/10 text-orange-500 px-2 py-1 rounded text-[10px] mono mb-4 uppercase"></div>
-                <h2 id="vTitle" class="text-4xl font-black text-white uppercase leading-none mb-6 tracking-tighter"></h2>
+                <div id="vSalary" class="inline-block bg-orange-500/10 text-orange-500 px-2 py-1 rounded text-[10px] mono mb-4"></div>
+                <h2 id="vTitle" class="text-4xl font-black text-white uppercase leading-none mb-6"></h2>
                 <p id="vDesc" class="text-gray-400 leading-relaxed font-light text-sm italic"></p>
             </div>
-            <div class="bg-white/5 p-6 rounded-2xl border border-white/5">
-                <a id="vDl" href="#" target="_blank" class="w-full bg-white text-black py-4 rounded-xl text-center font-black text-[10px] uppercase hover:bg-sky-400 transition-all block">Download Master Report</a>
-            </div>
+            <a id="vDl" href="#" target="_blank" class="w-full bg-white text-black py-4 rounded-xl text-center font-black text-[10px] uppercase hover:bg-sky-400 transition-all">Download Master Report</a>
         </div>
         <div class="flex-grow p-4 md:p-8 bg-black">
             <iframe id="vFrame" src="" class="w-full h-full rounded-xl shadow-2xl bg-slate-900 border border-white/5"></iframe>
@@ -83,17 +68,33 @@
 
     <script>
         let vaultData = [];
+        // UPDATED WITH YOUR ID
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbze0Lxq9jsLsLTFg1Lma9L9oADYS1ubZp4f0PmsX2B32dLNGXzCpcX_9CSpRcB8EeIZrA/exec";
 
         async function init() {
+            const statusText = document.getElementById('status-text');
+            const statusDot = document.getElementById('status-dot');
+            const grid = document.getElementById('vaultGrid');
+
             try {
                 const response = await fetch(SCRIPT_URL);
+                
+                // If the response isn't OK, it's a permission issue
+                if (!response.ok) throw new Error('PERMISSION_DENIED');
+
                 vaultData = await response.json();
-                document.getElementById('status-dot').classList.replace('bg-red-500', 'bg-green-500');
-                document.getElementById('status-text').innerText = "ONLINE";
+                
+                statusDot.classList.replace('bg-red-500', 'bg-green-500');
+                statusText.innerText = "ONLINE";
                 render();
             } catch (err) {
-                document.getElementById('vaultGrid').innerHTML = `<div class="col-span-full text-red-500 mono text-center">ACCESS_DENIED: VERIFY DEPLOYMENT PERMISSIONS</div>`;
+                console.error(err);
+                statusText.innerText = "ACCESS_DENIED";
+                grid.innerHTML = `
+                    <div class="col-span-full p-10 bg-red-500/10 border border-red-500/50 rounded-xl text-center">
+                        <h3 class="text-red-500 mono font-bold">CRITICAL_AUTH_FAILURE</h3>
+                        <p class="text-gray-400 text-xs mt-2 italic">Ensure Deployment is set to "Anyone" in Apps Script.</p>
+                    </div>`;
             }
         }
 
@@ -111,10 +112,10 @@
                     </div>
                     <span class="mono text-[9px] text-orange-500 font-bold uppercase tracking-widest mb-2">${doc.salary}</span>
                     <h2 class="text-xl font-black text-white mb-4 uppercase tracking-tight leading-tight">${doc.title}</h2>
-                    <p class="text-gray-500 text-xs mb-8 line-clamp-2 leading-relaxed font-medium">${doc.description}</p>
+                    <p class="text-gray-500 text-xs mb-8 line-clamp-2">${doc.description}</p>
                     <div class="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
-                        <button onclick="openViewer('${doc.id}')" class="text-[10px] mono font-bold text-sky-400 hover:text-white uppercase tracking-widest transition-colors">Open Protocol</button>
-                        <span class="text-[9px] mono text-gray-600">DL_CNT: ${doc.downloads}</span>
+                        <button onclick="openViewer('${doc.id}')" class="text-[10px] mono font-bold text-sky-400 hover:text-white uppercase tracking-widest">Open Protocol</button>
+                        <span class="text-[9px] mono text-gray-600 uppercase">Traffic: ${doc.downloads}</span>
                     </div>
                 </div>`;
             }).join('');
@@ -126,14 +127,19 @@
             document.getElementById('vTitle').innerText = doc.title;
             document.getElementById('vDesc').innerText = doc.description;
             document.getElementById('vSalary').innerText = doc.salary;
-            document.getElementById('vFrame').src = doc.pdflink.replace('/view', '/preview');
+            
+            // Convert standard Drive link to Preview link
+            const previewUrl = doc.pdflink.replace('/view', '/preview').split('?')[0];
+            document.getElementById('vFrame').src = previewUrl;
             document.getElementById('vDl').href = doc.pdflink;
             document.getElementById('pdfOverlay').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
         }
 
         function closeViewer() {
             document.getElementById('pdfOverlay').classList.add('hidden');
             document.getElementById('vFrame').src = "";
+            document.body.style.overflow = 'auto';
         }
 
         window.onload = init;
