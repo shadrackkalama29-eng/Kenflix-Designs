@@ -12,17 +12,14 @@
             --terminal-dark: #020617;
             --accent-gold: #f97316;
             --accent-blue: #38bdf8;
-            --glass: rgba(15, 23, 42, 0.8);
         }
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
             background: var(--terminal-dark); 
             color: #f1f5f9; 
-            letter-spacing: -0.01em;
         }
         .mono { font-family: 'JetBrains Mono', monospace; }
         
-        /* Financial Card Gradient */
         .fin-card {
             background: linear-gradient(180deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0) 100%);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -35,10 +32,7 @@
             transform: translateY(-4px);
         }
         .trending-border { border-left: 4px solid var(--accent-gold) !important; }
-
-        /* Split-Screen Viewer Style */
         .viewer-overlay { backdrop-filter: blur(40px); background: rgba(2, 6, 23, 0.98); }
-        .data-badge { font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 4px; }
     </style>
 </head>
 <body class="min-h-screen">
@@ -48,8 +42,10 @@
             <h1 class="text-white font-black text-xl uppercase tracking-tighter">Kenflix<span class="text-sky-400">Institutional</span></h1>
             <div class="h-4 w-px bg-white/10 hidden md:block"></div>
             <div class="hidden md:flex items-center gap-6 text-[10px] mono text-gray-500">
-                <span class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-green-500"></span> VAULT_SYNC_ACTIVE</span>
-                <span>DATA_STREAM: SECURE</span>
+                <span class="flex items-center gap-2">
+                    <span id="status-dot" class="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse"></span> 
+                    VAULT_STATUS: <span id="status-text">OFFLINE</span>
+                </span>
             </div>
         </div>
         <div class="px-4 py-1 border border-sky-500/30 rounded text-sky-400 text-[10px] mono">V8.6_ENCRYPTED</div>
@@ -59,7 +55,6 @@
         <div class="mb-16 border-l-2 border-orange-500 pl-8">
             <h2 class="text-orange-500 mono text-xs font-bold uppercase tracking-[0.4em] mb-2">Internal Asset Registry</h2>
             <h1 class="text-5xl md:text-7xl font-extrabold text-white uppercase tracking-tighter">Finance <span class="text-gray-500">Vault</span></h1>
-            <p class="text-gray-400 mt-4 max-w-2xl font-light">Accessing proprietary strategies, technical analysis, and weekly investment protocols. Unauthorized redistribution is strictly prohibited.</p>
         </div>
 
         <div id="vaultGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -73,18 +68,14 @@
                 <button onclick="closeViewer()" class="text-gray-500 hover:text-sky-400 mb-12 flex items-center gap-2 text-[10px] mono font-bold uppercase">
                     <i data-lucide="chevron-left" class="w-4 h-4"></i> Return to Terminal
                 </button>
-                <div id="vSalary" class="inline-block bg-orange-500/10 text-orange-500 data-badge mono mb-4 uppercase"></div>
+                <div id="vSalary" class="inline-block bg-orange-500/10 text-orange-500 px-2 py-1 rounded text-[10px] mono mb-4 uppercase"></div>
                 <h2 id="vTitle" class="text-4xl font-black text-white uppercase leading-none mb-6 tracking-tighter"></h2>
-                <div class="h-px w-20 bg-sky-500 mb-8"></div>
                 <p id="vDesc" class="text-gray-400 leading-relaxed font-light text-sm italic"></p>
             </div>
-            
             <div class="bg-white/5 p-6 rounded-2xl border border-white/5">
-                <p class="text-[9px] mono text-gray-500 mb-4 uppercase">Asset Protocol Verification</p>
                 <a id="vDl" href="#" target="_blank" class="w-full bg-white text-black py-4 rounded-xl text-center font-black text-[10px] uppercase hover:bg-sky-400 transition-all block">Download Master Report</a>
             </div>
         </div>
-        
         <div class="flex-grow p-4 md:p-8 bg-black">
             <iframe id="vFrame" src="" class="w-full h-full rounded-xl shadow-2xl bg-slate-900 border border-white/5"></iframe>
         </div>
@@ -92,12 +83,18 @@
 
     <script>
         let vaultData = [];
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbze0Lxq9jsLsLTFg1Lma9L9oADYS1ubZp4f0PmsX2B32dLNGXzCpcX_9CSpRcB8EeIZrA/exec";
 
-        function init() {
-            google.script.run.withSuccessHandler(data => {
-                vaultData = data;
+        async function init() {
+            try {
+                const response = await fetch(SCRIPT_URL);
+                vaultData = await response.json();
+                document.getElementById('status-dot').classList.replace('bg-red-500', 'bg-green-500');
+                document.getElementById('status-text').innerText = "ONLINE";
                 render();
-            }).getVaultData();
+            } catch (err) {
+                document.getElementById('vaultGrid').innerHTML = `<div class="col-span-full text-red-500 mono text-center">ACCESS_DENIED: VERIFY DEPLOYMENT PERMISSIONS</div>`;
+            }
         }
 
         function render() {
@@ -106,18 +103,15 @@
 
             grid.innerHTML = vaultData.map(doc => {
                 const isTrending = parseInt(doc.downloads) === maxDls && maxDls > 0;
-                
                 return `
                 <div class="fin-card p-8 flex flex-col rounded-xl relative ${isTrending ? 'trending-border' : ''}">
                     <div class="flex justify-between items-start mb-8">
                         <div class="text-sky-400"><i data-lucide="file-bar-chart" class="w-6 h-6"></i></div>
                         <span class="mono text-[10px] text-gray-600">${doc.id}</span>
                     </div>
-
                     <span class="mono text-[9px] text-orange-500 font-bold uppercase tracking-widest mb-2">${doc.salary}</span>
                     <h2 class="text-xl font-black text-white mb-4 uppercase tracking-tight leading-tight">${doc.title}</h2>
                     <p class="text-gray-500 text-xs mb-8 line-clamp-2 leading-relaxed font-medium">${doc.description}</p>
-                    
                     <div class="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
                         <button onclick="openViewer('${doc.id}')" class="text-[10px] mono font-bold text-sky-400 hover:text-white uppercase tracking-widest transition-colors">Open Protocol</button>
                         <span class="text-[9px] mono text-gray-600">DL_CNT: ${doc.downloads}</span>
@@ -129,24 +123,17 @@
 
         function openViewer(id) {
             const doc = vaultData.find(d => d.id == id);
-            if (!doc) return;
-
             document.getElementById('vTitle').innerText = doc.title;
             document.getElementById('vDesc').innerText = doc.description;
             document.getElementById('vSalary').innerText = doc.salary;
-            
-            const previewUrl = doc.pdflink.replace('/view', '/preview').replace('?usp=sharing', '');
-            document.getElementById('vFrame').src = previewUrl;
+            document.getElementById('vFrame').src = doc.pdflink.replace('/view', '/preview');
             document.getElementById('vDl').href = doc.pdflink;
-            
             document.getElementById('pdfOverlay').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
         }
 
         function closeViewer() {
             document.getElementById('pdfOverlay').classList.add('hidden');
             document.getElementById('vFrame').src = "";
-            document.body.style.overflow = 'auto';
         }
 
         window.onload = init;
