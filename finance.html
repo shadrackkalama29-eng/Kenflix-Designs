@@ -1,245 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Finance Vault | Kenflix Insights</title>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #020617; 
-            color: #F3F4F6; 
-            background-image: radial-gradient(circle at 100% 0%, rgba(56, 189, 248, 0.07), transparent 50%);
-            min-height: 100vh;
-        }
-
-        .text-brand-orange { color: #f97316; }
-        .bg-brand-orange { background-color: #f97316; }
-
-        .back-home-link {
-            color: #38bdf8;
-            font-size: 14px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .doc-card {
-            background: rgba(15, 23, 42, 0.4);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 2rem;
-            transition: all 0.4s ease;
-            position: relative;
-        }
-
-        .most-downloaded {
-            border: 2px solid #f97316 !important;
-            box-shadow: 0 0 20px rgba(249, 115, 22, 0.2);
-        }
-
-        .shimmer {
-            background: linear-gradient(90deg, #0f172a 25%, #1e293b 50%, #0f172a 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-        }
-        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-
-        .hidden { display: none; }
-    </style>
+  <base target="_top">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background: #0f172a; color: white; font-family: sans-serif; padding: 20px; }
+    .tab { cursor: pointer; padding: 10px; border-bottom: 2px solid transparent; transition: 0.3s; font-size: 12px; font-weight: bold; }
+    .active-tab { border-color: #f97316; color: #f97316; }
+    input, textarea { width: 100%; background: #1e293b; border: 1px solid #334155; color: white; padding: 10px; margin-top: 5px; border-radius: 8px; font-size: 13px; }
+    button { width: 100%; background: #f97316; color: white; padding: 12px; border-radius: 8px; font-weight: bold; margin-top: 15px; cursor: pointer; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    #status { margin-top: 15px; font-size: 12px; text-align: center; }
+  </style>
 </head>
-<body class="flex flex-col">
+<body>
 
-    <nav class="p-8 sticky top-0 bg-slate-950/90 backdrop-blur-xl z-[60]">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="index.html" class="back-home-link">
-                <i data-lucide="arrow-left" class="w-4 h-4"></i> Home
-            </a>
-            <div class="px-4 py-1 rounded-full border border-white/10 bg-white/5 text-[9px] font-black uppercase tracking-[0.2em] text-gray-400">
-                Live Sheet Sync
-            </div>
-        </div>
-    </nav>
+  <div class="flex justify-around mb-6 border-b border-slate-700">
+    <div id="tabJob" class="tab active-tab uppercase" onclick="switchTab('job')">Post Job</div>
+    <div id="tabFinance" class="tab uppercase" onclick="switchTab('finance')">Upload Finance</div>
+  </div>
 
-    <header class="container mx-auto px-6 pt-16 pb-12">
-        <div class="max-w-4xl">
-            <span class="text-sky-400 font-black text-[11px] uppercase tracking-[0.4em] mb-4 block">SECURE REPOSITORY</span>
-            <h1 class="text-5xl md:text-7xl font-black text-white leading-tight uppercase tracking-tighter mb-6">
-                Finance <span class="text-brand-orange">Vault</span>
-            </h1>
-            <p class="text-gray-400 text-lg md:text-xl max-w-2xl leading-relaxed">
-                Access your real-time financial intelligence documents. All files are synchronized from the central cloud database.
-            </p>
-        </div>
-    </header>
+  <div id="jobForm">
+    <label class="text-[10px] text-slate-400 uppercase font-bold">Paste Job Details</label>
+    <textarea id="jobText" rows="10" placeholder="Line 1: Title&#10;Line 2: Location&#10;Line 3+: Description"></textarea>
+    <button id="jobBtn" onclick="submitJob()">Publish Job</button>
+  </div>
 
-    <main id="main-view" class="container mx-auto px-6 pb-32 flex-grow">
-        <div id="loader" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="h-80 shimmer rounded-[2rem]"></div>
-            <div class="h-80 shimmer rounded-[2rem]"></div>
-            <div class="h-80 shimmer rounded-[2rem]"></div>
-        </div>
+  <div id="financeForm" class="hidden">
+    <label class="text-[10px] text-slate-400 uppercase font-bold">Document Title</label>
+    <input type="text" id="finTitle" placeholder="e.g. Weekly Strategy">
+    
+    <label class="text-[10px] text-slate-400 uppercase font-bold mt-4 block">Short Description</label>
+    <textarea id="finDesc" rows="3" placeholder="Brief summary..."></textarea>
+    
+    <label class="text-[10px] text-slate-400 uppercase font-bold mt-4 block">Select PDF</label>
+    <input type="file" id="finFile" accept="application/pdf">
+    
+    <button id="finBtn" onclick="submitFinance()">Upload to Vault</button>
+  </div>
 
-        <div id="resource-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden"></div>
+  <div id="status"></div>
 
-        <div id="read-more-container" class="mt-16 text-center hidden">
-            <button onclick="showListView()" class="px-10 py-4 border border-white/10 rounded-full text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 hover:text-white hover:border-sky-400 transition-all">
-                View All Resources
-            </button>
-        </div>
-    </main>
+  <script>
+    function switchTab(type) {
+      document.getElementById('jobForm').classList.toggle('hidden', type !== 'job');
+      document.getElementById('financeForm').classList.toggle('hidden', type !== 'finance');
+      document.getElementById('tabJob').classList.toggle('active-tab', type === 'job');
+      document.getElementById('tabFinance').classList.toggle('active-tab', type === 'finance');
+    }
 
-    <main id="list-view" class="container mx-auto px-6 pb-32 flex-grow hidden">
-        <button onclick="showGridView()" class="mb-10 text-gray-500 hover:text-white flex items-center gap-2 font-bold uppercase text-[10px] tracking-widest">
-            <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Featured
-        </button>
-        <div class="bg-slate-900/40 rounded-[2rem] border border-white/5 overflow-hidden" id="resource-list"></div>
-    </main>
+    function setStatus(msg) { document.getElementById('status').innerText = msg; }
 
-    <div id="pdfOverlay" class="fixed inset-0 bg-slate-950 z-[100] hidden flex flex-col md:flex-row">
-        <div class="w-full md:w-1/3 p-10 flex flex-col justify-between border-r border-white/5 bg-slate-900/50">
-            <div>
-                <button onclick="closeViewer()" class="text-gray-500 hover:text-white mb-12 flex items-center gap-2 font-bold uppercase text-[10px] tracking-widest">
-                    <i data-lucide="x" class="w-4 h-4"></i> Close Viewer
-                </button>
-                <h2 id="viewingTitle" class="text-3xl font-black text-white uppercase leading-tight"></h2>
-                <p id="viewingDesc" class="text-gray-400 mt-6 leading-relaxed"></p>
-            </div>
-            <a id="dlBtnOverlay" href="#" target="_blank" class="block w-full bg-brand-orange text-white py-5 rounded-2xl font-black uppercase tracking-widest text-xs text-center shadow-lg">Open Source</a>
-        </div>
-        <div class="flex-grow bg-slate-950 p-4">
-            <iframe id="pdfFrame" src="" class="w-full h-full rounded-[2rem] border border-white/10"></iframe>
-        </div>
-    </div>
+    function submitJob() {
+      const text = document.getElementById('jobText').value;
+      if(!text) return alert("Paste text first");
+      document.getElementById('jobBtn').disabled = true;
+      setStatus("⏳ Publishing Job...");
+      google.script.run.withSuccessHandler((res) => {
+        setStatus(res);
+        document.getElementById('jobText').value = "";
+        document.getElementById('jobBtn').disabled = false;
+      }).processRawEntry(text);
+    }
 
-    <script>
-        // REPLACE WITH YOUR ACTUAL DEPLOYMENT ID
-        const DEPLOY_ID = "AKfycbxifvk82I76Vt_fLPaDQgdjKPMqNYENi4JP3clerubLRf-qfwy43LAmTGqwNbm4-vFH";
-        const API_URL = `https://script.google.com/macros/s/${DEPLOY_ID}/exec?sheet=FinanceVault`;
-        let allDocs = [];
+    function submitFinance() {
+      const fileInput = document.getElementById('finFile');
+      const title = document.getElementById('finTitle').value;
+      const desc = document.getElementById('finDesc').value;
+      
+      if(!fileInput.files[0] || !title) return alert("Title and File required");
+      
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+      
+      document.getElementById('finBtn').disabled = true;
+      setStatus("⏳ Converting & Uploading...");
 
-        async function initVault() {
-            try {
-                const response = await fetch(API_URL);
-                allDocs = await response.json();
-                renderVault();
-            } catch (err) {
-                console.error("Link Error:", err);
-                document.getElementById('loader').innerHTML = `<p class="text-red-400 font-bold uppercase text-[10px]">Database Connection Failed</p>`;
-            }
-        }
-
-        function renderVault() {
-            const grid = document.getElementById('resource-grid');
-            const loader = document.getElementById('loader');
-            const readMore = document.getElementById('read-more-container');
-            
-            if (!allDocs || allDocs.length === 0) {
-                loader.innerHTML = `<p class="text-gray-500 uppercase text-[10px] font-bold">No documents found in vault.</p>`;
-                return;
-            }
-
-            loader.classList.add('hidden');
-            grid.classList.remove('hidden');
-
-            // Find Most Popular based on 'downloads' column
-            const maxDown = Math.max(...allDocs.map(d => Number(d.downloads) || 0));
-            const mostPopularId = (maxDown > 0) ? allDocs.find(d => Number(d.downloads) === maxDown).id : null;
-
-            // Show first 6 only
-            const featured = allDocs.slice(0, 6);
-            if (allDocs.length > 6) readMore.classList.remove('hidden');
-
-            grid.innerHTML = featured.map(doc => `
-                <div class="doc-card p-10 flex flex-col h-full group ${doc.id === mostPopularId ? 'most-downloaded' : ''}">
-                    ${doc.id === mostPopularId ? `
-                        <div class="absolute top-6 right-8 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <span class="bg-brand-orange text-white text-[8px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Most Popular</span>
-                        </div>` : ''}
-                    
-                    <div class="w-12 h-12 bg-sky-400/10 rounded-xl flex items-center justify-center text-sky-400 mb-8">
-                        <i data-lucide="file-text"></i>
-                    </div>
-                    
-                    <h3 class="text-xl font-black text-white mb-4 uppercase leading-tight">${doc.title || 'Untitled Asset'}</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed line-clamp-3 mb-10">${doc.description || 'Secure Repository Document.'}</p>
-                    
-                    <div class="mt-auto flex items-center justify-between pt-8 border-t border-white/5">
-                        <button onclick="openViewer('${doc.id}')" class="text-[10px] font-black text-sky-400 uppercase tracking-widest hover:text-white transition">Read Online</button>
-                        <div class="flex items-center gap-3">
-                            <span class="text-[9px] text-gray-600 font-bold uppercase">${doc.downloads || 0} DLs</span>
-                            <a href="${doc.pdflink}" target="_blank" class="text-gray-600 hover:text-brand-orange transition">
-                                <i data-lucide="external-link" class="w-4 h-4"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-            lucide.createIcons();
-        }
-
-        function renderList() {
-            const list = document.getElementById('resource-list');
-            list.innerHTML = allDocs.map(doc => `
-                <div class="p-8 border-b border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 hover:bg-white/5 transition">
-                    <div class="flex items-center gap-4">
-                        <i data-lucide="file-text" class="w-5 h-5 text-sky-400"></i>
-                        <span class="text-white font-bold uppercase text-xs tracking-tight">${doc.title}</span>
-                    </div>
-                    <div class="flex gap-8 items-center">
-                        <span class="text-[9px] text-gray-600 font-black uppercase tracking-widest">${doc.downloads || 0} DLs</span>
-                        <button onclick="openViewer('${doc.id}')" class="text-[10px] font-black text-sky-400 uppercase tracking-widest">Read Online</button>
-                        <a href="${doc.pdflink}" target="_blank" class="text-[10px] font-black text-brand-orange uppercase tracking-widest">Source</a>
-                    </div>
-                </div>
-            `).join('');
-            lucide.createIcons();
-        }
-
-        function showListView() { 
-            document.getElementById('main-view').classList.add('hidden'); 
-            document.getElementById('list-view').classList.remove('hidden'); 
-            renderList(); 
-            window.scrollTo(0,0);
-        }
-
-        function showGridView() { 
-            document.getElementById('list-view').classList.add('hidden'); 
-            document.getElementById('main-view').classList.remove('hidden'); 
-            window.scrollTo(0,0);
-        }
-
-        function openViewer(id) {
-            const doc = allDocs.find(d => d.id == id);
-            document.getElementById('viewingTitle').innerText = doc.title;
-            document.getElementById('viewingDesc').innerText = doc.description || 'Internal Repository document.';
-            
-            // Clean Google Drive URLs for Previewing
-            let cleanUrl = doc.pdflink;
-            if(cleanUrl.includes('drive.google.com')) {
-                cleanUrl = cleanUrl.replace('/view', '/preview').split('?')[0];
-            }
-            
-            document.getElementById('pdfFrame').src = cleanUrl;
-            document.getElementById('dlBtnOverlay').href = doc.pdflink;
-            document.getElementById('pdfOverlay').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeViewer() { 
-            document.getElementById('pdfOverlay').classList.add('hidden'); 
-            document.getElementById('pdfFrame').src = ''; 
-            document.body.style.overflow = 'auto';
-        }
-
-        window.onload = initVault;
-    </script>
+      reader.onload = function(e) {
+        google.script.run.withSuccessHandler((res) => {
+          setStatus(res);
+          document.getElementById('finTitle').value = "";
+          document.getElementById('finDesc').value = "";
+          document.getElementById('finFile').value = "";
+          document.getElementById('finBtn').disabled = false;
+        }).uploadFileToDrive(e.target.result, file.name, title, desc);
+      };
+      reader.readAsDataURL(file);
+    }
+  </script>
 </body>
 </html>
