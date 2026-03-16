@@ -13,7 +13,6 @@
         
         .text-brand-orange { color: #f97316; }
         .text-sky-blue { color: #38bdf8; }
-        .bg-sky-blue { background-color: #38bdf8; }
         
         .doc-card { 
             background: linear-gradient(145deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.1));
@@ -31,7 +30,7 @@
 
         .most-popular {
             border: 2px solid #f97316 !important;
-            box-shadow: 0 0 30px rgba(249, 115, 22, 0.15);
+            box-shadow: 0 0 30px rgba(249, 115, 22, 0.2);
         }
         
         #typing-text::after {
@@ -42,15 +41,14 @@
         }
         @keyframes blink { 50% { opacity: 0; } }
 
+        .modal-blur { backdrop-filter: blur(20px); background: rgba(7, 11, 20, 0.95); }
+        
         .list-container {
             background: rgba(15, 23, 42, 0.6);
             border: 1px solid rgba(56, 189, 248, 0.1);
             border-radius: 2rem;
             overflow: hidden;
         }
-
-        /* Modal Blur */
-        .modal-blur { backdrop-filter: blur(20px); background: rgba(7, 11, 20, 0.95); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -63,7 +61,7 @@
             <div class="flex gap-8 items-center">
                 <div class="flex items-center gap-2">
                     <span id="connection-dot" class="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse"></span>
-                    <span class="text-[9px] font-black uppercase tracking-widest text-sky-blue/60">Secure Sync</span>
+                    <span class="text-[9px] font-black uppercase tracking-widest text-sky-blue/60">Secure Vault Sync</span>
                 </div>
                 <a href="index.html" class="text-[10px] font-black text-gray-400 uppercase tracking-widest hover:text-sky-blue transition-colors">Home</a>
             </div>
@@ -73,7 +71,7 @@
     <main class="container mx-auto px-6 py-20 flex-grow">
         <header class="mb-20">
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-blue/10 border border-sky-blue/20 mb-8">
-                <span class="text-[10px] font-bold text-sky-blue uppercase tracking-[0.2em]">Premium Financial Insights</span>
+                <span class="text-[10px] font-bold text-sky-blue uppercase tracking-[0.2em]">Institutional Grade Repository</span>
             </div>
             
             <h1 class="text-7xl md:text-9xl font-bold text-white leading-[0.85] uppercase tracking-tighter mb-10">
@@ -82,7 +80,7 @@
             
             <div class="max-w-2xl bg-white/[0.02] p-8 rounded-[2rem] border-l-4 border-l-brand-orange border-y border-r border-white/5 backdrop-blur-sm">
                 <p class="text-gray-400 text-lg leading-relaxed font-light">
-                    Access our <span class="text-sky-blue font-semibold italic">curated financial repository</span>. From market analysis to investment strategies, all documents are verified by the <span class="text-white font-semibold">Kenflix Intelligence Unit</span> for quality and accuracy.
+                    Real-time access to <span class="text-sky-blue font-semibold italic">Kenflix proprietary data</span>. These documents are synced directly from our central vault to your terminal. High-security, high-impact intelligence.
                 </p>
             </div>
         </header>
@@ -90,12 +88,13 @@
         <div class="mb-12 max-w-xl">
             <div class="relative">
                 <i data-lucide="search" class="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500"></i>
-                <input type="text" id="docSearch" onkeyup="filterDocs()" placeholder="SEARCH THE VAULT..." 
+                <input type="text" id="vaultSearch" onkeyup="filterVault()" placeholder="SEARCH INTELLIGENCE ASSETS..." 
                 class="w-full bg-white/5 border border-white/10 rounded-2xl py-5 pl-14 pr-6 text-[10px] font-bold text-white uppercase tracking-widest focus:outline-none focus:border-brand-orange transition-all">
             </div>
         </div>
 
-        <div id="docGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
+        <div id="vaultGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
+
         <div id="fullListView" class="hidden mt-10">
             <div class="list-container">
                 <div id="listContent"></div>
@@ -104,7 +103,7 @@
 
         <div id="action-container" class="mt-20 flex flex-col items-center gap-4">
             <button id="viewMoreBtn" onclick="toggleViewMode()" class="hidden group relative bg-sky-blue text-black px-16 py-6 rounded-2xl text-[11px] font-black uppercase tracking-[0.4em] hover:bg-brand-orange hover:text-white transition-all duration-500">
-                Browse Full Catalog
+                View Full Catalog
             </button>
         </div>
     </main>
@@ -113,13 +112,13 @@
         <div class="w-full md:w-1/3 p-12 flex flex-col justify-between border-r border-white/5">
             <div>
                 <button onclick="closeViewer()" class="text-gray-500 hover:text-white mb-12 flex items-center gap-2 font-bold uppercase text-[10px] tracking-[0.3em]">
-                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Return to Vault
+                    <i data-lucide="x" class="w-4 h-4"></i> Close Intelligence View
                 </button>
                 <h2 id="viewingTitle" class="text-4xl font-bold text-white uppercase leading-tight tracking-tighter"></h2>
                 <div id="viewingMeta" class="mt-6 flex gap-4"></div>
                 <p id="viewingDesc" class="text-gray-400 mt-8 leading-relaxed font-light text-lg"></p>
             </div>
-            <a id="dlBtnOverlay" href="#" target="_blank" class="block w-full bg-brand-orange text-white py-6 rounded-2xl font-black uppercase tracking-[0.3em] text-[10px] text-center shadow-2xl hover:scale-105 transition-transform">Download Document</a>
+            <a id="dlBtnOverlay" href="#" target="_blank" class="block w-full bg-brand-orange text-white py-6 rounded-2xl font-black uppercase tracking-[0.3em] text-[10px] text-center shadow-2xl hover:scale-105 transition-transform">Source Download</a>
         </div>
         <div class="flex-grow p-4 md:p-10">
             <iframe id="pdfFrame" src="" class="w-full h-full rounded-[2.5rem] border border-white/10 bg-[#020617]"></iframe>
@@ -131,8 +130,8 @@
         let allDocs = [];
         let isListView = false;
 
-        // --- Typing Effect ---
-        const words = ["Vault.", "Intelligence.", "Insights.", "Reports."];
+        // Typing Effect
+        const words = ["Vault.", "Vault.", "Vault.", "Vault."]; // You can customize these
         let i = 0, j = 0, isDeleting = false;
         function type() {
             const currentWord = words[i];
@@ -143,36 +142,36 @@
             else { setTimeout(type, isDeleting ? 100 : 200); }
         }
 
-        async function fetchVaultData() {
+        async function initVault() {
             try {
                 const response = await fetch(SCRIPT_URL);
                 allDocs = await response.json();
                 document.getElementById('connection-dot').classList.replace('bg-red-500', 'bg-green-500');
-                renderGrid(allDocs);
-            } catch (error) { console.error("Vault offline"); }
+                renderVaultGrid(allDocs);
+            } catch (err) { console.error("Vault connection failed"); }
         }
 
-        function renderGrid(docs) {
-            const grid = document.getElementById('docGrid');
+        function renderVaultGrid(docs) {
+            const grid = document.getElementById('vaultGrid');
             const btn = document.getElementById('viewMoreBtn');
             
-            // Find Most Popular
-            const maxDownloads = Math.max(...docs.map(d => Number(d.downloads) || 0));
-            const featuredDocs = docs.slice(0, 6);
+            // Logic for "Most Popular"
+            const maxDown = Math.max(...docs.map(d => Number(d.downloads) || 0));
+            const featured = docs.slice(0, 6);
 
-            grid.innerHTML = featuredDocs.map(doc => {
-                const isPopular = Number(doc.downloads) === maxDownloads && maxDownloads > 0;
+            grid.innerHTML = featured.map(doc => {
+                const isPopular = Number(doc.downloads) === maxDown && maxDown > 0;
                 return `
                 <div class="doc-card p-10 flex flex-col h-full ${isPopular ? 'most-popular' : ''}">
                     ${isPopular ? `
-                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-orange text-white text-[8px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] z-10 shadow-xl">
-                            Most Downloaded Asset
+                        <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-orange text-white text-[8px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] z-10">
+                            High Demand Asset
                         </div>
                     ` : ''}
                     
                     <div class="flex justify-between items-start mb-10">
                         <div class="w-12 h-12 bg-sky-blue/10 rounded-2xl flex items-center justify-center text-sky-blue">
-                            <i data-lucide="file-text" class="w-6 h-6"></i>
+                            <i data-lucide="file-text"></i>
                         </div>
                         <span class="text-[9px] text-gray-600 font-bold uppercase tracking-widest">${doc.downloads || 0} Downloads</span>
                     </div>
@@ -193,32 +192,32 @@
             lucide.createIcons();
         }
 
-        function filterDocs() {
-            const query = document.getElementById('docSearch').value.toLowerCase();
+        function filterVault() {
+            const query = document.getElementById('vaultSearch').value.toLowerCase();
             const filtered = allDocs.filter(d => d.title.toLowerCase().includes(query) || d.description.toLowerCase().includes(query));
-            isListView ? renderFullList(filtered) : renderGrid(filtered);
+            isListView ? renderFullList(filtered) : renderVaultGrid(filtered);
         }
 
         function toggleViewMode() {
             isListView = !isListView;
-            document.getElementById('docGrid').classList.toggle('hidden');
+            document.getElementById('vaultGrid').classList.toggle('hidden');
             document.getElementById('fullListView').classList.toggle('hidden');
-            document.getElementById('viewMoreBtn').innerText = isListView ? "Back to Featured" : "Browse Full Catalog";
+            document.getElementById('viewMoreBtn').innerText = isListView ? "Featured View" : "View Full Catalog";
             if (isListView) renderFullList(allDocs);
         }
 
         function renderFullList(docs) {
             document.getElementById('listContent').innerHTML = docs.map(doc => `
                 <div class="flex flex-col md:grid md:grid-cols-4 p-8 gap-6 items-center border-b border-white/5 hover:bg-white/[0.02] transition-colors">
-                    <div class="flex items-center gap-4">
-                        <i data-lucide="file-text" class="w-4 h-4 text-sky-blue"></i>
+                    <div>
                         <p class="text-white font-bold text-sm uppercase tracking-tight">${doc.title}</p>
+                        <p class="text-[8px] text-sky-blue font-black uppercase tracking-widest mt-1">${doc.id}</p>
                     </div>
-                    <div class="text-[10px] text-gray-500 uppercase font-black tracking-widest">${doc.type || 'Finance'}</div>
-                    <div class="text-[10px] text-brand-orange font-black uppercase tracking-widest">${doc.downloads || 0} Downloads</div>
+                    <div class="text-[10px] text-gray-500 uppercase font-black tracking-widest">${doc.type || 'ASSET'}</div>
+                    <div class="text-[10px] text-brand-orange font-black uppercase tracking-widest">${doc.downloads || 0} DLs</div>
                     <div class="flex gap-4 justify-end w-full">
-                        <button onclick="openViewer('${doc.id}')" class="text-[9px] font-black text-white border border-white/10 px-5 py-2.5 rounded-lg hover:border-sky-blue transition-all">READ</button>
-                        <a href="${doc.pdflink}" target="_blank" class="text-[9px] font-black text-brand-orange border border-brand-orange/20 px-5 py-2.5 rounded-lg hover:bg-brand-orange hover:text-white transition-all font-heading">DL</a>
+                        <button onclick="openViewer('${doc.id}')" class="text-[9px] font-black text-white border border-white/10 px-5 py-2.5 rounded-lg hover:border-sky-blue transition-all uppercase">Open</button>
+                        <a href="${doc.pdflink}" target="_blank" class="text-[9px] font-black text-brand-orange border border-brand-orange/20 px-5 py-2.5 rounded-lg hover:bg-brand-orange hover:text-white transition-all uppercase">Download</a>
                     </div>
                 </div>
             `).join('');
@@ -227,10 +226,11 @@
 
         function openViewer(id) {
             const doc = allDocs.find(d => d.id == id);
+            if(!doc) return;
+
             document.getElementById('viewingTitle').innerText = doc.title;
             document.getElementById('viewingDesc').innerText = doc.description;
             
-            // Format Google Drive Link for iFrame
             let embedUrl = doc.pdflink;
             if(embedUrl.includes('drive.google.com')) {
                 embedUrl = embedUrl.replace('/view', '/preview');
@@ -249,7 +249,7 @@
             document.body.style.overflow = 'auto';
         }
 
-        window.onload = () => { fetchVaultData(); type(); };
+        window.onload = () => { initVault(); type(); };
     </script>
 </body>
 </html>
