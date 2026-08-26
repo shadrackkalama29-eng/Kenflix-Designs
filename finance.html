@@ -3,102 +3,571 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kenflix | Finance Vault - Coming Soon</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>Kenflix Designs | Smart Kenyan Budget & Take-Home Calculator</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- SheetJS for Dynamic Excel Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #0ea5e9; --bg: #020617; }
-        body { 
-            background-color: var(--bg); color: #f8fafc; font-family: 'Inter', sans-serif;
-            background-image: radial-gradient(circle at 50% -20%, #1e293b 0%, #020617 80%);
-            margin: 0; min-height: 100vh; overflow-x: hidden; display: flex; flex-direction: column;
-        }
-
-        .ticker-container { 
-            background: rgba(15, 23, 42, 0.8); 
-            border-bottom: 1px solid rgba(255,255,255,0.05); 
-            padding: 14px 0; 
-            overflow: hidden; 
-        }
-        .ticker-wrapper { 
-            display: flex; 
-            white-space: nowrap; 
-            animation: ticker 45s linear infinite; 
-        }
-        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        
-        .glass-card {
-            background: rgba(15, 23, 42, 0.6); 
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }
-        .data-label { font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.75rem; color: #64748b; }
-        
-        /* Pulse Animation for Status */
-        .status-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f8fafc; }
     </style>
 </head>
-<body>
+<body class="min-h-screen py-10 px-4 sm:px-6 lg:px-8">
 
-<div class="ticker-container">
-    <div class="ticker-wrapper gap-16 text-[11px] font-bold uppercase tracking-[0.2em]">
-        <span class="text-green-400">BTC/USD ▲ $68,432.12</span>
-        <span class="text-red-400">ETH/USD ▼ $3,210.45</span>
-        <span class="text-green-400">BNB/USD ▲ $591.20</span>
-        <span class="text-green-400">SOL/USD ▲ $146.88</span>
-        <span class="text-green-400">BTC/USD ▲ $68,432.12</span>
-        <span class="text-red-400">ETH/USD ▼ $3,210.45</span>
-        <span class="text-green-400">BNB/USD ▲ $591.20</span>
-        <span class="text-green-400">SOL/USD ▲ $146.88</span>
-    </div>
-</div>
+    <div class="max-w-5xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Kenflix Designs • Financial Tech Suite</span>
+            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-white mt-3">Smart Kenyan Budget & Take-Home Calculator</h1>
+            <p class="text-slate-400 mt-2 max-w-2xl mx-auto">Accurate KRA statutory brackets, updated NSSF tiers (up to KSh 108,000 ceiling), manual statutory overrides, and realistic local wealth plans.</p>
+        </div>
 
-<header class="py-8 px-8 max-w-7xl mx-auto w-full flex justify-between items-center">
-    <a href="https://kenflixdesigns.co.ke" class="text-2xl font-black italic uppercase tracking-tighter hover:text-sky-400 transition-colors">
-        Kenflix<span class="text-sky-500">.</span>
-    </a>
-    <div class="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-full border border-white/10">
-        <div class="w-2 h-2 bg-amber-500 rounded-full status-pulse"></div>
-        <span class="text-[9px] font-bold uppercase tracking-widest text-slate-300">Node Maintenance</span>
-    </div>
-</header>
-
-<main class="flex-1 flex items-center justify-center p-8">
-    <div class="glass-card max-w-2xl w-full p-12 md:p-16 rounded-[3rem] text-center relative overflow-hidden">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-sky-500/20 blur-[80px] rounded-full pointer-events-none"></div>
-
-        <div class="relative z-10">
-            <i data-lucide="lock" class="w-12 h-12 text-sky-500 mx-auto mb-8 opacity-80"></i>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
-            <p class="data-label mb-4 text-sky-400">Protocol Initialization</p>
-            <h2 class="text-5xl md:text-7xl font-black italic uppercase tracking-tighter leading-none mb-6">
-                Coming <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-blue-600">Soon</span>
-            </h2>
-            
-            <p class="text-slate-400 text-sm italic max-w-md mx-auto leading-relaxed mb-10">
-                The Kenflix Finance Vault is currently undergoing a backend security upgrade. Decentralized storage protocols will be back online shortly.
-            </p>
+            <!-- INPUT FORM (Left Column) -->
+            <div class="lg:col-span-7 bg-slate-900/80 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-xl border border-slate-800">
+                <form id="budgetForm" class="space-y-6">
+                    
+                    <!-- Section A: Income & Workspace -->
+                    <div>
+                        <h2 class="text-lg font-semibold text-emerald-400 border-b border-slate-800 pb-2 mb-4 flex items-center gap-2">
+                            <span>01.</span> Income & Workspace
+                        </h2>
+                        
+                        <div class="space-y-4">
+                            <!-- Gross Salary Input -->
+                            <div id="grossGroup">
+                                <label class="block text-sm font-medium text-slate-300 mb-1">Gross Monthly Salary (KSh)</label>
+                                <input type="number" id="grossSalary" placeholder="e.g. 75000" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition">
+                            </div>
 
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md mx-auto border border-white/10 p-2 rounded-full bg-slate-900/50 mb-10">
-                <input type="email" placeholder="ENTER ADMIN EMAIL" class="bg-transparent border-none outline-none text-xs text-white placeholder:text-slate-600 px-6 py-3 w-full uppercase tracking-widest font-bold">
-                <button onclick="alert('Notification alert registered in system.')" class="bg-sky-500 text-white px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-sky-400 transition-all whitespace-nowrap">
-                    Notify Me
-                </button>
+                            <!-- Direct Net Salary Override Mode -->
+                            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
+                                <div class="flex items-center space-x-3">
+                                    <input type="checkbox" id="toggleDirectNet" onchange="toggleNetInputs()" class="h-4 w-4 text-emerald-500 focus:ring-emerald-500 bg-slate-900 border-slate-700 rounded">
+                                    <label for="toggleDirectNet" class="text-sm font-medium text-white cursor-pointer">I already have a final Net Salary value</label>
+                                </div>
+                                <div id="directNetContainer" class="pt-2 hidden">
+                                    <label class="block text-xs text-slate-400 mb-1">Exact Net Salary Received (KSh)</label>
+                                    <input type="number" id="directNetSalary" value="0" placeholder="e.g. 58000" class="w-full px-3 py-2.5 rounded-lg bg-slate-900 border border-slate-700 text-white text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                                    <p class="text-xs text-slate-500 mt-1">Bypasses gross tax deductions and uses this exact net take-home figure as your budget anchor.</p>
+                                </div>
+                            </div>
+
+                            <!-- Manual Statutory Override Checkbox & Inputs -->
+                            <div id="statutoryOverrideSection" class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
+                                <div class="flex items-center space-x-3">
+                                    <input type="checkbox" id="toggleManualStatutory" onchange="toggleManualInputs()" class="h-4 w-4 text-emerald-500 focus:ring-emerald-500 bg-slate-900 border-slate-700 rounded">
+                                    <label for="toggleManualStatutory" class="text-sm font-medium text-white cursor-pointer">I already have pre-deducted statutory amounts (Manual Override)</label>
+                                </div>
+                                <div id="manualStatutoryContainer" class="grid grid-cols-2 gap-3 pt-2 hidden">
+                                    <div>
+                                        <label class="block text-xs text-slate-400 mb-1">PAYE (KSh)</label>
+                                        <input type="number" id="manualPAYE" value="0" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-slate-400 mb-1">NSSF (KSh)</label>
+                                        <input type="number" id="manualNSSF" value="1080" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-slate-400 mb-1">SHIF (KSh)</label>
+                                        <input type="number" id="manualSHIF" value="0" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs text-slate-400 mb-1">Housing Levy (KSh)</label>
+                                        <input type="number" id="manualHousing" value="0" class="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-white text-sm">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-300 mb-1">Commute Days / Week</label>
+                                    <select id="commuteDays" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition">
+                                        <option value="5">5 Days</option>
+                                        <option value="6">6 Days</option>
+                                        <option value="7">7 Days</option>
+                                        <option value="0">Fully Remote</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-300 mb-1">Daily Round-Trip Fare (KSh)</label>
+                                    <input type="number" id="dailyFare" value="0" placeholder="e.g. 200" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section B: Core Living Costs -->
+                    <div>
+                        <h2 class="text-lg font-semibold text-emerald-400 border-b border-slate-800 pb-2 mb-4 flex items-center gap-2">
+                            <span>02.</span> Core Living Costs
+                        </h2>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-300 mb-1">Monthly House Rent (KSh)</label>
+                                <input type="number" id="monthlyRent" required placeholder="e.g. 20000" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-300 mb-1">Work Lunch per Day (KSh)</label>
+                                <input type="number" id="dailyLunch" value="0" placeholder="e.g. 150" class="w-full px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section C: Smart Hidden-Cost Estimator -->
+                    <div>
+                        <h2 class="text-lg font-semibold text-emerald-400 border-b border-slate-800 pb-2 mb-4 flex items-center gap-2">
+                            <span>03.</span> Utilities & Hidden Bills
+                        </h2>
+                        
+                        <div class="flex items-start space-x-3 bg-slate-950 p-4 rounded-xl border border-slate-800">
+                            <input type="checkbox" id="toggleHidden" class="mt-1 h-4 w-4 text-emerald-500 focus:ring-emerald-500 bg-slate-900 border-slate-700 rounded">
+                            <div class="text-sm">
+                                <label for="toggleHidden" class="font-medium text-white cursor-pointer">Auto-include baseline utilities & subscriptions</label>
+                                <p class="text-slate-400 mt-0.5">Adds urban baseline defaults: Groceries (KSh 3,500), Power/Water (KSh 1,200), Internet & Airtime (KSh 1,000).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="calculateBudget()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3.5 px-6 rounded-xl transition shadow-lg shadow-emerald-900/30 cursor-pointer">
+                        Calculate Net Pay & Wealth Plan
+                    </button>
+                </form>
             </div>
 
-            <a href="https://kenflixdesigns.co.ke" class="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 hover:text-sky-400 transition-all group">
-                <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i>
-                Back to Home Page
-            </a>
+            <!-- OUTPUT RESULTS (Right Column) -->
+            <div class="lg:col-span-5 space-y-6">
+                
+                <!-- Financial Summary Card -->
+                <div id="resultsCard" class="bg-slate-900/80 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-xl border border-slate-800 hidden">
+                    <h2 class="text-lg font-semibold text-white border-b border-slate-800 pb-2 mb-4">📊 Executive Salary & Net Summary</h2>
+                    
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between py-1 border-b border-slate-800">
+                            <span class="text-slate-400">Gross Salary</span>
+                            <span id="outGross" class="font-semibold text-white">KSh 0</span>
+                        </div>
+                        <div class="flex justify-between py-1 border-b border-slate-800 text-rose-400">
+                            <span>Total Statutory Deductions</span>
+                            <span id="outStatutory" class="font-semibold">- KSh 0</span>
+                        </div>
+                        <div class="flex justify-between py-1.5 border-b border-slate-800 bg-emerald-950/40 px-3 rounded-lg border border-emerald-500/20">
+                            <span class="font-medium text-emerald-300">Net Take-Home Pay</span>
+                            <span id="outNet" class="font-bold text-emerald-400">KSh 0</span>
+                        </div>
+                        <div class="flex justify-between py-1 border-b border-slate-800 text-amber-400">
+                            <span>Total Living & Commute Outlays</span>
+                            <span id="outExpenses" class="font-semibold">- KSh 0</span>
+                        </div>
+                        <div class="flex justify-between py-2.5 bg-slate-950 text-white px-3 rounded-xl mt-2 border border-slate-800">
+                            <span class="font-medium">Net Monthly Surplus</span>
+                            <span id="outRemaining" class="font-bold text-emerald-400">KSh 0</span>
+                        </div>
+                    </div>
+
+                    <!-- Granular Statutory Breakdown Drawer -->
+                    <div class="mt-4 pt-3 border-t border-slate-800">
+                        <details class="group">
+                            <summary class="text-xs font-semibold uppercase text-emerald-400 tracking-wider cursor-pointer list-none flex justify-between items-center">
+                                <span>📋 View Statutory Breakdown</span>
+                                <span class="transition group-open:rotate-180">▼</span>
+                            </summary>
+                            <div class="mt-3 space-y-2 text-xs text-slate-300 bg-slate-950 p-3 rounded-xl border border-slate-800">
+                                <div class="flex justify-between"><span>PAYE Tax (Net of Relief):</span> <span id="statPAYE" class="font-medium text-white">KSh 0</span></div>
+                                <div class="flex justify-between"><span>NSSF Contribution (Tier I & II):</span> <span id="statNSSF" class="font-medium text-white">KSh 0</span></div>
+                                <div class="flex justify-between"><span>SHIF (Medical):</span> <span id="statSHIF" class="font-medium text-white">KSh 0</span></div>
+                                <div class="flex justify-between"><span>Housing Levy (1.5%):</span> <span id="statHousing" class="font-medium text-white">KSh 0</span></div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Granular Expense Breakdown Drawer -->
+                    <div class="mt-3 pt-3 border-t border-slate-800">
+                        <details class="group">
+                            <summary class="text-xs font-semibold uppercase text-emerald-400 tracking-wider cursor-pointer list-none flex justify-between items-center">
+                                <span>🔍 View Expense Sub-Breakdown</span>
+                                <span class="transition group-open:rotate-180">▼</span>
+                            </summary>
+                            <div class="mt-3 space-y-2 text-xs text-slate-300 bg-slate-950 p-3 rounded-xl border border-slate-800">
+                                <div class="flex justify-between"><span>House Rent:</span> <span id="expRent" class="font-medium text-white">KSh 0</span></div>
+                                <div class="flex justify-between"><span>Transport Commute:</span> <span id="expTransport" class="font-medium text-white">KSh 0</span></div>
+                                <div class="flex justify-between"><span>Workplace Lunches:</span> <span id="expLunch" class="font-medium text-white">KSh 0</span></div>
+                                <div class="flex justify-between"><span>Utilities & Bills:</span> <span id="expHidden" class="font-medium text-white">KSh 0</span></div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Download Options -->
+                    <div class="mt-6 pt-5 border-t border-slate-800 space-y-2">
+                        <p class="text-xs font-semibold uppercase text-slate-400 tracking-wider mb-2">Export Professional Report</p>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button onclick="downloadPDF()" class="bg-rose-950/50 hover:bg-rose-900/60 text-rose-300 border border-rose-800/50 font-medium py-2 px-3 rounded-lg text-xs transition text-center cursor-pointer">
+                                📄 PDF
+                            </button>
+                            <button onclick="downloadExcel()" class="bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-300 border border-emerald-800/50 font-medium py-2 px-3 rounded-lg text-xs transition text-center cursor-pointer">
+                                📊 Excel
+                            </button>
+                            <button onclick="downloadWord()" class="bg-blue-950/50 hover:bg-blue-900/60 text-blue-300 border border-blue-800/50 font-medium py-2 px-3 rounded-lg text-xs transition text-center cursor-pointer">
+                                📝 Word
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Realistic Savings Tier Strategies -->
+                <div id="tiersCard" class="space-y-4 hidden">
+                    <h3 class="text-md font-bold text-white tracking-tight">💡 Realistic Kenyan Wealth & Investment Plans</h3>
+                    
+                    <!-- Tier 1 -->
+                    <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-800 shadow-sm">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2.5 py-1 rounded-md">Safety Buffer (10%)</span>
+                            <span id="tier1Amt" class="font-bold text-white text-sm">KSh 0</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-1">Tailored for liquidity and emergency stability. Deposited into regulated Money Market Funds (MMFs like CIC, Sanlam, or Cytonn yielding 11%-15% p.a.).</p>
+                    </div>
+
+                    <!-- Tier 2 -->
+                    <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-800 shadow-sm">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold bg-purple-500/10 text-purple-400 border border-purple-500/20 px-2.5 py-1 rounded-md">Growth & Career (15%)</span>
+                            <span id="tier2Amt" class="font-bold text-white text-sm">KSh 0</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-1">Dedicated to compounding human capital: Automated SACCO monthly deposits for strong annual dividends (10%-12%) and professional development (CPA/KASNEB).</p>
+                    </div>
+
+                    <!-- Tier 3 -->
+                    <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-800 shadow-sm">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-md">Asset Building (25%)</span>
+                            <span id="tier3Amt" class="font-bold text-white text-sm">KSh 0</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-1">For high-surplus earners looking to fund scalable digital ventures, digital agency growth, or low-risk government securities via CBK DhowCSD (Treasury Bonds & Bills).</p>
+                    </div>
+                </div>
+
+                <!-- Initial Placeholder Banner -->
+                <div id="placeholderCard" class="bg-slate-900/80 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-slate-800 text-center">
+                    <div class="text-emerald-400 mb-3">
+                        <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-base font-medium text-white">Kenflix Designs Engine Ready</h3>
+                    <p class="text-sm text-slate-400 mt-1">Enter your gross salary, direct net salary, or manual statutory entries to build your complete financial blueprint.</p>
+                </div>
+
+            </div>
+
         </div>
     </div>
-</main>
 
-<script>
-    lucide.createIcons();
-</script>
+    <!-- JavaScript Logic Engine -->
+    <script>
+        let calculatedData = {};
+
+        function toggleNetInputs() {
+            const isDirectNet = document.getElementById('toggleDirectNet').checked;
+            const netContainer = document.getElementById('directNetContainer');
+            const grossGroup = document.getElementById('grossGroup');
+            const statSection = document.getElementById('statutoryOverrideSection');
+
+            if (isDirectNet) {
+                netContainer.classList.remove('hidden');
+                grossGroup.classList.add('hidden');
+                statSection.classList.add('hidden');
+            } else {
+                netContainer.classList.add('hidden');
+                grossGroup.classList.remove('hidden');
+                statSection.classList.remove('hidden');
+            }
+        }
+
+        function toggleManualInputs() {
+            const isManual = document.getElementById('toggleManualStatutory').checked;
+            const container = document.getElementById('manualStatutoryContainer');
+            if (isManual) {
+                container.classList.remove('hidden');
+            } else {
+                container.classList.add('hidden');
+            }
+        }
+
+        // Updated NSSF Calculator using Tier I (up to 9,000) and Tier II (up to 108,000)
+        function calculateNSSF(gross) {
+            const tier1Base = Math.min(gross, 9000);
+            const tier1 = tier1Base * 0.06; // Max KSh 540
+            
+            const tier2Base = Math.max(0, Math.min(gross, 108000) - 9000);
+            const tier2 = tier2Base * 0.06; // Max KSh 5,940
+            
+            return tier1 + tier2; // Total capped at KSh 6,480 for 108,000+
+        }
+
+        function calculatePAYE(taxableIncome) {
+            if (taxableIncome <= 0) return 0;
+            let payeBeforeRelief = 0;
+            if (taxableIncome <= 24000) {
+                payeBeforeRelief = taxableIncome * 0.10;
+            } else if (taxableIncome <= 32333) {
+                payeBeforeRelief = 2400 + (taxableIncome - 24000) * 0.25;
+            } else {
+                payeBeforeRelief = 2400 + 2083.25 + (taxableIncome - 32333) * 0.30;
+            }
+            let finalPaye = payeBeforeRelief - 2400; // Personal Relief KSh 2,400
+            return finalPaye > 0 ? finalPaye : 0;
+        }
+
+        function calculateBudget() {
+            const isDirectNet = document.getElementById('toggleDirectNet').checked;
+            const daysPerWeek = parseFloat(document.getElementById('commuteDays').value) || 0;
+            const dailyFare = parseFloat(document.getElementById('dailyFare').value) || 0;
+            const rent = parseFloat(document.getElementById('monthlyRent').value) || 0;
+            const dailyLunch = parseFloat(document.getElementById('dailyLunch').value) || 0;
+            const useHidden = document.getElementById('toggleHidden').checked;
+
+            let gross, netIncome, totalStatutory, paye, nssf, shif, housingLevy;
+
+            if (isDirectNet) {
+                netIncome = parseFloat(document.getElementById('directNetSalary').value) || 0;
+                if (netIncome <= 0) {
+                    alert('Please enter a valid Net Salary value.');
+                    return;
+                }
+                gross = netIncome; 
+                totalStatutory = 0;
+                paye = 0; nssf = 0; shif = 0; housingLevy = 0;
+            } else {
+                gross = parseFloat(document.getElementById('grossSalary').value) || 0;
+                if (gross <= 0) {
+                    alert('Please enter a valid Gross Monthly Salary.');
+                    return;
+                }
+
+                const isManual = document.getElementById('toggleManualStatutory').checked;
+
+                if (isManual) {
+                    paye = parseFloat(document.getElementById('manualPAYE').value) || 0;
+                    nssf = parseFloat(document.getElementById('manualNSSF').value) || 0;
+                    shif = parseFloat(document.getElementById('manualSHIF').value) || 0;
+                    housingLevy = parseFloat(document.getElementById('manualHousing').value) || 0;
+                } else {
+                    nssf = calculateNSSF(gross); 
+                    housingLevy = gross * 0.015;
+                    shif = gross * 0.0275;
+                    let taxableIncome = gross - nssf - housingLevy;
+                    paye = calculatePAYE(taxableIncome);
+                }
+
+                totalStatutory = nssf + housingLevy + shif + paye;
+                netIncome = gross - totalStatutory;
+            }
+
+            // Expense computations
+            const monthlyTransport = dailyFare * (daysPerWeek * 4.33);
+            const calculatedLunch = dailyLunch * (daysPerWeek * 4.33);
+            
+            let hiddenCosts = 0;
+            if (useHidden) {
+                hiddenCosts = 3500 + 1200 + 1000; // Groceries, Utilities, Internet/Airtime
+            }
+
+            const totalExpenses = rent + monthlyTransport + calculatedLunch + hiddenCosts;
+            const remainingCash = netIncome - totalExpenses;
+
+            // Realistic Net-Based Investment Allocations
+            const tier1 = netIncome * 0.10;
+            const tier2 = netIncome * 0.15;
+            const tier3 = netIncome * 0.25;
+
+            // Save state for exports
+            calculatedData = { 
+                gross, totalStatutory, netIncome, totalExpenses, remainingCash, 
+                paye, nssf, shif, housingLevy,
+                rent, monthlyTransport, monthlyLunch: calculatedLunch, hiddenCosts, 
+                tier1, tier2, tier3 
+            };
+
+            // Update UI DOM Elements
+            document.getElementById('outGross').innerText = isDirectNet ? `KSh ${netIncome.toLocaleString(undefined, {maximumFractionDigits: 0})} (Net Anchored)` : `KSh ${gross.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+            document.getElementById('outStatutory').innerText = isDirectNet ? `- KSh 0 (Direct Net)` : `- KSh ${totalStatutory.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+            document.getElementById('outNet').innerText = `KSh ${netIncome.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+            document.getElementById('outExpenses').innerText = `- KSh ${totalExpenses.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+            document.getElementById('outRemaining').innerText = `KSh ${remainingCash.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+
+            // Statutory sub-breakdown
+            document.getElementById('statPAYE').innerText = `KSh ${paye.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+            document.getElementById('statNSSF').innerText = `KSh ${nssf.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+            document.getElementById('statSHIF').innerText = `KSh ${shif.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+            document.getElementById('statHousing').innerText = `KSh ${housingLevy.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+
+            // Drawer sub-breakdown elements
+            document.getElementById('expRent').innerText = `KSh ${rent.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+            document.getElementById('expTransport').innerText = `KSh ${monthlyTransport.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+            document.getElementById('expLunch').innerText = `KSh ${calculatedLunch.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+            document.getElementById('expHidden').innerText = `KSh ${hiddenCosts.toLocaleString(undefined, {maximumFractionDigits: 0})}`;
+
+            document.getElementById('tier1Amt').innerText = `KSh ${tier1.toLocaleString(undefined, {maximumFractionDigits: 0})}/mo`;
+            document.getElementById('tier2Amt').innerText = `KSh ${tier2.toLocaleString(undefined, {maximumFractionDigits: 0})}/mo`;
+            document.getElementById('tier3Amt').innerText = `KSh ${tier3.toLocaleString(undefined, {maximumFractionDigits: 0})}/mo`;
+
+            // Toggle visibility of panels
+            document.getElementById('placeholderCard').classList.add('hidden');
+            document.getElementById('resultsCard').classList.remove('hidden');
+            document.getElementById('tiersCard').classList.remove('hidden');
+        }
+
+        // Bulletproof Print / PDF Export Function via Dedicated Pop-up Window
+        function downloadPDF() {
+            if (!calculatedData.netIncome) { alert('Please calculate your budget first.'); return; }
+
+            const printWindow = window.open('', '_blank', 'width=800,height=900');
+            if (!printWindow) {
+                alert('Pop-up blocker detected! Please allow pop-ups for this site to export PDF reports, or use the Word export button.');
+                return;
+            }
+
+            const reportHTML = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Kenflix Designs | Financial & Wealth Blueprint</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 30px; color: #1e293b; background: #fff; }
+                        h1 { color: #059669; font-size: 20px; margin-bottom: 5px; }
+                        p { color: #64748b; font-size: 11px; margin-bottom: 25px; }
+                        h3 { font-size: 13px; border-bottom: 2px solid #059669; padding-bottom: 5px; color: #059669; margin-top: 25px; }
+                        table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 11px; }
+                        th, td { border: 1px solid #cbd5e1; padding: 8px 10px; text-align: left; }
+                        th { background-color: #f1f5f9; }
+                        .right { text-align: right; }
+                        .center { text-align: center; }
+                        .highlight { background-color: #ecfdf5; font-weight: bold; }
+                        .dark-row { background-color: #0f172a; color: white; font-weight: bold; }
+                    </style>
+                </head>
+                <body>
+                    <h1>Kenflix Designs | Financial & Wealth Blueprint</h1>
+                    <p>Generated via Smart Kenyan Budget & Take-Home Calculator (Market Edition)</p>
+                    
+                    <h3>1. Executive Summary & Net Take-Home</h3>
+                    <table>
+                        <tr><th>Financial Metric</th><th class="right">Amount (KSh)</th></tr>
+                        <tr><td>Gross Salary / Baseline</td><td class="right">${calculatedData.gross.toLocaleString(undefined, {maximumFractionDigits: 0})}</td></tr>
+                        <tr><td>Total Statutory Deductions</td><td class="right">- ${calculatedData.totalStatutory.toLocaleString(undefined, {maximumFractionDigits: 0})}</td></tr>
+                        <tr class="highlight"><td>Net Take-Home Pay</td><td class="right">${calculatedData.netIncome.toLocaleString(undefined, {maximumFractionDigits: 0})}</td></tr>
+                        <tr><td>Total Living & Commute Outlays</td><td class="right">- ${calculatedData.totalExpenses.toLocaleString(undefined, {maximumFractionDigits: 0})}</td></tr>
+                        <tr class="dark-row"><td>Net Monthly Surplus / Cash Flow</td><td class="right">${calculatedData.remainingCash.toLocaleString(undefined, {maximumFractionDigits: 0})}</td></tr>
+                    </table>
+
+                    <h3>2. Granular Statutory Itemization</h3>
+                    <table>
+                        <tr><th>Statutory Component</th><th class="right">Monthly Amount (KSh)</th></tr>
+                        <tr><td>PAYE Tax (Net of Relief)</td><td class="right">${calculatedData.paye.toLocaleString(undefined, {maximumFractionDigits: 0})}</td></tr>
+                        <tr><td>NSSF Contribution (Tier I & II)</td><td class="right">${calculatedData.nssf.toLocaleString(undefined, {maximumFractionDigits: 0})}</td></tr>
+                        <tr><td>SHIF Medical Contribution</td><td class="right">${calculatedData.shif.toLocaleString(undefined, {maximumFractionDigits: 0})}</td></tr>
+                        <tr><td>Housing Levy (1.5%)</td><td class="right">${calculatedData.housingLevy.toLocaleString(undefined, {maximumFractionDigits: 0})}</td></tr>
+                    </table>
+
+                    <h3>3. Granular Living & Commute Expense Breakdown</h3>
+                    <table>
+                        <tr><th>Expense Category</th><th class="right">Monthly Amount (KSh)</th></tr>
+                        <tr><td>Monthly House Rent</td><td class="right">${calculatedData.rent.toLocaleString(undefined, {maximumFractionDigits: 0})}</td></tr>
+                        <tr><td>Commute / Transport Fares</td><td class="right">${calculatedData.monthlyTransport.toLocaleString(undefined, {maximumFractionDigits: 0})}</td></tr>
+                        <tr><td>Workplace Lunches</td><td class="right">${calculatedData.monthlyLunch.toLocaleString(undefined, {maximumFractionDigits: 0})}</td></tr>
+                        <tr><td>Utilities & Digital Bills (Groceries, Power, Internet)</td><td class="right">${calculatedData.hiddenCosts.toLocaleString(undefined, {maximumFractionDigits: 0})}</td></tr>
+                    </table>
+
+                    <h3>4. Realistic Savings & Investment Allocation</h3>
+                    <table>
+                        <tr><th>Investment Tier</th><th class="center">Allocation</th><th class="right">Monthly Amount</th><th>Deployment Strategy (Kenya Market)</th></tr>
+                        <tr><td><strong>Tier 1: Safety Buffer</strong></td><td class="center">10%</td><td class="right">${calculatedData.tier1.toLocaleString(undefined, {maximumFractionDigits: 0})}</td><td>Emergency reserves in regulated Money Market Funds (11%-15% p.a.).</td></tr>
+                        <tr><td><strong>Tier 2: Growth & Career</strong></td><td class="center">15%</td><td class="right">${calculatedData.tier2.toLocaleString(undefined, {maximumFractionDigits: 0})}</td><td>Automated SACCO deposits (10%-12% dividends) & professional certs.</td></tr>
+                        <tr><td><strong>Tier 3: Asset Building</strong></td><td class="center">25%</td><td class="right">${calculatedData.tier3.toLocaleString(undefined, {maximumFractionDigits: 0})}</td><td>Side-hustle expansion & CBK Treasury Bonds / Bills via DhowCSD.</td></tr>
+                    </table>
+
+                    <script>
+                        window.onload = function() {
+                            window.print();
+                        };
+                    <\/script>
+                </body>
+                </html>
+            `;
+
+            printWindow.document.write(reportHTML);
+            printWindow.document.close();
+        }
+
+        function downloadExcel() {
+            if (!calculatedData.netIncome) { alert('Please calculate your budget first.'); return; }
+            
+            const ws_data = [
+                ["Kenflix Designs | Financial & Wealth Blueprint", ""],
+                ["Generated by Smart Kenyan Budget Calculator", ""],
+                ["", ""],
+                ["Financial Parameter", "Amount (KSh)"],
+                ["Gross Salary / Baseline", calculatedData.gross],
+                ["Total Statutory Deductions", -calculatedData.totalStatutory],
+                ["Net Take-Home Pay", calculatedData.netIncome],
+                ["Total Living & Commute Expenses", -calculatedData.totalExpenses],
+                ["Net Monthly Surplus", calculatedData.remainingCash],
+                ["", ""],
+                ["Statutory Component", "Amount (KSh)"],
+                ["PAYE Tax", calculatedData.paye],
+                ["NSSF Contribution", calculatedData.nssf],
+                ["SHIF Contribution", calculatedData.shif],
+                ["Housing Levy", calculatedData.housingLevy],
+                ["", ""],
+                ["Expense Sub-Category", "Amount (KSh)"],
+                ["House Rent", calculatedData.rent],
+                ["Transport Commute", calculatedData.monthlyTransport],
+                ["Workplace Lunches", calculatedData.monthlyLunch],
+                ["Utilities & Hidden Bills", calculatedData.hiddenCosts],
+                ["", ""],
+                ["Investment Tier", "Monthly Amount (KSh)"],
+                ["Tier 1: Safety Buffer (10%)", calculatedData.tier1],
+                ["Tier 2: Growth & Career (15%)", calculatedData.tier2],
+                ["Tier 3: Asset Building (25%)", calculatedData.tier3]
+            ];
+
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(ws_data);
+            XLSX.utils.book_append_sheet(wb, ws, "Financial Summary");
+            XLSX.writeFile(wb, "Kenflix_Designs_Budget_Blueprint.xlsx");
+        }
+
+        function downloadWord() {
+            if (!calculatedData.netIncome) { alert('Please calculate your budget first.'); return; }
+
+            const htmlContent = `
+                <div style="font-family: Arial, sans-serif; padding: 20px; color: #1e293b;">
+                    <h1 style="color: #059669; font-size: 20px;">Kenflix Designs | Financial & Wealth Blueprint</h1>
+                    <p style="color: #64748b; font-size: 11px;">Generated via Smart Kenyan Budget & Take-Home Calculator</p>
+                    
+                    <h3 style="color: #059669; font-size: 14px;">1. Executive Summary</h3>
+                    <table border="1" cellpadding="6" cellspacing="0" style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                        <tr><th>Metric</th><th align="right">Amount (KSh)</th></tr>
+                        <tr><td>Gross / Baseline</td><td align="right">${calculatedData.gross}</td></tr>
+                        <tr><td>Net Take-Home Pay</td><td align="right">${calculatedData.netIncome}</td></tr>
+                        <tr><td>Total Expenses</td><td align="right">${calculatedData.totalExpenses}</td></tr>
+                        <tr><td>Net Surplus</td><td align="right">${calculatedData.remainingCash}</td></tr>
+                    </table>
+                </div>
+            `;
+            const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Budget</title></head><body>";
+            const footer = "</body></html>";
+            const sourceHTML = header + htmlContent + footer;
+
+            const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+            const fileDownload = document.createElement("a");
+            document.body.appendChild(fileDownload);
+            fileDownload.href = source;
+            fileDownload.download = 'Kenflix_Designs_Budget_Blueprint.doc';
+            fileDownload.click();
+            document.body.removeChild(fileDownload);
+        }
+    </script>
 </body>
 </html>
